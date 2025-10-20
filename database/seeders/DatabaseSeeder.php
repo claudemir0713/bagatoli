@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MenuSeeder::class,
             LicitacaoTipoSeeder::class,
-            // MenuUsuarioSeeder::class,
+            MenuUsuarioSeeder::class,
         ]);
     }
 }
