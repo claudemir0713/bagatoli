@@ -18,8 +18,8 @@ function alteraEmpresa(empresa_id){
             })
         },
         success:function(result){
-            // console.log(result);
-            $(document).find('#taxa_financeira').val(result.taxa_financeira)
+            console.log(result);
+            $(document).find('#taxa_financeira').val(result[0].taxa_financeira)
             let imposto_venda   = 0;
             let difal           = 0;
 
