@@ -165,6 +165,11 @@
                                     <input type="hidden" class="form-control fonte-8 direita" id="id{{$item->id}}" name="id[]" value="{{$item->id}}">
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="16">
+                                    {{$item->descricao}}
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
