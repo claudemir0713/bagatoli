@@ -60,6 +60,7 @@ class bg_impostos {
                     ,'comissao'             => $empresa_parametro->comissao
                     ,'outros'               => $empresa_parametro->outros
                     ,'margem'               => $empresa_parametro->margem
+                    ,'taxa_financeira'      => $empresa_parametro->taxa_financeira
                     ,'regime_tributario'    => $regime_tributario
                     ,'imposto_custo'        => $imposto_custo
                     ,'origem'               => 'oracle'
@@ -79,6 +80,7 @@ class bg_impostos {
                     ,'comissao'             => $empresa_parametro->comissao
                     ,'outros'               => $empresa_parametro->outros
                     ,'margem'               => $empresa_parametro->margem
+                    ,'taxa_financeira'      => $empresa_parametro->taxa_financeira
                     ,'regime_tributario'    => $regime_tributario
                     ,'imposto_custo'        => $imposto_custo
                     ,'origem'               => 'mysql'
