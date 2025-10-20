@@ -42,8 +42,8 @@ $(document).ready(function () {
                 $(document).find('#md_cod_produto').val(md_cod_produto)
                 localizaNomeCliente()
                 $("#ModalLocalizaProduto").modal("hide");
-                $(document).find('#md_cod_produto').focus();
                 localizaNomeProduto()
+                $(document).find('#md_cod_produto').focus();
             }
         })
         /**********************NomeCliente**************************/
