@@ -167,7 +167,7 @@
                             </tr>
                             <tr>
                                 <td colspan="16">
-                                    <sup><b><i>escrição</i></b></sup> {{$item->descricao}}
+                                    <b><i>Descrição</i></b> {{$item->descricao}}
                                 </td>
                             </tr>
                         @endforeach
