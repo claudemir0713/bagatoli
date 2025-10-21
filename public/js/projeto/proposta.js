@@ -194,7 +194,6 @@ $(document).ready(function () {
                     ,'obs_item'             :obs_item
                     ,'impostos_credito'     :impostos_credito
                 }
-                console.log(dados,route,type,origem);
                 cadastrar(dados,route,type,origem);
             }
         })

@@ -123,19 +123,19 @@
                                                         <input type="text" class="form-control fonte-10" id="und{{$item->item}}" name="und[]" value="{{$item->und}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="qtd{{$item->item}}" name="qtd[]" value="{{$item->qtd}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="qtd{{$item->item}}" name="qtd[]" value="{{number_format($item->qtd,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_edital{{$item->item}}" name="unt_edital[]" value="{{$item->unt_edital}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_edital{{$item->item}}" name="unt_edital[]" value="{{number_format($item->unt_edital,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita" id="total_edital{{$item->item}}" name="total_edital[]" value="{{$item->total_edital}}">
+                                                        <input type="text" class="form-control fonte-10 direita" id="total_edital{{$item->item}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_custo{{$item->item}}" name="unt_custo[]" value="{{$item->unt_custo}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_custo{{$item->item}}" name="unt_custo[]" value="{{number_format($item->unt_custo,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita" id="total_custo{{$item->item}}" name="total_custo[]" value="{{$item->total_custo}}">
+                                                        <input type="text" class="form-control fonte-10 direita" id="total_custo{{$item->item}}" name="total_custo[]" value="{{number_format($item->total_custo,2,',','.')}}">
                                                     </td>
                                                     <td>
                                                         <button type="button" name="delServico[]" id="minusItem{{$item->item}}" value="{{$item->item}}" class="btn btn-outline-danger fonte-10 removeItem"><span class="fas fa-minus"></span></button>
