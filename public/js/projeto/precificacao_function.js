@@ -103,6 +103,7 @@ function precoVenda(id){
         let custo_unt       = 0;
         let equivalencia    = Math.pow( (taxa_financeira/100+1),(prazoMedio/30) ) ;
 
+        let vlrVendaUnt        = parseFloat($(document).find('#vlrVendaUnt'+id).val().replaceAll('.','').replaceAll(',','.'));
         let vlrVenda        = parseFloat($(document).find('#vlrVenda'+id).val().replaceAll('.','').replaceAll(',','.'));
         let total_edital    = parseFloat($(document).find('#total_edital'+id).val().replaceAll('.','').replaceAll(',','.'));
 
@@ -133,11 +134,12 @@ function precoVenda(id){
         fundoValor(total_edital,vlr_venda,id)
         fundoMargem(margem,id)
 
+        vlrVendaUnt =vlr_venda/qtd;
+
         vlr_venda = (formCurrency.format(vlr_venda)).replace('R$', '').replace(/\s/g, '');
+        vlrVendaUnt = (formCurrency.format(vlrVendaUnt)).replace('R$', '').replace(/\s/g, '');
         $(document).find('#vlrVenda'+id).val(vlr_venda);
-
-
-
+        $(document).find('#vlrVendaUnt'+id).val(vlrVendaUnt);
 }
 
 function precoVendaValor(id){
@@ -181,14 +183,19 @@ function precoVendaValor(id){
         let imposto_ir_csll = (vlrVendaAntes_ir_csll * ir_csll)* equivalencia
         let margem = vlrVenda - (custo_fin+impostos_desp_fin+imposto_ir_csll)
         let margem_perc = (margem/vlrVenda)*100
+        let vlrVendaUnt = vlrVenda/qtd
 
         fundoValor(total_edital,vlrVenda,id)
         fundoMargem(margem_perc,id)
 
 
         margem_perc  = formCub.format(margem_perc).replace('R$', '').replace(/\s/g, '')
+        vlrVendaUnt  = formCurrency.format(vlrVendaUnt).replace('R$', '').replace(/\s/g, '')
+        vlrVenda  = formCurrency.format(vlrVenda).replace('R$', '').replace(/\s/g, '')
 
         $(document).find('#margem'+id).val(margem_perc)
+        $(document).find('#vlrVendaUnt'+id).val(vlrVendaUnt)
+        $(document).find('#vlrVenda'+id).val(vlrVenda)
 
 
 }
@@ -196,7 +203,6 @@ function precoVendaValor(id){
 function fundoValor(total_edital,vlrVenda,id){
     let controla_preco_minimo = $(document).find('#controla_preco_minimo').val();
     let css_edital      = 'fundoAmarelo'
-    console.log(total_edital,vlrVenda,id,controla_preco_minimo)
     if(total_edital >= vlrVenda || controla_preco_minimo!='S'){
         $(document).find('#linhaPrecificacao'+id).removeClass(css_edital);
     }else{

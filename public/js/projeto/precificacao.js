@@ -10,6 +10,24 @@ $(document).ready(function () {
         $(document).find('#main-content').addClass('sidebar-closed');
 
 
+    /**************************calcVlrVenda********************************************/
+        $(document).on('change','.calcVlrVenda',function(event){
+            event.preventDefault()
+            let id = $(this).attr('id').replace(/[^0-9]/g,'');
+            let vlrVendaUnt = $(this).val()
+            let qtd = $(document).find('#qtd'+id).val()
+
+            qtd = qtd.replaceAll('.','').replaceAll(',','.')
+            vlrVendaUnt = vlrVendaUnt.replaceAll('.','').replaceAll(',','.')
+
+            let vlrVenda = vlrVendaUnt*qtd;
+            vlrVendaUnt = formCurrency.format(vlrVendaUnt).replace('R$', '').replace(/\s/g, '')
+            vlrVenda = formCurrency.format(vlrVenda).replace('R$', '').replace(/\s/g, '')
+            $(document).find('#vlrVendaUnt'+id).val(vlrVendaUnt)
+            $(document).find('#vlrVenda'+id).val(vlrVenda)
+        })
+
+
     /*************************preço de venda pela margem**********************************/
     $(document).on('change','.calc_pre_venda',function(event){
         event.preventDefault()
@@ -34,7 +52,7 @@ $(document).ready(function () {
         alteraEmpresa(empresa_id);
     })
 
-    /***************************cadastro do proposta**************************************/
+    /***************************cadastro do precificacao**********************************/
         $(document).on('submit', 'form#cadastro-precificacao', function (event) {
             event.preventDefault()
             let route = $(this).find('input#route').val();
@@ -65,6 +83,7 @@ $(document).ready(function () {
             $(document).find('input[name="total_custo[]"]').each(function(index){
                 total_custo.push($(this).val());
             })
+
 
             let impostos_credito = [];
             $(document).find('input[name="imposto_custo[]"]').each(function(index){
@@ -154,6 +173,40 @@ $(document).ready(function () {
                 // console.log(dados,route,type,origem);
                 cadastrar(dados,route,type,origem);
             }
+        })
+
+    /**************************calc_custo_total********************************************/
+        $(document).on('change','.calc_custo_total',function(event){
+            event.preventDefault()
+            let id = $(this).attr('id').replace(/[^0-9]/g,'');
+            let unt_custo = $(this).val()
+            let qtd = $(document).find('#qtd'+id).val()
+
+            qtd = qtd.replaceAll('.','').replaceAll(',','.')
+            unt_custo = unt_custo.replaceAll('.','').replaceAll(',','.')
+
+            let total_custo = unt_custo*qtd;
+            unt_custo = formCurrency.format(unt_custo).replace('R$', '').replace(/\s/g, '')
+            total_custo = formCurrency.format(total_custo).replace('R$', '').replace(/\s/g, '')
+            $(document).find('#unt_custo'+id).val(unt_custo)
+            $(document).find('#total_custo'+id).val(total_custo)
+        })
+
+    /**************************calc_custo_unt********************************************/
+        $(document).on('change','.calc_custo_unt',function(event){
+            event.preventDefault()
+            let id = $(this).attr('id').replace(/[^0-9]/g,'');
+            let total_custo = $(this).val()
+            let qtd = $(document).find('#qtd'+id).val()
+
+            qtd = qtd.replaceAll('.','').replaceAll(',','.')
+            total_custo = total_custo.replaceAll('.','').replaceAll(',','.')
+
+            let unt_custo = total_custo/qtd;
+            unt_custo = formCurrency.format(unt_custo).replace('R$', '').replace(/\s/g, '')
+            total_custo = formCurrency.format(total_custo).replace('R$', '').replace(/\s/g, '')
+            $(document).find('#unt_custo'+id).val(unt_custo)
+            $(document).find('#total_custo'+id).val(total_custo)
         })
 
 })

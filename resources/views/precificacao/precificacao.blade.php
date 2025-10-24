@@ -41,7 +41,7 @@
 
         <div class="row">
             <div class="form-group col-md-12" style="overflow: auto; height: 400px; width: 100%">
-                <table class="table table-borderless table-advance table-striped  table-condensed fonte-8" id="tbItem">
+                <table class="table table-borderless table-advance table-striped table-condensed fonte-8" id="tbItem">
                     <thead>
                         <tr class="fonte-10">
                             <th width="2%">Item</th>
@@ -69,6 +69,7 @@
                         @foreach ($proposta_item as $item )
                             @php
                                 $imposto_custo      = 12;
+                                $unt_custo          = 0;
                                 $total_custo        = 0;
                                 $imposto_venda      = 0;
                                 $ir_csll            = 0;
@@ -100,6 +101,8 @@
 
                                 if($item){
                                     $total_custo = $item->total_custo;
+                                    $unt_custo = $item->unt_custo;
+
                                     $imposto_venda = $item->impostos_venda;
                                     $ir_csll = $item->ir_csll;
                                     $difal = $item->difal;
@@ -109,9 +112,13 @@
                                     $frete = $item->frete;
                                     $despesa_fixa = $item->despesa_fixa;
                                     $margem = $item->margem;
+
+                                    $vlrVendaUnt = $item->unt_venda;
                                     $vlrVenda = $item->total_venda;
+
                                 };
 
+                                $unt_custo          = number_format($unt_custo,2,',','.');
                                 $total_custo        = number_format($total_custo,2,',','.');
                                 $imposto_venda      = number_format($imposto_venda,2,',','.');
                                 $ir_csll            = number_format($ir_csll,2,',','.');
@@ -148,7 +155,10 @@
                                 <td align="right">{{number_format($item->qtd,2,',','.')}}</td>
                                 <td align="right">{{number_format($item->unt_edital,2,',','.')}}</td>
                                 <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda"                  id="total_custo{{$item->id}}"     name="total_custo[]"    value="{{$total_custo}}"></td>
+                                <td>
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_total" id="unt_custo{{$item->id}}"       name="unt_custo[]"      value="{{$unt_custo}}" title="R$ custo unt"><br>
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_unt"   id="total_custo{{$item->id}}"     name="total_custo[]"    value="{{$total_custo}}" title="R$ custo total">
+                                </td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda"                  id="imposto_custo{{$item->id}}"   name="imposto_custo[]"  value="{{$imposto_custo}}"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda imposto_venda"    id="imposto_venda{{$item->id}}"   name="imposto_venda[]"  value="{{$imposto_venda}}"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda difal"            id="difal{{$item->id}}"           name="difal[]"          value="{{$difal}}"></td>
@@ -159,7 +169,8 @@
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda despesa_fixa"     id="despesa_fixa{{$item->id}}"    name="despesa_fixa[]"   value="{{$despesa_fixa}}"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda margem {{$cssFundoMargem}}"           id="margem{{$item->id}}"          name="margem[]"         value="{{$margem}}"></td>
                                 <td>
-                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor" id="vlrVenda{{$item->id}}" name="vlrVenda[]" value="{{$vlrVenda}}">
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor calcVlrVenda" id="vlrVendaUnt{{$item->id}}" name="vlrVendaUnt[]" value="{{$vlrVendaUnt}}" title="R$ Unt"><br>
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor" id="vlrVenda{{$item->id}}" name="vlrVenda[]" value="{{$vlrVenda}}" title="R$ Total">
                                     <input type="hidden" class="form-control fonte-8 direita" id="qtd{{$item->id}}" name="qtd[]" value="{{number_format($item->qtd,2,',','.')}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="total_edital{{$item->id}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="id{{$item->id}}" name="id[]" value="{{$item->id}}">
