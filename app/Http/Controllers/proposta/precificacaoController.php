@@ -174,4 +174,54 @@ class precificacaoController extends Controller
 
         return ($impostos);
     }
+
+    public function imprimir($id){
+        $proposta = proposta::find($id);
+        $cliente = cliente::find($proposta->cliente_id);
+
+
+        // 🔹 Caminho do Bootstrap (pode ser CDN ou local)
+
+        $fileName = 'Cotação.pdf';
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4',
+            'margin_left'   => 15,
+            'margin_rigth'  => 10,
+            'margin_top'    => 20,
+            'margin_bottom' => 15,
+            'margin_header' => 5,
+            'margin_footer' => 5
+        ]);
+        // 🔹 Carrega o Bootstrap CSS
+        $bootstrap  = file_get_contents(asset('css/bootstrap.min.css'));
+        $customCss  = file_get_contents(asset('css/custom.css'));
+        // // 🔹 Carrega o conteúdo HTML
+        // $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+
+        $cabecalho = '<table width="100%">';
+        $cabecalho .='<tr>';
+        $cabecalho .='<td width="10%" align="center"><img src="'.asset('img/logo.png').'" height="30"></td>';
+        $cabecalho .= '<td width="90%" align="center"><span style="font-size:20px"><b>Cotação</b></span></td>';
+        $cabecalho .='</tr>';
+        $cabecalho .='</table><hr>';
+
+
+        $rodape = '<hr><table width="100%">';
+        $rodape .='<tr>';
+        $rodape .='<td width="80%" align="center"></td>';
+        $rodape .= '<td width="20%" align="right"><span style="font-size:10px">Página {PAGENO} de {nb}</span></td>';
+        $rodape .='</tr>';
+        $rodape .='</table>';
+
+
+        $html = view('precificacao.imprimePdf',compact('proposta','cliente'));
+        $html->render();
+        $mpdf->SetHTMLHeader($cabecalho);
+        $mpdf->SetHTMLFooter($rodape);
+        $mpdf->AddPage('L');
+        $mpdf->WriteHTML($bootstrap.$customCss, 1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output($fileName, 'I');
+
+    }
 }

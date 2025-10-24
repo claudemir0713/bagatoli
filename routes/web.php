@@ -117,6 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('precificacao/precificar/{id}',[precificacaoController::class,'formPrecificacao'])->name('precificacao.formPrecificacao');
         Route::patch('precificacao/editPrecificacao/{id}',[precificacaoController::class,'editPrecificacao'])->name('precificacao.editPrecificacao');
         Route::post('precificacao/alteraEmpresa',[precificacaoController::class,'alteraEmpresa'])->name('precificacao.alteraEmpresa');
+        Route::get('precificacao/imprimir/{id}',[precificacaoController::class,'imprimir'])->name('precificacao.imprimir');
     });
 
 });

@@ -22,12 +22,6 @@
             $version_css = env('VERSAO_CSS');
         @endphp
 
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
-
 
         <!-- javascripts -->
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>

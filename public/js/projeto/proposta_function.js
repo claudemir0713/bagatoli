@@ -10,11 +10,11 @@ function bg_localizaCliente(cliente){
         url: url + route,
         beforeSend:function(){
             $(document).find('#tbConsultaCliente >tbody').html('')
-            Swal({
-                title: 'Aguarde!',
-                type: 'warning',
-                html:'<b>Aguarde Localizando!</b>'
-            })
+            // Swal({
+            //     title: 'Aguarde!',
+            //     type: 'warning',
+            //     html:'<b>Aguarde Localizando!</b>'
+            // })
         },
         success:function(result){
             let linhas = '';

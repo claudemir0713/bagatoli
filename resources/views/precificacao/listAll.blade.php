@@ -49,7 +49,7 @@
                         <th width="5%">Data Licitação</th>
                         <th width="10%">Valor Edital</th>
                         <th width="10%">Valor Venda</th>
-                        <th width="5%">Ação</th>
+                        <th width="5%" colspan="2">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +67,12 @@
                                 <a class="btn btn-warning fonte-10" href="{{route('precificacao.formPrecificacao', ['id'=>$item->id])}}">
                                     <i class="fas fa-dollar-sign"></i>&nbsp;&nbsp;&nbsp;
                                     <span>Precificar</span>
+                                </a>
+                            </td>
+                            <td  align="center">
+                                <a class="btn btn-info fonte-10" href="{{route('precificacao.imprimir', ['id'=>$item->id])}}" target="_blank">
+                                    <i class="fas fa-print"></i>&nbsp;&nbsp;&nbsp;
+                                    <span>Imprimir</span>
                                 </a>
                             </td>
                         </tr>
