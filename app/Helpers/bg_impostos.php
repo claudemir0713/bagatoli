@@ -41,6 +41,7 @@ class bg_impostos {
                                 , 'PRDUTO_UF_ALIQ_ICMS.PRAI_PERC_ALIQ_INTERNA   as aliq_iterna'
                                 , 'ALIQ_ICMS.AI_PER_REDUC_ICMS                  as base'
                                 , 'PRDUTO_UF_ALIQ_ICMS.PRAI_PERC_ALIQ_INT_COMP  as aliq_icms'
+                                , 'AI_NOM                                       as regra'
                             ])
                             ->where($filtros)
                             ->first();
@@ -63,6 +64,7 @@ class bg_impostos {
                     ,'taxa_financeira'      => $empresa_parametro->taxa_financeira
                     ,'regime_tributario'    => $regime_tributario
                     ,'imposto_custo'        => $imposto_custo
+                    ,'regra'                => $icms->regra
                     ,'origem'               => 'oracle'
                 );
             }else{
@@ -83,6 +85,7 @@ class bg_impostos {
                     ,'taxa_financeira'      => $empresa_parametro->taxa_financeira
                     ,'regime_tributario'    => $regime_tributario
                     ,'imposto_custo'        => $imposto_custo
+                    ,'regra'                => 'parametros'
                     ,'origem'               => 'mysql'
                 );
             }

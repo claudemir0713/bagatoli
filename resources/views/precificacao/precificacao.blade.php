@@ -10,22 +10,25 @@
         </div>
         <div class="form-group col-md-3">
             Empresa:
-            <select class="form-control alteraEmpresa" id="empresa" name="empresa">
+            <select class="form-control alteraEmpresa fonte-10" id="empresa" name="empresa">
                 <option value="">Selecione</option>
                 @foreach ($empresa as $item )
                     <option value="{{$item->id}}" {{($item->id == $proposta->empresa_id)?'selected':''}}>{{$item->razao}}</option>
                 @endforeach
             </select>
         </div>
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-1 fonte-10">
             Prazo (dias):
             <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="prazoMedio" name="prazoMedio" value="30">
         </div>
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-1 fonte-10">
             Tx:
             <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="taxa_financeira" name="taxa_financeira" value="{{($proposta->taxa_financeira)?$proposta->taxa_financeira : (($empresa_parametro) ? $empresa_parametro->taxa_financeira : 0.5) }}">
         </div>
-
+        <div class="form-group col-md-1 fonte-10">
+            Frete:
+            <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="frete_base" name="frete_base" value="{{($proposta->frete)?$proposta->frete : (($empresa_parametro) ? $empresa_parametro->frete : 0.5) }}">
+        </div>
     </div>
     <hr>
     <form action=""  id="cadastro-precificacao"  method="post">

@@ -4,7 +4,7 @@ function alteraEmpresa(empresa_id){
     let dados = {
         'empresa_id'    : empresa_id
         ,'proposta_id'  : proposta_id
-    };alteraEmpresa
+    };
     $.ajax({
         data: dados,
         type: 'post',
@@ -24,11 +24,18 @@ function alteraEmpresa(empresa_id){
             let difal           = 0;
 
             $.each(result, function (result, val) {
-                console.log(val)
+                console.log(val);
                 let id = val.proposta_item_id;
-                imposto_venda = (val.aliq_icms*(val.base_icms/100)) + val.pis + val.cofins
+                let icms = 0
+                if(val.base_icms==100){
+                    icms  = (val.aliq_icms*((val.base_icms)/100))
+                }else{
+                    icms  = (val.aliq_icms*((100-val.base_icms)/100))
+                }
+                imposto_venda =  icms + val.pis + val.cofins
                 imposto_venda = (formCurrency.format(imposto_venda)).replace('R$', '').replace(/\s/g, '');
                 $(document).find('#imposto_venda'+id).val(imposto_venda)
+                $(document).find('#imposto_venda'+id).prop('title', val.regra);
 
                 if(val.origem=='mysql'){
                     difal = val.difal
