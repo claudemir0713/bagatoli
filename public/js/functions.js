@@ -52,8 +52,10 @@ function buscaCnpj(cnpj){
         {
             console.log(result)
             $(document).find('input#email').val(result.email);
-            if(result.emails[0]){
-                $(document).find('input#email').val(result.emails[0].address);
+            if(result.emails){
+                if(result.emails[0]){
+                    $(document).find('input#email').val(result.emails[0].address);
+                }
             }
             if(result.address){
                 $(document).find('input#Cep').val(result.address.zip);
@@ -63,9 +65,12 @@ function buscaCnpj(cnpj){
                 $(document).find('input#uf').val(result.address.state);
             }
 
-            if(result.phones['0']){
-                $(document).find('input#telefone').val(result.phones['0'].area+' '+result.phones['0'].number);
+            if(result.phones){
+                if(result.phones['0']){
+                    $(document).find('input#telefone').val(result.phones['0'].area+' '+result.phones['0'].number);
+                }
             }
+
             if(result.company){
                 $(document).find('input#cliente').val(result.company.name);
                 if(result.company.members['0']){
@@ -74,9 +79,11 @@ function buscaCnpj(cnpj){
             }
             $(document).find('#contribuinte_icms').val('N').trigger('chosen:updated')
             let IE = 'Isento';
-            if(result.registrations['0']){
-                if(result.registrations['0'].number){IE = result.registrations['0'].number}
-                $(document).find('#contribuinte_icms').val('S').trigger('chosen:updated')
+            if(result.registrations){
+                if(result.registrations['0']){
+                    if(result.registrations['0'].number){IE = result.registrations['0'].number}
+                    $(document).find('#contribuinte_icms').val('S').trigger('chosen:updated')
+                }
             }
             $(document).find('#IE').val(IE)
 
