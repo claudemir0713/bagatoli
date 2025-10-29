@@ -1,124 +1,226 @@
-    <div class="row">
-        <div class="form-group col-md-2">
-            <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
-        </div>
-        <div class="form-group col-md-4">
-            <sup><b>Cidade:</b></sup> {{$cliente->cidade}}
-        </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    {{-- <title>Cotação {{$proposta->id}}</title> --}}
 
-    <table class="table table-borderless table-advance table-striped  table-condensed fonte-8" width='100%'>
+    <style>
+        /* 🔹 Estilos compatíveis com mPDF */
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d6efd;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #0d6efd;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        /*
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        } */
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table-footer {
+            margin-top: 15px;
+            text-align: right;
+            font-size: 11px;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        /* Opcional: simular um card do Bootstrap */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .fonte-7{
+            font-size: 7px !important;
+        }
+        .fonte-8{
+            font-size: 8px !important;
+        }
+    /* ******************bordaSimples**************************** */
+    table.bordaSimples {
+            border-collapse: collapse;
+            background: #FFF;
+            width: 100%;
+        }
+        table.bordaSimples td {
+            border: 0px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 8px;
+        }
+
+    /* ******************semBordas**************************** */
+    table.semBordas {
+            border-collapse: collapse;
+            background: #FFF;
+            width: 100%;
+        }
+        table.semBordas td {
+            border: 0px solid #ccc;
+            padding: 8px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <table class="bordaSimples fonte-8" width='100%'>
+        <tr>
+            <td colspan="2" width="50%">
+                <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
+            </td>
+            <td colspan="2" width="50%">
+                <sup><b>Cidade:</b></sup> {{$cliente->cidade}}
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">
+                <sup><b>Processo:</b></sup> {{$proposta->nr_processo}}
+            </td>
+            <td width="25%">
+                <sup><b>Pregão:</b></sup> {{$proposta->nr_pregao}}
+            </td>
+            <td width="25%">
+                <sup><b>Data:</b></sup> {{date('d/m/Y', strtotime($proposta->data))}}
+            </td>
+            <td width="25%">
+                <sup><b>Data entrega:</b></sup> {{date('d/m/Y', strtotime($proposta->data_entrega_proposta))}}  {{$proposta->hora_entrega_proposta}}
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">
+                <sup><b>Data abertura:</b></sup> {{date('d/m/Y', strtotime($proposta->data_processo))}}  {{$proposta->hora_processo}}
+            </td>
+            <td colspan="2" width="50%">
+                <sup><b>Portal:</b></sup> {{$proposta->portal_compras}}
+            </td>
+            <td width="25%">
+                <sup><b>Id:</b></sup> {{$proposta->id_portal_compras}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <sup><b>Obs:</b></sup> {{$proposta->obs}}
+            </td>
+        </tr>
+    </table>
+
+    <table class="table table-borderless fonte-8" width='100%'>
         <thead>
             <tr>
-                <th width="7%">NF</th>
-                <th width="5%">PARCELA</th>
-                <th width="38%">CLIENTE</th>
-                <th width="5%">EMISSÃO</th>
-                <th width="5%">VENCIMENTO</th>
-                <th width="5%">VALOR</th>
-                <th width="5%">PAGO</th>
-                <th width="5%">MULTA</th>
-                <th width="5%">JUROS</th>
-                <th width="10%">SALDO</th>
+                <th width="5%">Item</th>
+                <th width="5%">Cod.Prod</th>
+                <th width="60%">Produto</th>
+                <th width="10%">Qtd</th>
+                <th width="10%">Unt</th>
+                <th width="10%">Total</th>
             </tr>
         </thead>
         @php
         @endphp
-            <tbody>
-                <tr>
-                    <td width="7%">NF</td>
-                    <td width="5%">PARCELA</td>
-                    <td width="38%">CLIENTE</td>
-                    <td width="5%">EMISSÃO</td>
-                    <td width="5%">VENCIMENTO</td>
-                    <td width="5%">VALOR</td>
-                    <td width="5%">PAGO</td>
-                    <td width="5%">MULTA</td>
-                    <td width="5%">JUROS</td>
-                    <td width="10%">SALDO</td>
-                </tr>
-                <tr>
-                    <td width="7%">NF</td>
-                    <td width="5%">PARCELA</td>
-                    <td width="38%">CLIENTE</td>
-                    <td width="5%">EMISSÃO</td>
-                    <td width="5%">VENCIMENTO</td>
-                    <td width="5%">VALOR</td>
-                    <td width="5%">PAGO</td>
-                    <td width="5%">MULTA</td>
-                    <td width="5%">JUROS</td>
-                    <td width="10%">SALDO</td>
-                </tr>
-            </tbody>
-        {{-- <tbody>
-            @foreach ($receber as $item )
-                @if($COD_REP!=$item->COD_REP)
-                    @if ($COD_REP!='0')
+        {{-- {{dd($proposta_item)}} --}}
+        @php
+            $lote           = '0';
+            $total_venda    = 0;
+            $qtd            = 0;
+            $qtd_total      = 0;
+            $venda_total    = 0;
+
+        @endphp
+        <tbody>
+            @foreach ($proposta_item as $item )
+                @if($lote!=$item->lote)
+                    @if ($lote!='0' && $lote!='')
                         <tr bgcolor="#e3e3e3">
-                            <td colspan="5"><b>TOTAL</b></td>
-                            <td align="right"><b>{{number_format($vlr_total_rep,2,',','.')}}</b></td>
-                            <td align="right"><b>{{number_format($vlr_total_pago_rep,2,',','.')}}</b></td>
-                            <td align="right"><b>{{number_format($vlr_total_juros_rep,2,',','.')}}</b></td>
-                            <td align="right"><b>{{number_format($vlr_total_multa_rep,2,',','.')}}</b></td>
-                            <td align="right"><b>{{number_format($vlr_total_saldo_rep,2,',','.')}}</b></td>
+                            <td colspan="3"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                            <td align="right"><b>{{number_format($qtd,2,',','.')}}</b></td>
+                            <td></td>
+                            <td align="right"><b>{{number_format($total_venda,2,',','.')}}</b></td>
                         </tr>
                         @php
-                            $vlr_total_rep = 0;
-                            $vlr_total_pago_rep = 0;
-                            $vlr_total_juros_rep = 0;
-                            $vlr_total_multa_rep = 0;
-                            $vlr_total_saldo_rep = 0;
+                            $total_venda = 0;
+                            $qtd = 0;
                         @endphp
                     @endif
-                    <tr>
-                        <td colspan="10" bgcolor="#d3d3d3"><b>{{$COD_REP}} - {{$item->REPRESENTANTE}}</b></td>
-                    </tr>
+                    @if ($item->lote)
+                        <tr>
+                            <td colspan="6" bgcolor="#d3d3d3" align="center"><b>{{strtoupper($item->lote)}} </b></td>
+                        </tr>
+                    @endif
                 @endif
                 <tr>
-                    <td>{{$item->CON_NUMERO}}</td>
-                    <td align="center">{{$item->CON_SEQUENCIA}}</td>
-                    <td>{{$item->CLIENTE}}</td>
-                    <td>{{date('d/m/Y',strtotime($item->CON_DT_INCLUSAO))}}</td>
-                    <td>{{date('d/m/Y',strtotime($item->CON_DT_VENCIMENTO))}}</td>
-                    <td align="right">{{number_format($item->CON_VALOR_ORIGINAL,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->CON_VALOR_TOTAL_PAGO,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->CON_VALOR_JUROS,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->CON_VALOR_MULTA,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->CON_VALOR_CORRIGIDO,2,',','.')}}</td>
+                    <td align="center">{{$item->item}}</td>
+                    <td align="center">{{$item->cod_produto}}</td>
+                    <td align="">{{$item->produto}}</td>
+                    <td align="right">{{number_format($item->qtd,2,',','.')}}</td>
+                    <td align="right">{{number_format($item->unt_venda,2,',','.')}}</td>
+                    <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                 </tr>
                 @php
-                    $COD_REP            = $item->COD_REP;
-
-                    $vlr_total          += $item->CON_VALOR_ORIGINAL;
-                    $vlr_total_pago     += $item->CON_VALOR_TOTAL_PAGO;
-                    $vlr_total_juros    += $item->CON_VALOR_JUROS;
-                    $vlr_total_multa    += $item->CON_VALOR_MULTA;
-                    $vlr_total_saldo    += $item->CON_VALOR_CORRIGIDO;
-
-                    $vlr_total_rep       += $item->CON_VALOR_ORIGINAL;
-                    $vlr_total_pago_rep  += $item->CON_VALOR_TOTAL_PAGO;
-                    $vlr_total_juros_rep += $item->CON_VALOR_JUROS;
-                    $vlr_total_multa_rep += $item->CON_VALOR_MULTA;
-                    $vlr_total_saldo_rep += $item->CON_VALOR_CORRIGIDO;
+                    $lote               = $item->lote;
+                    $total_venda        += $item->total_venda;
+                    $qtd                += $item->qtd;
+                    $venda_total        += $item->total_venda;
+                    $qtd_total          += $item->qtd;
                 @endphp
             @endforeach
             <tr bgcolor="#e3e3e3">
-                <td colspan="5"><b>TOTAL</b></td>
-                <td align="right"><b>{{number_format($vlr_total_rep,2,',','.')}}</b></td>
-                <td align="right"><b>{{number_format($vlr_total_pago_rep,2,',','.')}}</b></td>
-                <td align="right"><b>{{number_format($vlr_total_juros_rep,2,',','.')}}</b></td>
-                <td align="right"><b>{{number_format($vlr_total_multa_rep,2,',','.')}}</b></td>
-                <td align="right"><b>{{number_format($vlr_total_saldo_rep,2,',','.')}}</b></td>
+                <td colspan="3"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                <td align="right"><b>{{number_format($qtd,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($total_venda,2,',','.')}}</b></td>
             </tr>
         </tbody>
         <tfoot>
-            <tr>
-                <td colspan="5">TOTAL</td>
-                <td align="right">{{number_format($vlr_total,2,',','.')}}</td>
-                <td align="right">{{number_format($vlr_total_pago,2,',','.')}}</td>
-                <td align="right">{{number_format($vlr_total_juros,2,',','.')}}</td>
-                <td align="right">{{number_format($vlr_total_multa,2,',','.')}}</td>
-                <td align="right">{{number_format($vlr_total_saldo,2,',','.')}}</td>
-            </tr>
-        </tfoot> --}}
+            @if ($item->lote)
+                <tr bgcolor="#e3e3e3">
+                    <td colspan="3"><b>TOTAL</b></td>
+                    <td align="right"><b>{{number_format($qtd_total,2,',','.')}}</b></td>
+                    <td></td>
+                    <td align="right"><b>{{number_format($venda_total,2,',','.')}}</b></td>
+                </tr>
+            @endif
+        </tfoot>
     </table>
+</body>
+</html>

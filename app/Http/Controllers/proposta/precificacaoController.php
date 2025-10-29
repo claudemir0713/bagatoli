@@ -178,50 +178,49 @@ class precificacaoController extends Controller
     public function imprimir($id){
         $proposta = proposta::find($id);
         $cliente = cliente::find($proposta->cliente_id);
+        $empresa = empresa::find($proposta->empresa_id);
+        $proposta_item = proposta_item::where('proposta_id',$id)->orderBy('lote')->orderBy('item')->orderBy('id')->get();
 
-
-        // 🔹 Caminho do Bootstrap (pode ser CDN ou local)
-
-        $fileName = 'Cotação.pdf';
+        $fileName = 'COTAÇÃO '.$id.'-'.$cliente->cliente.'-'.$proposta->nr_processo.'.pdf';
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'A4',
             'margin_left'   => 15,
             'margin_rigth'  => 10,
             'margin_top'    => 20,
-            'margin_bottom' => 15,
-            'margin_header' => 5,
-            'margin_footer' => 5
+            'margin_bottom' => 18,
+            'margin_header' => 8,
+            'margin_footer' => 8
         ]);
-        // 🔹 Carrega o Bootstrap CSS
-        $bootstrap  = file_get_contents(asset('css/bootstrap.min.css'));
-        $customCss  = file_get_contents(asset('css/custom.css'));
-        // // 🔹 Carrega o conteúdo HTML
-        // $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
 
-        $cabecalho = '<table width="100%">';
+        $cabecalho = '<table class="semBordas" width="100%">';
         $cabecalho .='<tr>';
         $cabecalho .='<td width="10%" align="center"><img src="'.asset('img/logo.png').'" height="30"></td>';
-        $cabecalho .= '<td width="90%" align="center"><span style="font-size:20px"><b>Cotação</b></span></td>';
+        $cabecalho .= '<td width="90%" align="center"><span style="font-size:20px"><b>Cotação '.str_pad($id,4,'0',STR_PAD_LEFT).'</b></span></td>';
         $cabecalho .='</tr>';
         $cabecalho .='</table><hr>';
 
+        // dd($empresa);
 
-        $rodape = '<hr><table width="100%">';
-        $rodape .='<tr>';
-        $rodape .='<td width="80%" align="center"></td>';
-        $rodape .= '<td width="20%" align="right"><span style="font-size:10px">Página {PAGENO} de {nb}</span></td>';
-        $rodape .='</tr>';
+        $rodape = '<hr><table class="semBordas fonte-8" width="100%">';
+            $rodape .='<tr>';
+                $rodape .='<td width="80%" class="fonte-7" align="center">';
+                    $rodape .='<b>'.$empresa->razao.'</b><br>';
+                    $rodape .=$empresa->cnpj.'<br>';
+                    $rodape .=$empresa->endereco.' '.$empresa->bairro.'-'.$empresa->cep.'<br>';
+                    $rodape .=$empresa->cidade.'-'.$empresa->uf.'-'.$empresa->pais.'<br>';
+                $rodape .='</td>';
+                $rodape .= '<td width="20%" align="center">Página {PAGENO} de {nb}</td>';
+            $rodape .='</tr>';
         $rodape .='</table>';
 
 
-        $html = view('precificacao.imprimePdf',compact('proposta','cliente'));
+        $html = view('precificacao.imprimePdf',compact('proposta','proposta_item','cliente'));
         $html->render();
         $mpdf->SetHTMLHeader($cabecalho);
         $mpdf->SetHTMLFooter($rodape);
-        $mpdf->AddPage('L');
-        $mpdf->WriteHTML($bootstrap.$customCss, 1);
-        $mpdf->WriteHTML($html,2);
+        $mpdf->AddPage('P');
+        $mpdf->SetTitle($fileName);
+        $mpdf->WriteHTML($html);
         $mpdf->Output($fileName, 'I');
-
     }
 }
