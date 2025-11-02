@@ -3,6 +3,7 @@ $(document).ready(function () {
         url = $('input#appurl').val();
 
         // precoVendaForEach();
+        calculaCard();
 
     /***********************fecha slide bar***********************************************/
         $(document).find('#container').addClass('sidebar-closed');

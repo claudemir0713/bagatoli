@@ -18,8 +18,9 @@
             </select>
         </div>
         <div class="form-group col-md-1 fonte-10">
+            {{-- {{dd($proposta->prazo)}} --}}
             Prazo (dias):
-            <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="prazoMedio" name="prazoMedio" value="30">
+            <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="prazoMedio" name="prazoMedio" value="{{$proposta->prazo}}">
         </div>
         <div class="form-group col-md-1 fonte-10">
             Tx:
@@ -147,14 +148,35 @@
 
                             @endphp
                             @if($lote!=$item->lote && trim($item->lote)!='')
-                                <tr class="fonte-10">
-                                    <td colspan="16" bgcolor="#c3c3c3">{{$item->lote_descricao}}</td>
+                                <tr class="fonte-10 fundoAzul">
+                                    <td colspan="10" bgcolor=""><b><i>{{$item->lote_descricao}}</i></b></td>
+                                    <td colspan="2"  bgcolor="" class="fundoAzul" align="right">
+                                        <b><i>
+                                            <sup>Fat.R$</sup>
+                                            <span class="total{{preg_replace("/\s+/", "",$item->lote)}}"></span>
+                                        </i></b>
+                                    </td>
+                                    <td colspan="2"  bgcolor="" class="fundoVerde" id="mc{{preg_replace("/\s+/", "",$item->lote)}}" align="right">
+                                        <b><i>
+                                            <sup>MC%</sup>
+                                            <span class="mc{{preg_replace("/\s+/", "",$item->lote)}}"></span>
+                                        </i></b>
+                                    </td>
+                                    <td colspan="2"  bgcolor="" class="fundoVerde" id="lucro{{preg_replace("/\s+/", "",$item->lote)}}" align="right">
+                                        <b><i>
+                                            <sup>Lucro%</sup>
+                                            <span class="lucro{{preg_replace("/\s+/", "",$item->lote)}}"></span>
+                                        </i></b>
+                                    </td>
                                 </tr>
                                 @php $lote=$item->lote @endphp
                             @endif
                             <tr id="linhaPrecificacao{{$item->id}}" class="{{$cssFundoLinha}}">
                                 <td>{{$item->id}}</td>
-                                <td>{{$item->produto}}</td>
+                                <td>
+                                    @if(!$item->cod_produto) <span class="btn btn-danger btn-sm fas fa-exclamation-triangle"></span> @endif
+                                    {{$item->cod_produto.'-'.$item->produto}}
+                                </td>
                                 <td align="right">{{number_format($item->qtd,2,',','.')}}</td>
                                 <td align="right">{{number_format($item->unt_edital,2,',','.')}}</td>
                                 <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
@@ -173,10 +195,11 @@
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda margem {{$cssFundoMargem}}"           id="margem{{$item->id}}"          name="margem[]"         value="{{$margem}}"></td>
                                 <td>
                                     <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor calcVlrVenda" id="vlrVendaUnt{{$item->id}}" name="vlrVendaUnt[]" value="{{$vlrVendaUnt}}" title="R$ Unt"><br>
-                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor" id="vlrVenda{{$item->id}}" name="vlrVenda[]" value="{{$vlrVenda}}" title="R$ Total">
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor vlrVenda {{preg_replace("/\s+/", "",$item->lote)}}" id="vlrVenda{{$item->id}}" name="vlrVenda[]" value="{{$vlrVenda}}" title="R$ Total">
                                     <input type="hidden" class="form-control fonte-8 direita" id="qtd{{$item->id}}" name="qtd[]" value="{{number_format($item->qtd,2,',','.')}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="total_edital{{$item->id}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="id{{$item->id}}" name="id[]" value="{{$item->id}}">
+                                    <input type="hidden" class="form-control fonte-8 direita" id="lote{{$item->id}}" name="lote[]" value="{{preg_replace("/\s+/", "",$item->lote)}}">
                                 </td>
                             </tr>
                             <tr>
@@ -191,15 +214,36 @@
         </div>
         <hr>
         <div class="row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <button type="submit" name="sair"  class="btn btn-success btn-block">
                     <span class="fas fa-save"></span> Salvar
                 </button>
             </div>
-                <div class="form-group col-md-3">
-                    <button type="button" name="sair" id="sair" value="" class="btn btn-danger btn-block">
-                        <span class="fa fa-door-open"></span> Sair
-                    </button>
+            <div class="form-group col-md-2">
+                <button type="button" name="sair" id="sair" value="" class="btn btn-danger btn-block">
+                    <span class="fa fa-door-open"></span> Sair
+                </button>
+            </div>
+            <div class="form-group col-md-2"></div>
+            <div class="form-group col-md-2">
+                <div class="card text-white bg-info" align="right">
+                    <div class="card-header">
+                        <b><i><sup>Fat. R$</sup></i></b> <b> <span class="fatCard"></span></b>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="card text-white bg-success" id="mcCard" align="right">
+                    <div class="card-header">
+                        <b><i><sup>Mc %</sup></i></b> <b><span class="mcCard"></span></b>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="card text-white bg-success" id="lucroCard" align="right">
+                    <div class="card-header">
+                        <b><i><sup>Lucro %</sup></i></b><b><span class="lucroCard"></span></b>
+                    </div>
                 </div>
             </div>
         </div>

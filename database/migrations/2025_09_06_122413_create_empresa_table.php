@@ -25,6 +25,7 @@ class CreateEmpresaTable extends Migration
             $table->string('uf',4)->nullable();
             $table->string('pais',100)->nullable();
             $table->string('regime_tributario',100)->nullable();
+            $table->string('regime_especial_icms',1)->default('N')->nullable();
             $table->string('representante_legal',255)->nullable();
             $table->string('cpf',50)->nullable();
             $table->string('rg',50)->nullable();

@@ -156,6 +156,9 @@
                                                         <input type="hidden" id="frete_custo{{$item->item}}" name="frete_custo[]" value="{{$item->frete_custo}}">
                                                         <input type="hidden" id="impostos_credito{{$item->item}}" name="impostos_credito[]" value="{{$item->impostos_credito}}">
                                                         <input type="hidden" id="obs_item{{$item->item}}" name="obs_item[]" value="{{$item->obs}}">
+
+                                                        <input type="hidden" id="impostos_venda{{$item->item}}" name="impostos_venda[]" value="{{$item->impostos_venda}}">
+                                                        <input type="hidden" id="difal{{$item->item}}" name="difal[]" value="{{$item->difal}}">
                                                     </td>
                                                 </tr>
                                                 <tr>

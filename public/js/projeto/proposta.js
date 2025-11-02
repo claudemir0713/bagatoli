@@ -51,6 +51,15 @@ $(document).ready(function () {
             localizaNomeProduto()
         })
 
+        $(document).on('blur','#md_produto',function(event){
+            let cod_produto =  $(document).find('#md_cod_produto').val()
+            if(cod_produto){
+                $("#mdImpostoVenda").hide();
+            }else{
+                $("#mdImpostoVenda").show();
+            }
+
+        })
 
     /***************************cadastro do proposta**************************************/
         $(document).on('submit', 'form#cadastro-proposta', function (event) {
@@ -151,6 +160,17 @@ $(document).ready(function () {
                 impostos_credito.push($(this).val());
             })
 
+            let impostos_venda = [];
+            $(document).find('input[name="impostos_venda[]"]').each(function(index){
+                impostos_venda.push($(this).val());
+            })
+
+            let difal = [];
+            $(document).find('input[name="difal[]"]').each(function(index){
+                difal.push($(this).val());
+            })
+
+
             let obs_item = [];
             $(document).find('input[name="obs_item[]"]').each(function(index){
                 obs_item.push($(this).val());
@@ -193,7 +213,10 @@ $(document).ready(function () {
                     ,'modelo'               :modelo
                     ,'obs_item'             :obs_item
                     ,'impostos_credito'     :impostos_credito
+                    ,'impostos_venda'       :impostos_venda
+                    ,'difal'                :difal
                 }
+                // console.log(dados);
                 cadastrar(dados,route,type,origem);
             }
         })
@@ -235,42 +258,57 @@ $(document).ready(function () {
             let md_frete_custo = $(document).find('#md_frete_custo').val();
             let md_impostos_credito = $(document).find('#md_impostos_credito').val();
 
-            let linha = '';
-            linha +='<tr class="sectionItem'+md_seq+'">';
-                linha +='<td><input type="text" class="form-control fonte-10 direita seq"                           id="seq'+md_seq+'"          name="seq[]"            value="'+md_seq+'"          ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10"                                       id="produto'+md_seq+'"      name="produto[]"        value="'+md_produto+'"      ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10"                                       id="und'+md_seq+'"          name="und[]"            value="'+md_und+'"          ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="qtd'+md_seq+'"          name="qtd[]"            value="'+md_qtd+'"   ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10 direita "                              id="unt_edital'+md_seq+'"   name="unt_edital[]"     value="'+md_unt_edital+'"   ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="total_edital'+md_seq+'" name="total_edital[]"   value="'+md_total_edital+'" ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10 direita "                              id="unt_custo'+md_seq+'"    name="unt_custo[]"      value="'+md_unt_custo+'"    ></td>';
-                linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="total_custo'+md_seq+'"  name="total_custo[]"    value="'+md_total_custo+'"  ></td>';
-                linha +='<td>';
-                    linha +='<button type="button" name="delServico[]" id="minusItem'+md_seq+'" value="" class="btn btn-outline-danger fonte-10 removeItem">'
-                        linha +='<span class="fas fa-minus"></span>'
-                    linha +='</button>'
-                linha +='</td>';
-            linha +='</tr>';
-            linha +='<tr class="sectionItem'+md_seq+'">';
-                linha +='<td colspan="3"><textarea type="text" class="form-control fonte-10" id="descricao'+md_seq+'"   name="descricao[]">'+md_descricao+'</textarea></td>';
-                linha +='<td colspan="3"><input type="text" class="form-control fonte-10"                id="marca'+md_seq+'"       name="marca[]" value="'+md_marca+'"   ></td>';
-                linha +='<td colspan="3">'
-                        linha +='<input type="text" class="form-control fonte-10" id="modelo'+md_seq+'"             name="modelo[]"             value="'+md_modelo+'">'
-                        linha +='<input type="hidden"                            id="lote'+md_seq+'"               name="lote[]"               value="'+md_lote+'" >'
-                        linha +='<input type="hidden"                            id="lote_descricao'+md_seq+'"     name="lote_descricao[]"     value="'+md_lote_descricao+'" >'
-                        linha +='<input type="hidden"                            id="cod_produto'+md_seq+'"        name="cod_produto[]"        value="'+md_cod_produto+'" >'
-                        linha +='<input type="hidden"                            id="frete_custo'+md_seq+'"        name="frete_custo[]"        value="'+md_frete_custo+'" >'
-                        linha +='<input type="hidden"                            id="impostos_credito'+md_seq+'"   name="impostos_credito[]"   value="'+md_impostos_credito+'" >'
-                        linha +='<input type="hidden"                            id="obs_item'+md_seq+'"           name="obs_item[]"           value="'+md_obs+'" >'
-                linha +='</td>';
-            linha +='</tr>';
-            linha +='<tr class="sectionItem'+md_seq+'">';
-                linha +='<td colspan="9"><hr></td>'
-            linha +='</tr>';
+            let md_impostos_venda = $(document).find('#md_impostos_venda').val();
+            let md_difal = $(document).find('#md_difal').val();
 
-            $(document).find('#tbItem >tbody').append(linha);
-            // $("#ModalItem").modal("hide")
-            atualizaModalItem();
+            if(!md_cod_produto && !md_impostos_venda ){
+                Swal({
+                    title: 'Preencha todos os campos obrigatório',
+                    html: 'Quando o Código do produto estiver em branco é obrigatório preencher os campos <b>Icms % Compra, Icms % venda e Difal %',
+                    type: 'error',
+                    timer: 3000
+                })
+            }else{
+                let linha = '';
+                linha +='<tr class="sectionItem'+md_seq+'">';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita seq"                           id="seq'+md_seq+'"          name="seq[]"            value="'+md_seq+'"          ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10"                                       id="produto'+md_seq+'"      name="produto[]"        value="'+md_produto+'"      ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10"                                       id="und'+md_seq+'"          name="und[]"            value="'+md_und+'"          ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="qtd'+md_seq+'"          name="qtd[]"            value="'+md_qtd+'"   ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita "                              id="unt_edital'+md_seq+'"   name="unt_edital[]"     value="'+md_unt_edital+'"   ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="total_edital'+md_seq+'" name="total_edital[]"   value="'+md_total_edital+'" ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita "                              id="unt_custo'+md_seq+'"    name="unt_custo[]"      value="'+md_unt_custo+'"    ></td>';
+                    linha +='<td><input type="text" class="form-control fonte-10 direita"                               id="total_custo'+md_seq+'"  name="total_custo[]"    value="'+md_total_custo+'"  ></td>';
+                    linha +='<td>';
+                        linha +='<button type="button" name="delServico[]" id="minusItem'+md_seq+'" value="" class="btn btn-outline-danger fonte-10 removeItem">'
+                            linha +='<span class="fas fa-minus"></span>'
+                        linha +='</button>'
+                    linha +='</td>';
+                linha +='</tr>';
+                linha +='<tr class="sectionItem'+md_seq+'">';
+                    linha +='<td colspan="3"><textarea type="text" class="form-control fonte-10" id="descricao'+md_seq+'"   name="descricao[]">'+md_descricao+'</textarea></td>';
+                    linha +='<td colspan="3"><input type="text" class="form-control fonte-10"                id="marca'+md_seq+'"       name="marca[]" value="'+md_marca+'"   ></td>';
+                    linha +='<td colspan="3">'
+                            linha +='<input type="text" class="form-control fonte-10"id="modelo'+md_seq+'"             name="modelo[]"             value="'+md_modelo+'">'
+                            linha +='<input type="hidden"                            id="lote'+md_seq+'"               name="lote[]"               value="'+md_lote+'" >'
+                            linha +='<input type="hidden"                            id="lote_descricao'+md_seq+'"     name="lote_descricao[]"     value="'+md_lote_descricao+'" >'
+                            linha +='<input type="hidden"                            id="cod_produto'+md_seq+'"        name="cod_produto[]"        value="'+md_cod_produto+'" >'
+                            linha +='<input type="hidden"                            id="frete_custo'+md_seq+'"        name="frete_custo[]"        value="'+md_frete_custo+'" >'
+                            linha +='<input type="hidden"                            id="impostos_credito'+md_seq+'"   name="impostos_credito[]"   value="'+md_impostos_credito+'" >'
+                            linha +='<input type="hidden"                            id="obs_item'+md_seq+'"           name="obs_item[]"           value="'+md_obs+'" >'
+                            linha +='<input type="hidden"                            id="impostos_venda'+md_seq+'"     name="impostos_venda[]"     value="'+md_impostos_venda+'" >'
+                            linha +='<input type="hidden"                            id="difal'+md_seq+'"              name="difal[]"              value="'+md_difal+'" >'
+                    linha +='</td>';
+                linha +='</tr>';
+                linha +='<tr class="sectionItem'+md_seq+'">';
+                    linha +='<td colspan="9"><hr></td>'
+                linha +='</tr>';
+
+                $(document).find('#tbItem >tbody').append(linha);
+                // $("#ModalItem").modal("hide")
+                atualizaModalItem();
+            }
+
         })
 
         $(document).on('change','.calc_total_md',function(){

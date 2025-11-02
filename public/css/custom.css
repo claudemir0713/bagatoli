@@ -121,18 +121,26 @@ table tfoot tr td{
     background-color:greenyellow !important;
 } */
 .fundoAmarelo{
-    background-color:yellow !important;
+    background-color:#f7bb07 !important;
+    color: #fff !important;
+    border-radius : 3px!important;
 }
 
 .fundoVermelho{
     background-color:rgb(237, 87, 87) !important;
     color: #fff !important;
+    border-radius : 3px !important;
 }
 .fundoVerde{
-    background-color:rgb(9, 222, 9) !important;
-    /* color: #fff !important; */
+    background-color:#27a243 !important;
+    color: #fff !important;
+    border-radius : 3px !important;
 }
-
+.fundoAzul{
+    background-color:#169db2 !important;
+    color: #fff !important;
+    border-radius : 3px !important;
+}
 /***************** Botão liga e desliga checkBox **************************/
     .switch {
         position: relative;

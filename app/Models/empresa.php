@@ -24,6 +24,7 @@ class empresa extends Model
         , 'uf'
         , 'pais'
         , 'regime_tributario'
+        , 'regime_especial_icms'
         , 'representante_legal'
         , 'cpf'
         , 'rg'

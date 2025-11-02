@@ -111,6 +111,13 @@
                                 </Select>
                             </div>
                             <div class="form-group col-md-2">
+                                <sup><b>Regime Especial ICMS:</b></sup>
+                                <Select class="form-control" id="regime_especial_icms" name="regime_especial_icms">
+                                    <option value="N">Não</option>
+                                    <option value="S">Sim</option>
+                                </Select>
+                            </div>
+                            <div class="form-group col-md-2">
                                 <sup><b>Icms (%):</b></sup>
                                 <input class="form-control limpar fonte-10 direita" type="number" step="any" id="icms" name="icms" value="" >
                             </div>

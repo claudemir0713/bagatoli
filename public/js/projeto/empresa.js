@@ -32,6 +32,8 @@ $(document).ready(function () {
         var cargo = $(this).find('#cargo').val();
 
         var regime_tributario   = $(this).find('#regime_tributario').val();
+        var regime_especial_icms= $(this).find('#regime_especial_icms').val();
+
         var icms                = $(this).find('#icms').val();
         var simples             = $(this).find('#simples').val();
         var pis                 = $(this).find('#pis').val();
@@ -74,6 +76,7 @@ $(document).ready(function () {
                 ,'cargo'                : cargo
 
                 ,'regime_tributario'    : regime_tributario
+                ,'regime_especial_icms' : regime_especial_icms
                 ,'icms'                 : icms
                 ,'simples'              : simples
                 ,'pis'                  : pis

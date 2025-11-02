@@ -79,8 +79,20 @@
                             <input type="text" class="form-control fonte-12 direita" id="md_frete_custo" name="md_frete_custo">
                         </div>
                         <div class="form-group col-md-2">
-                            <sup><b>Icms %:</b></sup>
+                            <sup><b>Icms % Compra:</b></sup>
                             <input type="text" class="form-control fonte-12 direita" id="md_impostos_credito" name="md_impostos_credito">
+                        </div>
+                        <div class="form-group col-md-4 " id="mdImpostoVenda" style="display: none;">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <sup><b>Icms % venda:</b></sup>
+                                    <input type="text" class="form-control fonte-12 direita" id="md_impostos_venda" name="md_impostos_venda">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <sup><b>Difal %:</b></sup>
+                                    <input type="text" class="form-control fonte-12 direita" id="md_difal" name="md_difal">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

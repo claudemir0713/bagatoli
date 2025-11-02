@@ -51,7 +51,8 @@ class empresaController extends Controller
                 'cpf'                   => $request->cpf,
                 'rg'                    => $request->rg,
                 'cargo'                 => $request->cargo,
-                'regime_tributario'     => $request->regime_tributario
+                'regime_tributario'     => $request->regime_tributario,
+                'regime_especial_icms'  => $request->regime_especial_icms
             ]);
             $empresa->save();
             $empresa_id = $empresa->id;
@@ -115,6 +116,8 @@ class empresaController extends Controller
             $empresa->rg                    = $request->rg;
             $empresa->cargo                 = $request->cargo;
             $empresa->regime_tributario     = $request->regime_tributario;
+            $empresa->regime_especial_icms  = $request->regime_especial_icms;
+
             $empresa->save();
 
             $parametros->icms               = $request->icms;

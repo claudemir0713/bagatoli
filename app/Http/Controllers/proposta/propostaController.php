@@ -144,6 +144,8 @@ class propostaController extends Controller
                         , 'total_custo'             =>Helper::formata_valor($request->total_custo[$key])
                         , 'frete_custo'             =>($request->frete_custo)? Helper::formata_valor($request->frete_custo[$key]) : 0
                         , 'impostos_credito'        =>($request->impostos_credito)? Helper::formata_valor($request->impostos_credito[$key]) : 0
+                        , 'impostos_venda'          =>($request->impostos_venda)? Helper::formata_valor($request->impostos_venda[$key]) : null
+                        , 'difal'                   =>($request->difal)? Helper::formata_valor($request->difal[$key]) : null
                         , 'obs'                     =>($request->obs_item) ? $request->obs_item[$key] : ''
                     ]);
                     // dd($proposta_item);
@@ -225,6 +227,8 @@ class propostaController extends Controller
                         , 'total_custo'             =>Helper::formata_valor($request->total_custo[$key])
                         , 'frete_custo'             =>($request->frete_custo)? Helper::formata_valor($request->frete_custo[$key]) : 0
                         , 'impostos_credito'        =>($request->impostos_credito)? Helper::formata_valor($request->impostos_credito[$key]) : 0
+                        , 'impostos_venda'          =>($request->impostos_venda)? Helper::formata_valor($request->impostos_venda[$key]) : null
+                        , 'difal'                   =>($request->difal)? Helper::formata_valor($request->difal[$key]) : null
                         , 'obs'                     =>($request->obs_item) ? $request->obs_item[$key] : ''
                     ]);
                     // dd($proposta_item);
