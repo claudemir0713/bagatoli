@@ -76,8 +76,13 @@ class bg_impostos {
                 $imposto_custo  = $item->impostos_credito + $empresa_parametro->pis + $empresa_parametro->cofins;
                 $difal          = $item->difal;
                 $aliq_icms      = $item->impostos_venda;
-                $regra          = $regime_tributario.' - produto sem cadastro no sistema -> Icms '.$item->impostos_venda.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
+                $regra          = $regime_tributario.' - produto sem cadastro de regra tributária no sistema -> Icms '.$item->impostos_venda.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
 
+            }
+
+            if($regime_tributario=='Simples Nacional'){
+                $imposto_custo  = 0;
+                $difal          = 0;
             }
 
             if($icms){

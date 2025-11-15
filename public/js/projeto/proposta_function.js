@@ -18,7 +18,6 @@ function bg_localizaCliente(cliente){
         },
         success:function(result){
             let linhas = '';
-            console.log(result)
             $.each(result, function(i,val){
                 linhas += '<tr>'
                     linhas +='<td><input class="semBorda direita selecionaCliente" type="text" size="10" value="'+val.id+'"></td>'
@@ -81,7 +80,6 @@ function bg_localizaProduto(nome){
         },
         success:function(result){
             let linhas = '';
-            console.log(result)
             $.each(result, function(i,val){
                 linhas += '<tr >'
                     linhas +='<td rowspan="2" align="center" class="verticalCenter"><input type="text" class="semBorda direita selecionaProduto" size="10"  value="'+val.pr_cod+'"></td>'
@@ -118,41 +116,49 @@ function bg_localizaProduto(nome){
 
 function localizaNomeProduto(){
     let produto_id = $(document).find('#md_cod_produto').val();
-    let route = '/proposta/localizaNomeProduto';
-    let dados = {
-        'produto_id': produto_id,
-    };
-    $.ajax({
-        data: dados,
-        type: 'post',
-        dataType: 'JSON',
-        url: url + route,
-        beforeSend:function(){
-            $(document).find().val('');
-            Swal({
-                title: 'Aguarde!',
-                type: 'warning',
-                html:'<b>Aguarde Localizando!</b>'
-            })
-            $(document).find('#md_und').val('');
-            $(document).find('#md_unt_custo').val('');
-            $(document).find('#md_impostos_credito').val('');
-            $(document).find('#md_produto').val('');
-            $(document).find('#md_marca').val('');
-        },
-        success:function(result){
-            $(document).find('#md_produto').val(result.pr_nom);
-            $(document).find('#md_marca').val(result.pr_nom_reduz);
-            if(result.entradas[0]){
-                $(document).find('#md_und').val(result.entradas[0].und);
-                $(document).find('#md_unt_custo').val(formCurrency.format(result.entradas[0].val_unit).replace('R$', '').replace(/\s/g, ''));
-                $(document).find('#md_impostos_credito').val(formCurrency.format(result.entradas[0].per_icms).replace('R$', '').replace(/\s/g, ''));
+    if(produto_id){
+        let route = '/proposta/localizaNomeProduto';
+        let dados = {
+            'produto_id': produto_id,
+        };
+        $.ajax({
+            data: dados,
+            type: 'post',
+            dataType: 'JSON',
+            url: url + route,
+            beforeSend:function(){
+                $(document).find().val('');
+                Swal({
+                    title: 'Aguarde!',
+                    type: 'warning',
+                    html:'<b>Aguarde Localizando!</b>'
+                })
+                $(document).find('#md_und').val('');
+                $(document).find('#md_unt_custo').val('');
+                $(document).find('#md_impostos_credito').val('');
+                $(document).find('#md_produto').val('');
+                $(document).find('#md_marca').val('');
+            },
+            success:function(result){
+                $(document).find('#md_produto').val(result.pr_nom);
+                $(document).find('#md_marca').val(result.pr_nom_reduz);
+                if(result.entradas[0]){
+                    $(document).find('#md_und').val(result.entradas[0].und);
+                    $(document).find('#md_unt_custo').val(formCurrency.format(result.entradas[0].val_unit).replace('R$', '').replace(/\s/g, ''));
+                    $(document).find('#md_impostos_credito').val(formCurrency.format(result.entradas[0].per_icms).replace('R$', '').replace(/\s/g, ''));
+                }
+            },
+            complete:function(){
+                swal.close();
             }
-        },
-        complete:function(){
-            swal.close();
-        }
-    })
+        })
+    }else{
+        $(document).find('#md_und').val('');
+        $(document).find('#md_unt_custo').val('');
+        $(document).find('#md_impostos_credito').val('');
+        $(document).find('#md_produto').val('');
+        $(document).find('#md_marca').val('');
+    }
 }
 
 function importaItens(){
@@ -176,7 +182,6 @@ function importaItens(){
             })
         },
         success:function(result){
-            console.log(result);
             $(document).find('#texto').val('');
             $(document).find('#texto').val(result)
         },

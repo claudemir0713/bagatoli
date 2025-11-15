@@ -32,6 +32,123 @@ $(document).ready(function () {
 
     url = $('input#appurl').val();
 
+    /*************************passar campos com enter****************************************/
+
+        // Retorna apenas campos válidos e focáveis
+        function getCampos(container = document) {
+            return $(container)
+                .find('input, select, textarea, [tabindex]:not([tabindex="-1"])')
+                .filter(':visible')
+                .not(':disabled')
+                .not('[readonly]')
+                .not('button, a')
+                .not('[type=hidden]')
+                .not('[data-skip-enter="true"]');
+        }
+
+        // Animação ao focar
+        $(document).on('focus', 'input, select, textarea', function () {
+            $(this).addClass('campo-focus-animado');
+        });
+        $(document).on('blur', 'input, select, textarea', function () {
+            $(this).removeClass('campo-focus-animado');
+        });
+
+        // Selecionar automaticamente o texto do campo ao focar
+        $(document).on('focus', 'input[type=text], input[type=number], input[type=search], input[type=email], input[type=tel], textarea', function () {
+            let campo = this;
+            setTimeout(function () {
+                campo.select();
+            }, 10);
+        });
+
+        // Movimento com Enter
+        $(document).on('keydown', 'input, select, textarea', function (e) {
+
+            // CTRL + Enter → ignorar navegação
+            if (e.ctrlKey) return;
+
+            // ENTER
+            if (e.key === 'Enter') {
+                // Enter normal no textarea = quebra de linha
+                if ($(this).is('textarea') && !e.shiftKey) return;
+
+                e.preventDefault();
+
+                let campos = getCampos();
+                let index = campos.index(this);
+
+                // Shift+Enter → voltar
+                if (e.shiftKey) {
+                    if (index > 0) {
+                        campos.eq(index - 1).focus();
+                    }
+                    return;
+                }
+
+                // Enter → próximo campo
+                if (index + 1 < campos.length) {
+                    campos.eq(index + 1).focus();
+                }
+            }
+        });
+
+
+    /***********************Detecta apenas seta para cima e seta para baixo******************/
+        $(document).on("keydown", "#tbItem input, #tbItem select, #tbItem textarea", function (e) {
+
+            // Não navegar se Ctrl estiver pressionado
+            if (e.ctrlKey) return;
+
+            const KEY_UP = 38;
+            const KEY_DOWN = 40;
+
+            if (e.which !== KEY_UP && e.which !== KEY_DOWN) return;
+
+            e.preventDefault();
+
+            let $campoAtual   = $(this);
+            let $tdAtual      = $campoAtual.closest("td");
+            let colIndex      = $tdAtual.index();       // coluna atual
+            let $trAtual      = $campoAtual.closest("tr");
+
+            let $trDestino = null;
+
+            // seta cima = linha anterior válida
+            if (e.which === KEY_UP) {
+                $trDestino = $trAtual.prevAll("tr").not(":has(td[colspan])").first();
+            }
+
+            // seta baixo = próxima linha válida
+            if (e.which === KEY_DOWN) {
+                $trDestino = $trAtual.nextAll("tr").not(":has(td[colspan])").first();
+            }
+
+            if (!$trDestino || $trDestino.length === 0) return;
+
+            // Seleciona o mesmo campo da mesma coluna
+            let $campoDestino = $trDestino.find("td").eq(colIndex).find("input, select, textarea");
+
+            // Se a célula tiver 2 inputs (ex: custo ou venda)
+            // pega o input na mesma posição do campo anterior
+            if ($campoDestino.length > 1) {
+                let pos = $tdAtual.find("input, select, textarea").index($campoAtual);
+                if (pos >= 0 && pos < $campoDestino.length) {
+                    $campoDestino = $campoDestino.eq(pos);
+                } else {
+                    $campoDestino = $campoDestino.first();
+                }
+            }
+
+            // Foca no campo encontrado
+            if ($campoDestino.length > 0) {
+                $campoDestino.focus();
+                $campoDestino.select?.(); // se for input
+            }
+        });
+
+
+
     /************************ buscaCep ******************************************************/
     $(document).on('blur', 'input#cep', function (event) {
         event.preventDefault() // não permite que o navegador faça o submit
@@ -45,39 +162,41 @@ $(document).ready(function () {
     /************************ buscaCnpj ******************************************************/
     $(document).on('blur', 'input#cnpj', function (event) {
         let cnpj = $(this).val();
-        let route = '/cliente/verificaNaBase';
-        dados ={
-            'cnpj'  : cnpj
-        }
-        $.ajax({
-            data: dados,
-            type: 'post',
-            dataType: 'JSON',
-            url: url + route,
-            beforeSend:function(){
-                Swal({
-                    title: 'Aguarde!',
-                    type: 'info',
-                    timer:2000
-                })
-            },
-            success:function(result){
-                Swal.close();
-                if(result>0){
+        if(cnpj){
+            let route = '/cliente/verificaNaBase';
+            dados ={
+                'cnpj'  : cnpj
+            }
+            $.ajax({
+                data: dados,
+                type: 'post',
+                dataType: 'JSON',
+                url: url + route,
+                beforeSend:function(){
                     Swal({
-                        title: 'Cliente já cadastrado!',
-                        type: 'error',
+                        title: 'Aguarde!',
+                        type: 'info',
                         timer:2000
                     })
-                }else{
-                    cnpj = cnpj.replace('.', '').replace('/', '').replace('-', '');
-                    console.log(cnpj);
-                    if (cnpj.length >= 14) {
-                        buscaCnpj(cnpj);
-                    };
+                },
+                success:function(result){
+                    Swal.close();
+                    if(result>0){
+                        Swal({
+                            title: 'Cliente já cadastrado!',
+                            type: 'error',
+                            timer:2000
+                        })
+                    }else{
+                        cnpj = cnpj.replace('.', '').replace('/', '').replace('-', '');
+                        console.log(cnpj);
+                        if (cnpj.length >= 14) {
+                            buscaCnpj(cnpj);
+                        };
+                    }
                 }
-            }
-        })
+            })
+        }
 
     })
 

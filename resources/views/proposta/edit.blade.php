@@ -1,7 +1,12 @@
 @extends('layouts.model')
 @section('content')
-    <script src="{{ (asset('js/projeto/proposta.js')) }}"></script>
-    <script src="{{ (asset('js/projeto/proposta_function.js')) }}"></script>
+    @php
+        $version_js = env('VERSAO_JS');
+        $version_css = env('VERSAO_CSS');
+    @endphp
+
+    <script src="{{ (asset('js/projeto/proposta.js?v='.$version_js)) }}"></script>
+    <script src="{{ (asset('js/projeto/proposta_function.js?v='.$version_js)) }}"></script>
 
     <h3 class=""><i class="fas fa-tags"></i> Proposta</h3><hr>
     <form action=""  id="cadastro-proposta"  method="post">

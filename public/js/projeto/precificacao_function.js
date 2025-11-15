@@ -208,7 +208,7 @@ function precoVendaValor(id){
 function fundoValor(total_edital,vlrVenda,id){
     let controla_preco_minimo = $(document).find('#controla_preco_minimo').val();
     let css_edital      = 'fundoAmarelo'
-    if(total_edital >= vlrVenda || controla_preco_minimo!='S'){
+    if(total_edital >= vlrVenda || controla_preco_minimo!='S' || total_edital==0){
         $(document).find('#linhaPrecificacao'+id).removeClass(css_edital);
     }else{
         $(document).find('#linhaPrecificacao'+id).addClass(css_edital);

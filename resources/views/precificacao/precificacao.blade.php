@@ -1,14 +1,19 @@
 @extends('layouts.model')
 @section('content')
-    <script src="{{ (asset('js/projeto/precificacao.js')) }}"></script>
-    <script src="{{ (asset('js/projeto/precificacao_function.js')) }}"></script>
+    @php
+        $version_js = env('VERSAO_JS');
+        $version_css = env('VERSAO_CSS');
+    @endphp
+
+    <script src="{{ (asset('js/projeto/precificacao.js?v='.$version_js)) }}"></script>
+    <script src="{{ (asset('js/projeto/precificacao_function.js?v='.$version_js)) }}"></script>
 
     <div class="row">
         <div class="form-group col-md-6">
             <h3 style="display: inline;"><i class="fas fa-hand-holding-usd"></i> <sup>Proposta</sup></h3>
             <h6 style="display: inline;">    <b><i>{{str_pad($proposta->id, 4 , '0' , STR_PAD_LEFT)}}</i> - {{$cliente->cliente}}</b></h6>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-3 fonte-10">
             Empresa:
             <select class="form-control alteraEmpresa fonte-10" id="empresa" name="empresa">
                 <option value="">Selecione</option>
@@ -20,7 +25,7 @@
         <div class="form-group col-md-1 fonte-10">
             {{-- {{dd($proposta->prazo)}} --}}
             Prazo (dias):
-            <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="prazoMedio" name="prazoMedio" value="{{$proposta->prazo}}">
+            <input type="number" step="1" min="0"  class="form-control direita fonte-9 precoVendaForEach" id="prazoMedio" name="prazoMedio" value="{{($proposta->prazo)?$proposta->prazo:0}}" autofocus>
         </div>
         <div class="form-group col-md-1 fonte-10">
             Tx:
@@ -133,9 +138,10 @@
                                 $frete              = number_format($frete,2,',','.');
                                 $despesa_fixa       = number_format($despesa_fixa,2,',','.');
                                 $margem             = number_format($margem,2,',','.');
+                                $vlrVendaUnt        = number_format($vlrVendaUnt,2,',','.');
                                 $vlrVenda           = number_format($vlrVenda,2,',','.');
 
-                                if($item->total_venda>=$item->total_edital){
+                                if($item->total_venda>=$item->total_edital && $item->total_edital>0){
                                     $cssFundoLinha = 'fundoAmarelo';
                                 }
 
@@ -181,18 +187,18 @@
                                 <td align="right">{{number_format($item->unt_edital,2,',','.')}}</td>
                                 <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
                                 <td>
-                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_total" id="unt_custo{{$item->id}}"       name="unt_custo[]"      value="{{$unt_custo}}" title="R$ custo unt"><br>
-                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_unt"   id="total_custo{{$item->id}}"     name="total_custo[]"    value="{{$total_custo}}" title="R$ custo total">
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_total" id="unt_custo{{$item->id}}"       name="unt_custo[]"      value="{{$unt_custo}}" title="R$ custo unt"       autocomplete="off"><br>
+                                    <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_unt"   id="total_custo{{$item->id}}"     name="total_custo[]"    value="{{$total_custo}}" title="R$ custo total"   autocomplete="off">
                                 </td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda"                  id="imposto_custo{{$item->id}}"   name="imposto_custo[]"  value="{{$imposto_custo}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda imposto_venda"    id="imposto_venda{{$item->id}}"   name="imposto_venda[]"  value="{{$imposto_venda}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda difal"            id="difal{{$item->id}}"           name="difal[]"          value="{{$difal}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda ir_csll"          id="ir_csll{{$item->id}}"         name="ir_csll[]"        value="{{$ir_csll}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda outros"           id="outros{{$item->id}}"          name="outros[]"         value="{{$outros}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda comissao"         id="comissao{{$item->id}}"        name="comissao[]"       value="{{$comissao}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda frete"            id="frete{{$item->id}}"           name="frete[]"          value="{{$frete}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda despesa_fixa"     id="despesa_fixa{{$item->id}}"    name="despesa_fixa[]"   value="{{$despesa_fixa}}"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda margem {{$cssFundoMargem}}"           id="margem{{$item->id}}"          name="margem[]"         value="{{$margem}}"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda"                  id="imposto_custo{{$item->id}}"   name="imposto_custo[]"  value="{{$imposto_custo}}"                        autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda imposto_venda"    id="imposto_venda{{$item->id}}"   name="imposto_venda[]"  value="{{$imposto_venda}}"                        autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda difal"            id="difal{{$item->id}}"           name="difal[]"          value="{{$difal}}"                                autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda ir_csll"          id="ir_csll{{$item->id}}"         name="ir_csll[]"        value="{{$ir_csll}}"                              autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda outros"           id="outros{{$item->id}}"          name="outros[]"         value="{{$outros}}"                               autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda comissao"         id="comissao{{$item->id}}"        name="comissao[]"       value="{{$comissao}}"                             autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda frete"            id="frete{{$item->id}}"           name="frete[]"          value="{{$frete}}"                                autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda despesa_fixa"     id="despesa_fixa{{$item->id}}"    name="despesa_fixa[]"   value="{{$despesa_fixa}}"                         autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda margem {{$cssFundoMargem}}"id="margem{{$item->id}}" name="margem[]"         value="{{$margem}}"                               autocomplete="off"></td>
                                 <td>
                                     <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor calcVlrVenda" id="vlrVendaUnt{{$item->id}}" name="vlrVendaUnt[]" value="{{$vlrVendaUnt}}" title="R$ Unt"><br>
                                     <input type="text" class="form-control fonte-8 direita calc_pre_venda_valor vlrVenda {{preg_replace("/\s+/", "",$item->lote)}}" id="vlrVenda{{$item->id}}" name="vlrVenda[]" value="{{$vlrVenda}}" title="R$ Total">

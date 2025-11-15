@@ -4,8 +4,10 @@ $(document).ready(function () {
 
     /***************************localiza cliente******************************************/
         $(document).on('keyup','.localizaCliente',function(event){
-            if(event.which==113){
-                $("#ModalLocalizaCliente").modal("show");
+            if(event.key=='Enter'){
+                if(event.ctrlKey){
+                    $("#ModalLocalizaCliente").modal("show");
+                }
             }
         })
         $('#ModalLocalizaCliente').on('shown.bs.modal', function (event) {
@@ -15,6 +17,13 @@ $(document).ready(function () {
         /**********************localizaProduto**************************/
         $(document).on('keyup','#md_localizaCliente',function(event){
             let cliente = $(this).val();
+            if(event.ctrlKey){
+                $("#ModalCadastraCliente").modal("show");
+
+                $('#ModalCadastraCliente').on('shown.bs.modal', function (event) {
+                    $(document).find('#cnpj').focus();
+                })
+            }
             if(cliente.length>=1){
                 bg_localizaCliente(cliente)
             }
@@ -26,7 +35,7 @@ $(document).ready(function () {
         })
         /**********************selecionaCliente**************************/
         $(document).on('keyup','.selecionaCliente',function(event){
-            if(event.which==13){
+            if(event.ctrlKey){
                 let cliente_id = $(this).val();
                 $(document).find('#cliente_id').val(cliente_id)
                 localizaNomeCliente()
@@ -37,7 +46,7 @@ $(document).ready(function () {
 
     /**********************selecionaProduto**************************/
         $(document).on('keyup','.selecionaProduto',function(event){
-            if(event.which==13){
+            if(event.ctrlKey){
                 let md_cod_produto = $(this).val();
                 $(document).find('#md_cod_produto').val(md_cod_produto)
                 localizaNomeCliente()
@@ -375,8 +384,10 @@ $(document).ready(function () {
 
     /**********************Abre ModalLocalizaProduto**************************************************/
         $(document).on('keyup','#md_cod_produto',function(event){
-            if(event.which==113){
-                $("#ModalLocalizaProduto").modal("show")
+            if(event.key=='Enter'){
+                if(event.ctrlKey){
+                    $("#ModalLocalizaProduto").modal("show")
+                }
             }
         })
         $('#ModalLocalizaProduto').on('shown.bs.modal', function (event) {

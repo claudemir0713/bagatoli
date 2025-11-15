@@ -1,7 +1,12 @@
 @extends('layouts.model')
 
 @section('content')
-    <script src="{{ (asset('js/projeto/cliente.js')) }}"></script>
+    @php
+        $version_js = env('VERSAO_JS');
+        $version_css = env('VERSAO_CSS');
+    @endphp
+
+    <script src="{{ (asset('js/projeto/cliente.js?v='.$version_js)) }}"></script>
 
     <h3 class=""><i class="fas fa-users"></i> Cliente</h3>
     <form action="" id="cadastro-cliente" nome="cadastro-cliente" method="post">

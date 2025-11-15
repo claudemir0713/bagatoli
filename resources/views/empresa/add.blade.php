@@ -1,7 +1,12 @@
 @extends('layouts.model')
 
 @section('content')
-    <script src="{{ (asset('js/projeto/empresa.js')) }}"></script>
+    @php
+        $version_js = env('VERSAO_JS');
+        $version_css = env('VERSAO_CSS');
+    @endphp
+    <script src="{{ (asset('js/projeto/empresa.js?v='.$version_js)) }}"></script>
+
     <h3 class=""><i class="fas fa-landmark"></i> Empresa</h3><hr>
     <form action=""  id="cadastro-empresa"  method="post">
         @csrf

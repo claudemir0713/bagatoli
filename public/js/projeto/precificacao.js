@@ -210,4 +210,14 @@ $(document).ready(function () {
             $(document).find('#total_custo'+id).val(total_custo)
         })
 
+    /***********************altera Frete***************************************************/
+        $(document).on('change','#frete_base',function(event){
+            let perc_frete = $(this).val();
+            $('.frete').each(function(index, element){
+                $(this).val(perc_frete);
+                let id = $(this).attr('id').replace(/[^0-9]/g,'');
+                precoVenda(id);
+            })
+        })
+
 })
