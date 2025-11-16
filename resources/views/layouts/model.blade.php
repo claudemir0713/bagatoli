@@ -50,7 +50,7 @@
 
         <!-- Chosen -->
         <script src="{{ asset('js/chosen.jquery.min.js') }}" type="text/javascript"></script>
-        <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/chosen.css?v='.$version_css') }}" rel="stylesheet">
 
 
     </head>
