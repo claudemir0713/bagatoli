@@ -21,21 +21,61 @@ class precificacaoController extends Controller
     public function listAll(Request $request){
         $dateForm = $request->except('_token');
         $filtros=[];
-        $filtrosIn=[];
 
-        if(array_key_exists('cotacao',$dateForm)){
-            if($dateForm['cotacao']){
-                $filtros[]=['cotacao','like','%'.$dateForm['cotacao'].'%'];
-                session()->put('cotacao', $dateForm['cotacao']);
+        if(array_key_exists('cliente',$dateForm)){
+            if($dateForm['cliente']){
+                $filtros[]=['cliente','like','%'.$dateForm['cliente'].'%'];
             }
         };
-        if(array_key_exists('origem',$dateForm)){
-            if($dateForm['origem']){
-                $filtros[]=['origem',$dateForm['origem']];
-                session()->put('origem', $dateForm['origem']);
+        if(array_key_exists('cidade',$dateForm)){
+            if($dateForm['cidade']){
+                $filtros[]=['cidade','like','%'.$dateForm['cidade'].'%'];
             }
         };
 
+        if(array_key_exists('uf',$dateForm)){
+            if($dateForm['uf']){
+                $filtros[]=['uf',$dateForm['uf']];
+            }
+        };
+        if(array_key_exists('processo',$dateForm)){
+            if($dateForm['processo']){
+                $filtros[]=['nr_processo',$dateForm['processo']];
+            }
+        };
+        if(array_key_exists('pregao',$dateForm)){
+            if($dateForm['pregao']){
+                $filtros[]=['nr_pregao',$dateForm['pregao']];
+            }
+        };
+        if(array_key_exists('dtEI',$dateForm)){
+            if($dateForm['dtEI']){
+                $filtros[]=['data_entrega_proposta','>=',$dateForm['dtEI']];
+            }
+        };
+        if(array_key_exists('dtEF',$dateForm)){
+            if($dateForm['dtEF']){
+                $filtros[]=['data_entrega_proposta','<=',$dateForm['dtEF']];
+            }
+        };
+        if(array_key_exists('dtAI',$dateForm)){
+            if($dateForm['dtAI']){
+                $filtros[]=['data_processo','>=',$dateForm['dtAI']];
+            }
+        };
+        if(array_key_exists('dtAF',$dateForm)){
+            if($dateForm['dtAF']){
+                $filtros[]=['data_processo','<=',$dateForm['dtAF']];
+            }
+        };
+
+        if(array_key_exists('proposta',$dateForm)){
+            if($dateForm['proposta']){
+                $filtros=[];
+                $filtros[]=['fase_id',1];
+                $filtros[]=['proposta.id',$dateForm['proposta']];
+            }
+        };
 
         session()->put('dateForm',$dateForm);
 
@@ -43,6 +83,7 @@ class precificacaoController extends Controller
                     ->leftJoin('proposta_item','proposta_item.proposta_id','proposta.id')
                     ->leftJoin('proposta_fase','proposta_fase.id','proposta.fase_id')
                     ->whereIn('fase_id',[1,2,3])
+                    ->where($filtros)
                     ->select([
                         'proposta.id'
                         , 'proposta.empresa_id'
@@ -59,6 +100,7 @@ class precificacaoController extends Controller
                         , 'proposta.id_portal_compras'
                         , 'proposta.obs'
                         , 'cliente.cliente'
+                        , 'cliente.uf'
                         , 'proposta_fase.descricao as fase'
                         , 'fase_id'
                         , db::raw("sum(total_edital) as total_edital")
@@ -80,6 +122,7 @@ class precificacaoController extends Controller
                         , 'proposta.id_portal_compras'
                         , 'proposta.obs'
                         , 'cliente.cliente'
+                        , 'cliente.uf'
                         , 'proposta_fase.descricao'
                         , 'fase_id'
 

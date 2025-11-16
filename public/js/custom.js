@@ -147,7 +147,74 @@ $(document).ready(function () {
             }
         });
 
+    /*************************ordernar tabela com click no cabecalho*************************/
+        function parseValue(val) {
+            val = val.trim();
 
+            // moeda R$
+            if (val.match(/^R?\$?\s*\d/)) {
+                return parseFloat(val.replace(/[^0-9,-]/g, "").replace(",", "."));
+            }
+
+            // datas dd/mm/yyyy
+            if (/^\d{2}\/\d{2}\/\d{4}/.test(val)) {
+                let [d, m, y] = val.split("/");
+                return new Date(`${y}-${m}-${d}`).getTime();
+            }
+
+            // datas yyyy-mm-dd
+            if (/^\d{4}-\d{2}-\d{2}/.test(val)) {
+                return new Date(val).getTime();
+            }
+
+            // números
+            if (!isNaN(val.replace(",", "."))) {
+                return parseFloat(val.replace(",", "."));
+            }
+
+            // texto
+            return val.toLowerCase();
+        }
+
+        $(".tabela-ordenavel th").click(function () {
+            const th = $(this);
+            const tabela = th.closest("table");
+            const tbody = tabela.find("tbody");
+            const colIndex = th.index();
+
+            // direção asc/desc
+            let asc = !th.data("asc");
+            th.data("asc", asc);
+
+            // remover destaque & reset ícones
+            tabela.find("th").removeClass("col-ordenada")
+                .find(".icone-ordem")
+                .removeClass("fas fa-caret-down fas fa-caret-up")
+                .addClass("fas fa-caret-down");
+
+            // ícone atual
+            const icon = th.find(".icone-ordem");
+            icon.removeClass("fas fa-caret-down");
+            icon.addClass(asc ? "fas fa-caret-down" : "fas fa-caret-up");
+
+            th.addClass("col-ordenada");
+
+            // ordenar linhas
+            const linhas = tbody.find("tr").get();
+
+            linhas.sort(function (a, b) {
+                const A = parseValue($(a).children().eq(colIndex).text());
+                const B = parseValue($(b).children().eq(colIndex).text());
+
+                if (A < B) return asc ? -1 : 1;
+                if (A > B) return asc ? 1 : -1;
+                return 0;
+            });
+
+            $.each(linhas, function (_, row) {
+                tbody.append(row);
+            });
+        });
 
     /************************ buscaCep ******************************************************/
     $(document).on('blur', 'input#cep', function (event) {

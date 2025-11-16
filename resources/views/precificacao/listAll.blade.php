@@ -24,9 +24,47 @@
             <form method="get" action="{{ route('precificacao.listAll') }}">
                 @csrf
                 <div class="row">
+                    <div class="form-group col-md-2">
+                        Proposta:
+                        <input class="form-control fonte-12" type="text" name="proposta" id="proposta" value="{{ array_key_exists('proposta',$dateForm) ? $dateForm['proposta'] : '' }}" autofocus title="Ao preencher esse campos os demais filtros serão desconsiderados" autocomplete="off">
+                    </div>
                     <div class="form-group col-md-4">
-                        Tabela:
-                        <input class="form-control fonte-12" type="text" name="tabela" id="tabela" value="{{ array_key_exists('tabela',$dateForm) ? $dateForm['tabela'] : '' }}">
+                        Cliente:
+                        <input class="form-control fonte-12" type="text" name="cliente" id="cliente" value="{{ array_key_exists('cliente',$dateForm) ? $dateForm['cliente'] : '' }}" autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        Cidade:
+                        <input class="form-control fonte-12" type="text" name="cidade" id="cidade" value="{{ array_key_exists('cidade',$dateForm) ? $dateForm['cidade'] : '' }}">
+                    </div>
+                    <div class="form-group col-md-1">
+                        UF:
+                        <input class="form-control fonte-12" type="text" name="uf" id="uf" value="{{ array_key_exists('uf',$dateForm) ? $dateForm['uf'] : '' }}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-2">
+                        Data Entreda de:
+                        <input class="form-control fonte-12" type="date" name="dtEI" id="dtEI" value="{{ array_key_exists('dtEI',$dateForm) ? $dateForm['dtEI'] : '' }}" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        Data Entreda até:
+                        <input class="form-control fonte-12" type="date" name="dtEF" id="dtEF" value="{{ array_key_exists('dtEF',$dateForm) ? $dateForm['dtEF'] : '' }}" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        Data Abertura de:
+                        <input class="form-control fonte-12" type="date" name="dtAI" id="dtAI" value="{{ array_key_exists('dtAI',$dateForm) ? $dateForm['dtAI'] : '' }}" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        Data Abertura até:
+                        <input class="form-control fonte-12" type="date" name="dtAF" id="dtAF" value="{{ array_key_exists('dtAF',$dateForm) ? $dateForm['dtAF'] : '' }}" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        Processo nr:
+                        <input class="form-control fonte-12" type="text" name="processo" id="processo" value="{{ array_key_exists('processo',$dateForm) ? $dateForm['processo'] : '' }}" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        Pregão nr:
+                        <input class="form-control fonte-12" type="text" name="pregao" id="pregao" value="{{ array_key_exists('pregao',$dateForm) ? $dateForm['pregao'] : '' }}" >
                     </div>
                 </div>
                 <button class="btn btn-primary btn-sm fonte-12" type="submit" >
@@ -38,18 +76,20 @@
     <p>
     <div class="row">
         <div class="form-group col-md-12">
-            <table class="table table-bordered table-condensed table-striped fonte-10" >
+            <table class="table table-bordered table-condensed table-striped fonte-10 tabela-ordenavel" >
                 <thead>
                     <tr>
-                        <th width="5%">id</th>
-                        <th width="5%">Data</th>
-                        <th width="20%">Cliente</th>
-                        <th width="5%">Status</th>
-                        <th width="5%">Data Entrega</th>
-                        <th width="5%">Data Licitação</th>
-                        <th width="10%">Valor Edital</th>
-                        <th width="10%">Valor Venda</th>
-                        <th width="5%" colspan="2">Ação</th>
+                        <th width="5%">id <i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Data<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="20%">Cliente<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Status<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Entrega<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Licitação<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Processo<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Pregão<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="10%">Valor Edital<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="10%">Valor Venda<i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%" colspan="2">Ação<i class="fas fa-caret-down icone-ordem"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +101,8 @@
                             <td align="">{{$item->fase}}</td>
                             <td align="center">{{date('d/m/Y', strtotime($item->data_entrega_proposta))}}</td>
                             <td align="center">{{date('d/m/Y', strtotime($item->data_processo))}}</td>
+                            <td align="center">{{$item->nr_processo}}</td>
+                            <td align="center">{{$item->nr_pregao}}</td>
                             <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
                             <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                             <td  align="center">

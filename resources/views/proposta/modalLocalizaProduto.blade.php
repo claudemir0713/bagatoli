@@ -21,7 +21,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <div style="height: 300px; overflow-y: auto;">
+                        <div style="height: 600px; overflow-y: auto;">
                             <table class="table table-bordered table-condensed fonte-10" id="tbConsultaProduto">
                                 <thead>
                                     <th width="10%">Cod</th>
