@@ -31,7 +31,6 @@
             <div class="form-group col-md-2">
                 <sup><b>Tipo processo:</b></sup>
                 <select class="form-control" id="tipo_licitacao_id" name="tipo_licitacao_id">
-                    <option value="">Selecione</option>
                     @foreach ($licitacao_tipo as $item )
                         <option value="{{$item->id}}">{{ $item->descricao}}</option>
                     @endforeach
@@ -69,7 +68,7 @@
             </div>
             <div class="form-group col-md-6">
                 <sup><b>Portal de compras:</b></sup>
-                <input class="form-control limpar fonte-10" type="text"  name="portal_de_compras" id="portal_de_compras"  value="">
+                <input class="form-control limpar fonte-10" type="text"  name="portal_compras" id="portal_compras"  value="">
             </div>
             <div class="form-group col-md-2">
                 <sup><b>id do portal:</b></sup>

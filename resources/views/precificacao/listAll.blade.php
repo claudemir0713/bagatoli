@@ -112,10 +112,12 @@
                                 </a>
                             </td>
                             <td  align="center">
-                                <a class="btn btn-info fonte-10" href="{{route('precificacao.imprimir', ['id'=>$item->id])}}" target="_blank">
-                                    <i class="fas fa-print"></i>&nbsp;&nbsp;&nbsp;
-                                    <span>Imprimir</span>
-                                </a>
+                                @if($item->fase_id>1)
+                                    <a class="btn btn-info fonte-10" href="{{route('precificacao.imprimir', ['id'=>$item->id])}}" target="_blank">
+                                        <i class="fas fa-print"></i>&nbsp;&nbsp;&nbsp;
+                                        <span>Imprimir</span>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

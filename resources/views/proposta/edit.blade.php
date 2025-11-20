@@ -68,7 +68,7 @@
             </div>
             <div class="form-group col-md-6">
                 <sup><b>Portal de compras:</b></sup>
-                <input class="form-control limpar fonte-10" type="text"  name="portal_de_compras" id="portal_de_compras"  value="{{$proposta->portal_de_compras}}">
+                <input class="form-control limpar fonte-10" type="text"  name="portal_compras" id="portal_compras"  value="{{$proposta->portal_compras}}">
             </div>
             <div class="form-group col-md-2">
                 <sup><b>id do portal:</b></sup>

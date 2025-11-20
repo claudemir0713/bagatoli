@@ -86,7 +86,7 @@ $(document).ready(function () {
             let hora_processo = $(this).find('#hora_processo').val();
             let data_entrega_proposta = $(this).find('#data_entrega_proposta').val();
             let hora_entrega_proposta = $(this).find('#hora_entrega_proposta').val();
-            let portal_de_compras = $(this).find('#portal_de_compras').val();
+            let portal_compras = $(this).find('#portal_compras').val();
             let id_portal_compras = $(this).find('#id_portal_compras').val();
             let obs = $(this).find('#obs').val();
 
@@ -186,7 +186,7 @@ $(document).ready(function () {
             })
 
             /********************************************************************************************* */
-            if (!descricao ) {
+            if (!descricao || !tipo_licitacao_id ) {
                 Swal({
                     title: 'Preencha todos os campos obrigatório',
                     type: 'error',
@@ -203,7 +203,7 @@ $(document).ready(function () {
                     ,'hora_processo'        :hora_processo
                     ,'data_entrega_proposta':data_entrega_proposta
                     ,'hora_entrega_proposta':hora_entrega_proposta
-                    ,'portal_de_compras'    :portal_de_compras
+                    ,'portal_compras'       :portal_compras
                     ,'id_portal_compras'    :id_portal_compras
                     ,'obs'                  :obs
                     ,'seq'                  :seq

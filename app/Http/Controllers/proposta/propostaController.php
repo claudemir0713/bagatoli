@@ -158,6 +158,7 @@ class propostaController extends Controller
                 ,'portal_compras'       => $request->portal_compras
                 ,'id_portal_compras'    => $request->id_portal_compras
                 ,'obs'                  => $request->obs
+                ,'portal_de_compras'    => $request->portal_de_compras
             ]);
             $proposta->save();
             $proposta_id = $proposta->id;

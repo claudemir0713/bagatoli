@@ -121,11 +121,11 @@
             </table>
         </div>
     </div>
-    @if (isset($dateForm))
+    {{-- @if (isset($dateForm))
         {{$proposta->appends($dateForm)->links()}}
     @else
         {{$proposta->links()}}
-    @endif
+    @endif --}}
 
 @endsection
 
