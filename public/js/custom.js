@@ -63,7 +63,13 @@ $(document).ready(function () {
         });
 
         // Movimento com Enter
+        let travarFoco = false;
         $(document).on('keydown', 'input, select, textarea', function (e) {
+
+            if (travarFoco) {
+                e.preventDefault();
+                return;
+            }
 
             // CTRL + Enter → ignorar navegação
             if (e.ctrlKey) return;
@@ -78,17 +84,19 @@ $(document).ready(function () {
                 let campos = getCampos();
                 let index = campos.index(this);
 
-                // Shift+Enter → voltar
                 if (e.shiftKey) {
                     if (index > 0) {
+                        travarFoco = true;
                         campos.eq(index - 1).focus();
+                        setTimeout(() => travarFoco = false, 50);
                     }
                     return;
                 }
 
-                // Enter → próximo campo
                 if (index + 1 < campos.length) {
+                    travarFoco = true;
                     campos.eq(index + 1).focus();
+                    setTimeout(() => travarFoco = false, 50);
                 }
             }
         });
