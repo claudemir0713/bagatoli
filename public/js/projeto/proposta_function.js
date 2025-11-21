@@ -20,7 +20,7 @@ function bg_localizaCliente(cliente){
             let linhas = '';
             $.each(result, function(i,val){
                 linhas += '<tr>'
-                    linhas +='<td><input class="semBorda direita selecionaCliente" type="text" size="10" value="'+val.id+'"></td>'
+                    linhas +='<td><input class="semBorda direita selecionaCliente pointer" type="text" size="10" value="'+val.id+'"></td>'
                     linhas +='<td>'+val.cliente+'</td>'
                 linhas += '</tr>'
             })
@@ -82,7 +82,7 @@ function bg_localizaProduto(nome){
             let linhas = '';
             $.each(result, function(i,val){
                 linhas += '<tr >'
-                    linhas +='<td rowspan="2" align="center" class="verticalCenter"><input type="text" class="semBorda direita selecionaProduto" size="10"  value="'+val.pr_cod+'"></td>'
+                    linhas +='<td rowspan="2" align="center" class="verticalCenter"><input type="text" class="semBorda direita selecionaProduto pointer" size="10"  value="'+val.pr_cod+'"></td>'
                     linhas +='<td bgcolor="#f3f3f3">'+val.pr_nom+'</td>'
                 linhas += '</tr>'
                 linhas += '<tr bgcolor="#F9F9F9">'

@@ -230,7 +230,7 @@ class precificacaoController extends Controller
             'format' => 'A4',
             'margin_left'   => 15,
             'margin_rigth'  => 10,
-            'margin_top'    => 20,
+            'margin_top'    => 25,
             'margin_bottom' => 18,
             'margin_header' => 8,
             'margin_footer' => 8
@@ -239,7 +239,10 @@ class precificacaoController extends Controller
         $cabecalho = '<table class="semBordas" width="100%">';
         $cabecalho .='<tr>';
         $cabecalho .='<td width="10%" align="center"><img src="'.asset('img/logo.png').'" height="30"></td>';
-        $cabecalho .= '<td width="90%" align="center"><span style="font-size:20px"><b>Cotação '.str_pad($id,4,'0',STR_PAD_LEFT).'</b></span></td>';
+        $cabecalho .= '<td width="90%" align="center"><span style="font-size:20px">
+                                                            <b>Cotação '.str_pad($id,4,'0',STR_PAD_LEFT).'</b>
+                                                            <br>'.$empresa->razao.'
+                                                    </span></td>';
         $cabecalho .='</tr>';
         $cabecalho .='</table><hr>';
 
@@ -258,7 +261,7 @@ class precificacaoController extends Controller
         $rodape .='</table>';
 
 
-        $html = view('precificacao.imprimePdf',compact('proposta','proposta_item','cliente'));
+        $html = view('precificacao.imprimePdf',compact('proposta','proposta_item','cliente','empresa'));
         $html->render();
         $mpdf->SetHTMLHeader($cabecalho);
         $mpdf->SetHTMLFooter($rodape);

@@ -34,15 +34,26 @@ $(document).ready(function () {
             localizaNomeCliente()
         })
         /**********************selecionaCliente**************************/
-        $(document).on('keyup','.selecionaCliente',function(event){
-            if(event.ctrlKey){
+            $(document).on('keyup','.selecionaCliente',function(event){
+                if(event.ctrlKey){
+                    let cliente_id = $(this).val();
+                    $(document).find('#cliente_id').val(cliente_id)
+                    localizaNomeCliente()
+                    $("#ModalLocalizaCliente").modal("hide");
+                    $(document).find('#cliente_id').focus();
+                }
+            })
+
+            $(document).on('dblclick','.selecionaCliente',function(event){
                 let cliente_id = $(this).val();
                 $(document).find('#cliente_id').val(cliente_id)
                 localizaNomeCliente()
                 $("#ModalLocalizaCliente").modal("hide");
                 $(document).find('#cliente_id').focus();
-            }
-        })
+            })
+
+
+
 
     /**********************selecionaProduto**************************/
         $(document).on('keyup','.selecionaProduto',function(event){
@@ -55,6 +66,16 @@ $(document).ready(function () {
                 $(document).find('#md_cod_produto').focus();
             }
         })
+        $(document).on('dblclick','.selecionaProduto',function(event){
+                let md_cod_produto = $(this).val();
+                $(document).find('#md_cod_produto').val(md_cod_produto)
+                localizaNomeCliente()
+                $("#ModalLocalizaProduto").modal("hide");
+                localizaNomeProduto()
+                $(document).find('#md_cod_produto').focus();
+        })
+
+
         /**********************NomeCliente**************************/
         $(document).on('change','.localizaProduto',function(event){
             localizaNomeProduto()

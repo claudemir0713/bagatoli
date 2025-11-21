@@ -216,3 +216,10 @@ th {
 .col-ordenada {
     background: rgba(0, 123, 255, 0.08);
 }
+
+
+.pointer{
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+
