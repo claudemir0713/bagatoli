@@ -100,6 +100,14 @@
             padding: 8px;
         }
 
+
+        /* Garante que as quebras de linha sejam respeitadas */
+        .texto-quebra {
+            white-space: pre-line;
+            /* font-size: 14px; */
+            line-height: 1.5;
+        }
+
     </style>
 </head>
 
@@ -150,10 +158,17 @@
             <tr>
                 <th width="5%">Item</th>
                 <th width="5%">Cod.Prod</th>
-                <th width="60%">Produto</th>
-                <th width="10%">Qtd</th>
-                <th width="10%">Unt</th>
-                <th width="10%">Total</th>
+                <th width="20%">Produto</th>
+                <th width="10%">Marca</th>
+                <th width="10%">Modelo</th>
+                <th width="7%">Qtd</th>
+                <th width="5%">Und</th>
+                <th width="7%">Custo unt</th>
+                <th width="7%">Custo total</th>
+                <th width="7%">Pauta unt</th>
+                <th width="7%">Pauta total</th>
+                <th width="7%">Unt</th>
+                <th width="7%">Total</th>
             </tr>
         </thead>
         @php
@@ -164,6 +179,8 @@
             $total_venda    = 0;
             $qtd            = 0;
             $qtd_total      = 0;
+            $custo_total    = 0;
+            $pauta_total    = 0;
             $venda_total    = 0;
 
         @endphp
@@ -172,19 +189,27 @@
                 @if($lote!=$item->lote)
                     @if ($lote!='0' && $lote!='')
                         <tr bgcolor="#e3e3e3">
-                            <td colspan="3"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                            <td colspan="5"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                            <td></td>
                             <td align="right"><b>{{number_format($qtd,2,',','.')}}</b></td>
+                            <td></td>
+                            <td align="right"><b>{{number_format($custo_total,2,',','.')}}</b></td>
+                            <td></td>
+                            <td align="right"><b>{{number_format($pauta_total,2,',','.')}}</b></td>
                             <td></td>
                             <td align="right"><b>{{number_format($total_venda,2,',','.')}}</b></td>
                         </tr>
                         @php
                             $total_venda = 0;
-                            $qtd = 0;
+                            $qtd         = 0;
+                            $custo_total = 0;
+                            $pauta_total = 0;
+
                         @endphp
                     @endif
                     @if ($item->lote)
                         <tr>
-                            <td colspan="6" bgcolor="#d3d3d3" align="center"><b>{{strtoupper($item->lote)}} </b></td>
+                            <td colspan="13" bgcolor="#d3d3d3" align="center"><b>{{strtoupper($item->lote)}} </b></td>
                         </tr>
                     @endif
                 @endif
@@ -192,7 +217,15 @@
                     <td align="center">{{$item->item}}</td>
                     <td align="center">{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
+                    <td align="">{{$item->marca}}</td>
+                    <td align="">{{$item->modelo}}</td>
                     <td align="right">{{number_format($item->qtd,2,',','.')}}</td>
+                    <td align="center">{{$item->und}}</td>
+                    <td align="right">{{number_format($item->unt_custo,2,',','.')}}</td>
+                    <td align="right">{{number_format($item->total_custo,2,',','.')}}</td>
+                    <td align="right">{{number_format($item->unt_edital,2,',','.')}}</td>
+                    <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
+
                     <td align="right">{{number_format($item->unt_venda,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                 </tr>
@@ -200,13 +233,20 @@
                     $lote               = $item->lote;
                     $total_venda        += $item->total_venda;
                     $qtd                += $item->qtd;
-                    $venda_total        += $item->total_venda;
+                    $custo_total        += $item->total_custo;
+                    $pauta_total        += $item->total_edital;
                     $qtd_total          += $item->qtd;
+
                 @endphp
             @endforeach
             <tr bgcolor="#e3e3e3">
-                <td colspan="3"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                <td colspan="5"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                <td></td>
                 <td align="right"><b>{{number_format($qtd,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($custo_total,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($pauta_total,2,',','.')}}</b></td>
                 <td></td>
                 <td align="right"><b>{{number_format($total_venda,2,',','.')}}</b></td>
             </tr>
@@ -214,10 +254,15 @@
         <tfoot>
             @if ($item->lote)
                 <tr bgcolor="#e3e3e3">
-                    <td colspan="3"><b>TOTAL</b></td>
-                    <td align="right"><b>{{number_format($qtd_total,2,',','.')}}</b></td>
-                    <td></td>
-                    <td align="right"><b>{{number_format($venda_total,2,',','.')}}</b></td>
+                <td colspan="5"><b>TOTAL {{strtoupper($lote)}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($qtd,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($custo_total,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($pauta_total,2,',','.')}}</b></td>
+                <td></td>
+                <td align="right"><b>{{number_format($total_venda,2,',','.')}}</b></td>
                 </tr>
             @endif
         </tfoot>

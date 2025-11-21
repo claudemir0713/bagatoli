@@ -221,7 +221,8 @@ class precificacaoController extends Controller
     public function imprimir($id){
         $proposta = proposta::find($id);
         $cliente = cliente::find($proposta->cliente_id);
-        $empresa = empresa::find($proposta->empresa_id);
+        ($proposta->empresa_id)? $empresa_id = $proposta->empresa_id : $empresa_id = 1;
+        $empresa = empresa::find($empresa_id);
         $proposta_item = proposta_item::where('proposta_id',$id)->orderBy('lote')->orderBy('item')->orderBy('id')->get();
 
         $fileName = 'COTAÇÃO '.$id.'-'.$cliente->cliente.'-'.$proposta->nr_processo.'.pdf';
@@ -261,7 +262,7 @@ class precificacaoController extends Controller
         $html->render();
         $mpdf->SetHTMLHeader($cabecalho);
         $mpdf->SetHTMLFooter($rodape);
-        $mpdf->AddPage('P');
+        $mpdf->AddPage('L');
         $mpdf->SetTitle($fileName);
         $mpdf->WriteHTML($html);
         $mpdf->Output($fileName, 'I');

@@ -117,6 +117,11 @@
                                         <i class="fas fa-print"></i>&nbsp;&nbsp;&nbsp;
                                         <span>Imprimir</span>
                                     </a>
+                                @elseif ($item->fase_id<=1)
+                                    <a class="btn btn-danger fonte-10" href="{{route('precificacao.imprimir', ['id'=>$item->id])}}" target="_blank" title="Sem precificação">
+                                        <i class="fas fa-print"></i>&nbsp;&nbsp;&nbsp;
+                                        <span>Imprimir</span>
+                                    </a>
                                 @endif
                             </td>
                         </tr>
