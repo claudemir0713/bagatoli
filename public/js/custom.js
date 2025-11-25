@@ -34,72 +34,83 @@ $(document).ready(function () {
 
     /*************************passar campos com enter****************************************/
 
-        // Retorna apenas campos válidos e focáveis
-        function getCampos(container = document) {
-            return $(container)
-                .find('input, select, textarea, [tabindex]:not([tabindex="-1"])')
-                .filter(':visible')
-                .not(':disabled')
-                .not('[readonly]')
-                .not('button, a')
-                .not('[type=hidden]')
-                .not('[data-skip-enter="true"]');
-        }
+        // // Retorna apenas campos válidos e focáveis
+        // function getCampos(container = document) {
+        //     return $(container)
+        //         .find('input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        //         .filter(':visible')
+        //         .not(':disabled')
+        //         .not('[readonly]')
+        //         .not('button, a')
+        //         .not('[type=hidden]')
+        //         .not('[data-skip-enter="true"]');
+        // }
 
-        // Animação ao focar
-        $(document).on('focus', 'input, select, textarea', function () {
-            $(this).addClass('campo-focus-animado');
-        });
-        $(document).on('blur', 'input, select, textarea', function () {
-            $(this).removeClass('campo-focus-animado');
-        });
+        // // Animação ao focar
+        // $(document).on('focus', 'input, select, textarea', function () {
+        //     $(this).addClass('campo-focus-animado');
+        // });
+        // $(document).on('blur', 'input, select, textarea', function () {
+        //     $(this).removeClass('campo-focus-animado');
+        // });
 
-        // Selecionar automaticamente o texto do campo ao focar
-        $(document).on('focus', 'input[type=text], input[type=number], input[type=search], input[type=email], input[type=tel], textarea', function () {
-            let campo = this;
-            setTimeout(function () {
-                campo.select();
-            }, 10);
-        });
+        // // Selecionar automaticamente o texto do campo ao focar
+        // $(document).on('focus', 'input[type=text], input[type=number], input[type=search], input[type=email], input[type=tel], textarea', function () {
+        //     let campo = this;
+        //     setTimeout(function () {
+        //         campo.select();
+        //     }, 10);
+        // });
 
-        // Movimento com Enter
-        let travarFoco = false;
-        $(document).on('keydown', 'input, select, textarea', function (e) {
+        // // Movimento com Enter
+        // let travarFoco = false;
+        // $(document).on('keydown', 'input, select, textarea', function (e) {
 
-            if (travarFoco) {
-                e.preventDefault();
-                return;
-            }
+        //     if (travarFoco) {
+        //         e.preventDefault();
+        //         return;
+        //     }
 
-            // CTRL + Enter → ignorar navegação
-            if (e.ctrlKey) return;
+        //     // CTRL + Enter → ignorar navegação
+        //     if (e.ctrlKey) return;
 
-            // ENTER
+        //     // ENTER
+        //     if (e.key === 'Enter') {
+        //         // Enter normal no textarea = quebra de linha
+        //         if ($(this).is('textarea') && !e.shiftKey) return;
+
+        //         e.preventDefault();
+
+        //         let campos = getCampos();
+        //         let index = campos.index(this);
+
+        //         if (e.shiftKey) {
+        //             if (index > 0) {
+        //                 travarFoco = true;
+        //                 campos.eq(index - 1).focus();
+        //                 setTimeout(() => travarFoco = false, 50);
+        //             }
+        //             return;
+        //         }
+
+        //         if (index + 1 < campos.length) {
+        //             travarFoco = true;
+        //             campos.eq(index + 1).focus();
+        //             setTimeout(() => travarFoco = false, 50);
+        //         }
+        //     }
+        // });
+
+
+        $(document).on('keydown', 'form', function (e) {
             if (e.key === 'Enter') {
-                // Enter normal no textarea = quebra de linha
-                if ($(this).is('textarea') && !e.shiftKey) return;
-
-                e.preventDefault();
-
-                let campos = getCampos();
-                let index = campos.index(this);
-
-                if (e.shiftKey) {
-                    if (index > 0) {
-                        travarFoco = true;
-                        campos.eq(index - 1).focus();
-                        setTimeout(() => travarFoco = false, 50);
-                    }
-                    return;
-                }
-
-                if (index + 1 < campos.length) {
-                    travarFoco = true;
-                    campos.eq(index + 1).focus();
-                    setTimeout(() => travarFoco = false, 50);
+                // Se não for um textarea, bloqueia o submit
+                if (!$(e.target).is('textarea')) {
+                    e.preventDefault();
                 }
             }
-        });
+        })
+
 
 
     /***********************Detecta apenas seta para cima e seta para baixo******************/
