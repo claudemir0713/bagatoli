@@ -75,7 +75,7 @@ class bg_impostos {
             }else{
                 $imposto_custo  = $item->impostos_credito + $empresa_parametro->pis + $empresa_parametro->cofins;
                 $difal          = $item->difal;
-                $aliq_icms      = $item->impostos_venda;
+                $aliq_icms      = $empresa_parametro->icms + $empresa_parametro->simples;
                 $regra          = $regime_tributario.' - produto sem cadastro de regra tributária no sistema -> Icms '.$item->impostos_venda.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
 
             }
@@ -84,7 +84,9 @@ class bg_impostos {
                 $imposto_custo  = 0;
                 $difal          = 0;
             }
-
+            if($regime_especial_icms=='S'){
+                $imposto_custo  = $empresa_parametro->pis+$empresa_parametro->cofins;
+            }
             if($icms){
                 $return[] = array(
                     'proposta_item_id'      =>$item->id

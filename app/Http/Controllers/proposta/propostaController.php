@@ -81,6 +81,7 @@ class propostaController extends Controller
         };
 
         session()->put('dateForm',$dateForm);
+        // dd($filtros);
 
         $proposta = proposta::leftJoin('cliente','cliente.id','proposta.cliente_id')
                     ->leftJoin('proposta_item','proposta_item.proposta_id','proposta.id')

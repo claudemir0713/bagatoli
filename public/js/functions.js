@@ -129,7 +129,6 @@ function PMT(ir,np, pv, fv = 0){
 
 // /***********************************cadastrar************************************ */
 function cadastrar(dados,route,type,origem){
-    console.log(dados,route,type,origem);
     $.ajax({
         data: dados,
         type: type,
@@ -137,7 +136,6 @@ function cadastrar(dados,route,type,origem){
         url:url+route,
         success: function(result)
         {
-            console.log(result);
             Swal.fire({
                 title   : result.title,
                 type    : result.type,

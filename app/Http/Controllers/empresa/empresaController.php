@@ -29,7 +29,6 @@ class empresaController extends Controller
     public function formEdit($id){
         $empresa = empresa::find($id);
         $parametros = empresa_parametro::where('empresa_id',$empresa->id)->first();
-
         return view('empresa.edit',compact('empresa','parametros'));
     }
 
