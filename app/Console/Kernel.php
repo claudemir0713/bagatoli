@@ -2,41 +2,31 @@
 
 namespace App\Console;
 
-use App\Jobs\job_departamentos_produtos;
-use App\Jobs\job_importaMp;
-use App\Jobs\job_importaPrazo;
-use App\Jobs\job_produto;
-use App\Jobs\job_produtos;
-use App\Jobs\job_subgrupos_produtos;
-use App\Jobs\job_vendas;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
+
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->call(function(){
-        //     job_importaMp::dispatch();
-        //     job_produto::dispatch();
-        // })->everyMinute();
-
-        $schedule->job(new job_importaPrazo)->everyMinute()->between('00:00', '23:00');
-        $schedule->job(new job_produto)->everyMinute()->between('00:00', '07:00');
-        $schedule->job(new job_importaMp)->everyMinute()->between('00:00', '07:00');
-
+        // Backup do banco de dados com logs
+        $schedule->command('backup:database')
+            ->everyMinute() // Para teste, rode a cada minuto
+            ->between('00:00', '23:59') // Intervalo permitido
+            ->appendOutputTo(storage_path('logs/backup.log')) // Salva saída do comando
+            ->before(function () {
+                Log::info('⏳ Iniciando backup agendado...');
+            })
+            ->after(function () {
+                Log::info('✅ Backup agendado concluído.');
+            });
     }
 
     /**
-     * Register the commands for the application.
-     *
-     * @return void
+     * Registra os comandos do console.
      */
     protected function commands()
     {
@@ -44,4 +34,5 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
 }

@@ -93,8 +93,9 @@
                         <th width="5%">Dt Licitação <i class="fas fa-caret-down icone-ordem"></i></th>
                         <th width="5%">Processo <i class="fas fa-caret-down icone-ordem"></i></th>
                         <th width="5%">Pregão <i class="fas fa-caret-down icone-ordem"></i></th>
-                        <th width="10%">Valor <i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="5%">Valor <i class="fas fa-caret-down icone-ordem"></i></th>
                         <th width="5%">Ação <i class="fas fa-caret-down icone-ordem"></i></th>
+                        <th width="4%">Ação <i class="fas fa-caret-down icone-ordem"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,8 +112,12 @@
                             <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
                             <td  align="center">
                                 <a class="btn btn-success fonte-10" href="{{route('proposta.formEdit', ['id'=>$item->id])}}">
-                                    <i class="far fa-edit"></i>&nbsp;&nbsp;&nbsp;
-                                    <span>Editar</span>
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </td>
+                            <td  align="center">
+                                <a class="btn btn-danger fonte-10 delete" href="{{route('proposta.destroy', ['id'=>$item->id])}}">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>

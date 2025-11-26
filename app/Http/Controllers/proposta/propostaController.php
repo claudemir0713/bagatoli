@@ -310,7 +310,11 @@ class propostaController extends Controller
 
     }
     public function destroy($id){
-
+        // dd($id);
+        $proposta = proposta::find($id);
+        $proposta->delete();
+        $proposta->proposta_item()->delete(); // elimina todos os itens relacionados  conforme public function nfcItens() do model nfc
+        return;
     }
 
     public function bg_localizaCliente(Request $request){

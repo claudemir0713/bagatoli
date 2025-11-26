@@ -99,8 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('proposta/editar/{id}',[propostaController::class,'formEdit'])->name('proposta.formEdit');
         Route::post('proposta/store',[propostaController::class,'store'])->name('proposta.store');
         Route::patch('proposta/edit/{proposta}',[propostaController::class,'edit'])->name('proposta.edit');
-        Route::delete('proposta/destroy/{proposta}',[propostaController::class,'destroy'])->name('proposta.destroy');
-
+        Route::delete('proposta/destroy/{id}',[propostaController::class,'destroy'])->name('proposta.destroy');
 
         Route::post('proposta/bg_localizaProduto',[propostaController::class,'bg_localizaProduto'])->name('proposta.bg_localizaProduto');
         Route::post('proposta/localizaNomeProduto',[propostaController::class,'localizaNomeProduto'])->name('proposta.localizaNomeProduto');

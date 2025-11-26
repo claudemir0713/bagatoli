@@ -118,7 +118,7 @@
                 <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
             </td>
             <td colspan="2" width="50%">
-                <sup><b>Cidade:</b></sup> {{$cliente->cidade}}
+                <sup><b>Cidade/UF:</b></sup> {{$cliente->cidade}} @if($cliente->cidade) /  @endif  {{$cliente->uf}}
             </td>
         </tr>
         <tr>

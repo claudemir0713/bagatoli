@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class proposta extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable= [
         'id'
         , 'fase_id'
@@ -30,7 +31,6 @@ class proposta extends Model
     protected $primaryKey = 'id';
     protected $table = 'proposta';
     // public $timestamps = false;
-
 
     public function proposta_item(){
         return $this->hasMany(proposta_item::class, 'proposta_id','id');

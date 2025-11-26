@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class empresa_parametro extends Model
 {
     use HasFactory;
-    // use SoftDeletes;
+    use SoftDeletes;
     protected $fillable= [
         'id'
         ,'empresa_id'

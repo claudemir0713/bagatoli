@@ -330,6 +330,7 @@ $(document).ready(function () {
     /***********************mensagem confirma exclusão **************************************/
     $(document).on('click', '.delete', function (event) {
         event.preventDefault()
+        let link = $(this); // botão clicado
         Swal({
             title: 'Deseja realmente excluir?',
             type: 'warning',
@@ -340,8 +341,32 @@ $(document).ready(function () {
             confirmButtonText: 'Remover'
         }).then((result) => {
             if (result.value) {
-                var form = $(this).parent()
-                form.submit()
+                $.ajax({
+                    url: $(event.target).closest('a').attr('href'),
+                    type: 'DELETE',
+                    success: function () {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Removido!',
+                            text: 'O registro foi excluído.',
+                            timer: 2000, // tempo em milissegundos (2 segundos)
+                            showConfirmButton: false // remove botão OK
+                        });
+
+                        // Remove a linha da tabela
+                        link.closest('tr').remove();
+                    },
+                    error: function () {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Erro!',
+                            text: 'Não foi possível excluir.',
+                            timer: 2000, // tempo em milissegundos (2 segundos)
+                            showConfirmButton: false // remove botão OK
+                        });
+
+                    }
+                })
             }
         });
     })
