@@ -165,7 +165,7 @@
         <thead>
             <tr>
                 <th width="5%">Item</th>
-                <th width="5%">Cod.Prod</th>
+                <th width="5%">Cod</th>
                 <th width="20%">Produto</th>
                 <th width="10%">Marca</th>
                 <th width="10%">Modelo</th>
