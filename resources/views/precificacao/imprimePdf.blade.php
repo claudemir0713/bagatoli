@@ -23,8 +23,8 @@
         }
 
         th {
-            background-color: #0d6efd;
-            color: #fff;
+            background-color: #ccc;
+            color: #555;
             font-weight: bold;
             text-align: center;
             padding: 8px;
@@ -107,6 +107,14 @@
             /* font-size: 14px; */
             line-height: 1.5;
         }
+
+    /* Classe para destacar a coluna unt_edital */
+    .highlight-edital {
+        font-weight: bold;          /* Negrito para dar contraste */
+        background-color: #e0e0e0;  /* Cinza claro (opcional, imprime bem) */
+    }
+
+
 
     </style>
 </head>
@@ -223,9 +231,8 @@
                     <td align="center">{{$item->und}}</td>
                     <td align="right">{{number_format($item->unt_custo,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_custo,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->unt_edital,2,',','.')}}</td>
+                    <td align="right" class="highlight-edital">{{number_format($item->unt_edital,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
-
                     <td align="right">{{number_format($item->unt_venda,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                 </tr>
