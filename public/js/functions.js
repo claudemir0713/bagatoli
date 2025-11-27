@@ -51,47 +51,13 @@ function buscaCnpj(cnpj){
         success: function(result)
         {
             console.log(result)
+            $(document).find('input#cliente').val(result.razao_social);
             $(document).find('input#email').val(result.email);
-            if(result.emails){
-                if(result.emails[0]){
-                    $(document).find('input#email').val(result.emails[0].address);
-                }
-            }
-            if(result.address){
-                $(document).find('input#Cep').val(result.address.zip);
-                $(document).find('input#cidade').val(result.address.city);
-                $(document).find('input#endereco').val(result.address.street+','+result.address.number);
-                $(document).find('input#bairro').val(result.address.district);
-                $(document).find('input#uf').val(result.address.state);
-            }
-
-            if(result.phones){
-                if(result.phones['0']){
-                    $(document).find('input#telefone').val(result.phones['0'].area+' '+result.phones['0'].number);
-                }
-            }
-
-            if(result.company){
-                $(document).find('input#cliente').val(result.company.name);
-                if(result.company.members['0']){
-                    $(document).find('input#contato').val(result.company.members['0'].person.name);
-                }
-            }
-            $(document).find('#contribuinte_icms').val('N').trigger('chosen:updated')
-            let IE = 'Isento';
-            if(result.registrations){
-                if(result.registrations['0']){
-                    if(result.registrations['0'].number){IE = result.registrations['0'].number}
-                    $(document).find('#contribuinte_icms').val('S').trigger('chosen:updated')
-                }
-            }
-            $(document).find('#IE').val(IE)
-
-            if(result.company.simples.optant==true){
-                $(document).find('#simples_nascional').val('S').trigger('chosen:updated')
-            }else{
-                $(document).find('#simples_nascional').val('N').trigger('chosen:updated')
-            }
+            $(document).find('input#Cep').val(result.cep);
+            $(document).find('input#cidade').val(result.municipio);
+            $(document).find('input#endereco').val(result.logradouro+','+result.numero);
+            $(document).find('input#bairro').val(result.bairro);
+            $(document).find('input#uf').val(result.uf);
         }
     });
 }

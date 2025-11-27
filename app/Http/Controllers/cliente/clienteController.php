@@ -157,13 +157,42 @@ class clienteController extends Controller
 
     /******************** buscaCnpj *******************************************/
 
+    // public function buscaCnpj(Request $request){
+    //     $cnpj = $request->get('cnpj');
+    //     $cnpj =  preg_replace('/[^0-9]/', '' , $cnpj);
+    //     $curl = curl_init();
+
+    //     // $url = "https://www.receitaws.com.br/v1/cnpj/{$cnpj}";
+    //     $url = "https://open.cnpja.com/office/{$cnpj}";
+
+
+    //     curl_setopt($curl, CURLOPT_URL, $url);
+    //     curl_setopt($curl, CURLOPT_TIMEOUT, 3);
+    //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    //     $json = curl_exec($curl);
+    //     $erro = curl_error($curl);
+
+    //     //dd($json);
+    //     curl_close($curl);
+
+    //     if ($erro) {
+    //         return response()->json(['erro' => $erro]);
+    //     } else if ($json == 'Too many requests, please try again later.') {
+    //         return response()->json(['erro' => $json]);
+    //     }
+    //     // dd($json);
+    //     return response($json);
+
+    // }
+
     public function buscaCnpj(Request $request){
         $cnpj = $request->get('cnpj');
         $cnpj =  preg_replace('/[^0-9]/', '' , $cnpj);
         $curl = curl_init();
 
         // $url = "https://www.receitaws.com.br/v1/cnpj/{$cnpj}";
-        $url = "https://open.cnpja.com/office/{$cnpj}";
+        $url = "https://api.opencnpj.org/{$cnpj}";
 
 
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -181,10 +210,10 @@ class clienteController extends Controller
         } else if ($json == 'Too many requests, please try again later.') {
             return response()->json(['erro' => $json]);
         }
-        // dd($json);
         return response($json);
 
     }
+
 
 
     public function verificaNaBase(Request $request)
