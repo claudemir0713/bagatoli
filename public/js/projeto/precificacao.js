@@ -65,6 +65,8 @@ $(document).ready(function () {
             let taxa_financeira = $(document).find('#taxa_financeira').val();
 
 
+            let proposta_id =   $(document).find('#proposta_id').val();
+
             let id = [];
             $(document).find('input[name="id[]"]').each(function(index){
                 id.push($(this).val());
@@ -152,6 +154,7 @@ $(document).ready(function () {
             } else {
                 let dados = {
                     'id'                    :id
+                    ,'proposta_id'          :proposta_id
                     ,'empresa_id'           :empresa_id
                     ,'taxa_financeira'      :taxa_financeira
                     ,'prazo'                :prazo

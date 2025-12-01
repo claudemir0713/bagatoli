@@ -110,6 +110,9 @@ function cadastrar(dados,route,type,origem){
             }).then(() => {
                     if(result.acao=="voltar"){
                         window.location.replace(url+'/'+origem);
+                        if(origem=='precificacao'){
+                            window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
+                        }
                     }else if(result.acao=="atualizar"){
                         window.location.reload();
                     }else if(result.acao=="limpar"){
