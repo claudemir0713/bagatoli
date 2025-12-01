@@ -111,14 +111,14 @@ function cadastrar(dados,route,type,origem){
                 timer   : result.timer,
             }).then(() => {
                     if(result.acao=="voltar"){
+                        if(origem=='precificacao'){
+                            window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
+                        }
                         if(dados.page){
                             origem = origem+'?page='+dados.page
                         }
                         window.location.replace(url+'/'+origem);
 
-                        if(origem=='precificacao'){
-                            window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
-                        }
                     }else if(result.acao=="atualizar"){
                         window.location.reload();
                     }else if(result.acao=="limpar"){
