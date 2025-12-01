@@ -79,6 +79,7 @@ class precificacaoController extends Controller
 
         session()->put('dateForm',$dateForm);
 
+
         $proposta = proposta::leftJoin('cliente','cliente.id','proposta.cliente_id')
                     ->leftJoin('proposta_item','proposta_item.proposta_id','proposta.id')
                     ->leftJoin('proposta_fase','proposta_fase.id','proposta.fase_id')

@@ -66,6 +66,8 @@ $(document).ready(function () {
 
 
             let proposta_id =   $(document).find('#proposta_id').val();
+            let page =   $(document).find('#page').val();
+
 
             let id = [];
             $(document).find('input[name="id[]"]').each(function(index){
@@ -172,6 +174,7 @@ $(document).ready(function () {
                     ,'margem'               :margem
                     ,'unt_venda'            :unt_venda
                     ,'total_venda'          :total_venda
+                    ,'page'                 :page
 
                 }
                 // console.log(dados,route,type,origem);

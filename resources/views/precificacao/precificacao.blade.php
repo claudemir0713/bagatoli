@@ -45,6 +45,7 @@
         <input type="hidden" name="proposta_id" id="proposta_id" value="{{$proposta->id}}">
         <input type="hidden" name="type" id="type" value="PATCH">
         <input type="hidden" name="origem" id="origem" value="precificacao">
+        <input type="hidden" name="page" id="page" value="{{ session('dateForm.page')}}">
         <input type="hidden" name="retornoUrl" id="retornoUrl" value="?precificacao={{session('dateForm.precificacao')}}">
         <input type="hidden" name="controla_preco_minimo" id="controla_preco_minimo" value="{{$licitacao_tipo->controla_preco_minimo}}">
 

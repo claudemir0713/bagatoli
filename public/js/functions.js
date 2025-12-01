@@ -95,6 +95,8 @@ function PMT(ir,np, pv, fv = 0){
 
 // /***********************************cadastrar************************************ */
 function cadastrar(dados,route,type,origem){
+
+
     $.ajax({
         data: dados,
         type: type,
@@ -109,7 +111,11 @@ function cadastrar(dados,route,type,origem){
                 timer   : result.timer,
             }).then(() => {
                     if(result.acao=="voltar"){
+                        if(dados.page){
+                            origem = origem+'?page='+dados.page
+                        }
                         window.location.replace(url+'/'+origem);
+
                         if(origem=='precificacao'){
                             window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
                         }
