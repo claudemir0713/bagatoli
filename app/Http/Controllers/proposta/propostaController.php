@@ -108,6 +108,7 @@ class propostaController extends Controller
                         , 'fase_id'
                         , db::raw("sum(total_edital) as total_edital")
                     ])
+                    ->orderByRaw('proposta.data_processo,data')
                     ->groupBy([
                         'proposta.id'
                         , 'proposta.empresa_id'
@@ -276,7 +277,6 @@ class propostaController extends Controller
                     // dd($proposta_item);
                     $proposta_item->save();
                 }catch(\Exception $e){
-                    proposta::find($proposta_id)->delete();
                     proposta_item::where('proposta_id',$proposta_id)->delete();
 
                     return response()->json([

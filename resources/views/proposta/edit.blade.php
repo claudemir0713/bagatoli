@@ -117,56 +117,56 @@
                                         </thead>
                                         <tbody id="sectionItem">
                                             @foreach ($proposta_item as $item )
-                                                <tr>
+                                                <tr class="sectionItem{{$item->id}}">
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita seq" id="seq{{$item->item}}" name="seq[]" value="{{$item->item}}">
+                                                        <input type="text" class="form-control fonte-10 direita seq" id="seq{{$item->id}}" name="seq[]" value="{{$item->item}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10" id="produto{{$item->item}}" name="produto[]" value="{{$item->produto}}">
+                                                        <input type="text" class="form-control fonte-10" id="produto{{$item->id}}" name="produto[]" value="{{$item->produto}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10" id="und{{$item->item}}" name="und[]" value="{{$item->und}}">
+                                                        <input type="text" class="form-control fonte-10" id="und{{$item->id}}" name="und[]" value="{{$item->und}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="qtd{{$item->item}}" name="qtd[]" value="{{number_format($item->qtd,2,',','.')}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="qtd{{$item->id}}" name="qtd[]" value="{{number_format($item->qtd,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_edital{{$item->item}}" name="unt_edital[]" value="{{number_format($item->unt_edital,2,',','.')}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_edital{{$item->id}}" name="unt_edital[]" value="{{number_format($item->unt_edital,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita" id="total_edital{{$item->item}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
+                                                        <input type="text" class="form-control fonte-10 direita" id="total_edital{{$item->id}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_custo{{$item->item}}" name="unt_custo[]" value="{{number_format($item->unt_custo,2,',','.')}}">
+                                                        <input type="text" class="form-control fonte-10 direita calc_total calc_custo" id="unt_custo{{$item->id}}" name="unt_custo[]" value="{{number_format($item->unt_custo,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control fonte-10 direita" id="total_custo{{$item->item}}" name="total_custo[]" value="{{number_format($item->total_custo,2,',','.')}}">
+                                                        <input type="text" class="form-control fonte-10 direita" id="total_custo{{$item->id}}" name="total_custo[]" value="{{number_format($item->total_custo,2,',','.')}}">
                                                     </td>
                                                     <td>
-                                                        <button type="button" name="delServico[]" id="minusItem{{$item->item}}" value="{{$item->item}}" class="btn btn-outline-danger fonte-10 removeItem"><span class="fas fa-minus"></span></button>
+                                                        <button type="button" name="delServico[]" id="minusItem{{$item->id}}" value="{{$item->id}}" class="btn btn-outline-danger fonte-10 removeItem"><span class="fas fa-minus"></span></button>
                                                     </td>
                                                 </tr>
-                                                <tr class="sectionItem1">
+                                                <tr class="sectionItem{{$item->id}}">
                                                     <td colspan="3">
-                                                        <textarea type="text" class="form-control fonte-10" id="descricao{{$item->item}}" name="descricao[]">{{$item->descricao}}</textarea>
+                                                        <textarea type="text" class="form-control fonte-10" id="descricao{{$item->id}}" name="descricao[]">{{$item->descricao}}</textarea>
                                                     </td>
                                                     <td colspan="3">
-                                                        <input type="text" class="form-control fonte-10" id="marca{{$item->item}}" name="marca[]" value="{{$item->marca}}">
+                                                        <input type="text" class="form-control fonte-10" id="marca{{$item->id}}" name="marca[]" value="{{$item->marca}}">
                                                     </td>
                                                     <td colspan="3">
-                                                        <input type="text" class="form-control fonte-10" id="modelo{{$item->item}}" name="modelo[]" value="{{$item->modelo}}">
-                                                        <input type="hidden" id="lote{{$item->item}}" name="lote[]" value="{{$item->lote}}">
-                                                        <input type="hidden" id="lote_descricao{{$item->item}}" name="lote_descricao[]" value="{{$item->lote_descricao}}">
-                                                        <input type="hidden" id="cod_produto{{$item->item}}" name="cod_produto[]" value="{{$item->cod_produto}}">
-                                                        <input type="hidden" id="frete_custo{{$item->item}}" name="frete_custo[]" value="{{$item->frete_custo}}">
-                                                        <input type="hidden" id="impostos_credito{{$item->item}}" name="impostos_credito[]" value="{{$item->impostos_credito}}">
-                                                        <input type="hidden" id="obs_item{{$item->item}}" name="obs_item[]" value="{{$item->obs}}">
+                                                        <input type="text" class="form-control fonte-10" id="modelo{{$item->id}}" name="modelo[]" value="{{$item->modelo}}">
+                                                        <input type="hidden" id="lote{{$item->id}}" name="lote[]" value="{{$item->lote}}">
+                                                        <input type="hidden" id="lote_descricao{{$item->id}}" name="lote_descricao[]" value="{{$item->lote_descricao}}">
+                                                        <input type="hidden" id="cod_produto{{$item->id}}" name="cod_produto[]" value="{{$item->cod_produto}}">
+                                                        <input type="hidden" id="frete_custo{{$item->id}}" name="frete_custo[]" value="{{$item->frete_custo}}">
+                                                        <input type="hidden" id="impostos_credito{{$item->id}}" name="impostos_credito[]" value="{{$item->impostos_credito}}">
+                                                        <input type="hidden" id="obs_item{{$item->id}}" name="obs_item[]" value="{{$item->obs}}">
 
-                                                        <input type="hidden" id="impostos_venda{{$item->item}}" name="impostos_venda[]" value="{{$item->impostos_venda}}">
-                                                        <input type="hidden" id="difal{{$item->item}}" name="difal[]" value="{{$item->difal}}">
+                                                        <input type="hidden" id="impostos_venda{{$item->id}}" name="impostos_venda[]" value="{{$item->impostos_venda}}">
+                                                        <input type="hidden" id="difal{{$item->id}}" name="difal[]" value="{{$item->difal}}">
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr  class="sectionItem{{$item->id}}">
                                                     <td colspan="10"><hr></td>
                                                 </tr>
                                             @endforeach

@@ -107,6 +107,7 @@ class precificacaoController extends Controller
                         , db::raw("sum(total_edital) as total_edital")
                         , db::raw("sum(total_venda)  as total_venda")
                     ])
+                    ->orderBy('proposta.data_processo')
                     ->groupBy([
                         'proposta.id'
                         , 'proposta.empresa_id'

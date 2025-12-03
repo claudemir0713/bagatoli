@@ -77,6 +77,12 @@
         .fonte-8{
             font-size: 8px !important;
         }
+        .fonte-10{
+            font-size: 10px !important;
+        }
+        .fonte-12{
+            font-size: 12px !important;
+        }
     /* ******************bordaSimples**************************** */
     table.bordaSimples {
             border-collapse: collapse;
@@ -125,8 +131,8 @@
             <td colspan="2" width="50%">
                 <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
             </td>
-            <td colspan="2" width="50%">
-                <sup><b>Cidade/UF:</b></sup> {{$cliente->cidade}} @if($cliente->cidade) /  @endif  {{$cliente->uf}}
+            <td colspan="2" width="50%" >
+                <sup><b>Cidade/UF:</b></sup><span class="fonte-12"> <b>{{$cliente->cidade}} @if($cliente->cidade) /  @endif  {{$cliente->uf}}</b></span>
             </td>
         </tr>
         <tr>
@@ -233,7 +239,7 @@
                     <td align="right">{{number_format($item->total_custo,2,',','.')}}</td>
                     <td align="right" class="highlight-edital">{{number_format($item->unt_edital,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
-                    <td align="right">{{number_format($item->unt_venda,2,',','.')}}</td>
+                    <td align="right" class="highlight-edital">{{number_format($item->unt_venda,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                 </tr>
                 @php
