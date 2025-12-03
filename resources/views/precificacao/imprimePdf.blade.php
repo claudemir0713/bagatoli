@@ -126,13 +126,13 @@
 </head>
 
 <body>
-    <table class="bordaSimples fonte-8" width='100%'>
+    <table class="bordaSimples fonte-12" width='100%'>
         <tr>
             <td colspan="2" width="50%">
                 <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
             </td>
             <td colspan="2" width="50%" >
-                <sup><b>Cidade/UF:</b></sup><span class="fonte-12"> <b>{{$cliente->cidade}} @if($cliente->cidade) /  @endif  {{$cliente->uf}}</b></span>
+                <sup><b>Cidade/UF:</b></sup><span> <b>{{$cliente->cidade}} @if($cliente->cidade) /  @endif  {{$cliente->uf}}</b></span>
             </td>
         </tr>
         <tr>
