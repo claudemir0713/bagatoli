@@ -217,3 +217,39 @@ function atualizaModalItem(){
     $(document).find('#md_descricao').val('');
     $(document).find('#md_obs').val('');
 }
+
+function alteraData(dados){
+    let route = '/proposta/alteraData';
+    $.ajax({
+        data: dados,
+        type: 'post',
+        dataType: 'JSON',
+        url: url + route,
+        beforeSend: function(){
+            Swal({
+                title: 'Aguarde!',
+                type: 'warning',
+                // timer:2000
+            })
+        },
+        error:function(){
+            Swal({
+                title: 'Data não alterada!',
+                type: 'error',
+                timer:2000
+            })
+        },
+        success:function(result){
+            Swal({
+                title: 'Data alterada!',
+                type: 'success',
+                timer:2000
+            })
+        },
+        complete:function(){
+            $('#modalAleraData').modal('hide');
+            location.reload();
+        }
+    })
+
+}

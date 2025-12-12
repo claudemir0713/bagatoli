@@ -9,9 +9,13 @@
     <script src="{{ (asset('js/projeto/precificacao_function.js?v='.$version_js)) }}"></script>
 
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <h3 style="display: inline;"><i class="fas fa-hand-holding-usd"></i> <sup>Proposta</sup></h3>
             <h6 style="display: inline;">    <b><i>{{str_pad($proposta->id, 4 , '0' , STR_PAD_LEFT)}}</i> - {{$cliente->cliente}}</b></h6>
+        </div>
+        <div class="form-group col-md-2">
+            <h3 style="display: inline;"><sup>Tipo</sup></h3>
+            <h6 style="display: inline;"><b><i>{{$licitacao_tipo->descricao}} </i></b></h6>
         </div>
         <div class="form-group col-md-3 fonte-10">
             Empresa:

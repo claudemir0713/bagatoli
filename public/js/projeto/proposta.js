@@ -422,4 +422,35 @@ $(document).ready(function () {
                 bg_localizaProduto(nome)
             }
         })
+
+    /**********************Abre ModalLocalAlteraData**************************************************/
+        $(document).on('click','.alteraData',function(event){
+            const item_id                 = $(this).attr('item_id');
+            const data_entrega_proposta   = $(this).attr('data_entrega_proposta');
+            const data_processo           = $(this).attr('data_processo');
+
+
+            $('#md_data_entrega_proposta').val(data_entrega_proposta ?? '');
+            $('#md_data_processo').val(data_processo ?? '');
+            $('#md_id').val(item_id ?? '');
+            $('.md_proposta').html(item_id ?? '');
+
+            $("#modalAleraData").modal("show")
+        })
+        $('#modalAleraData').on('shown.bs.modal', function (event) {
+            $(document).find('#md_data_processo').focus();
+        })
+
+
+        $(document).on('click','#md_salvarData',function(event){
+            let id = $(document).find('#md_id').val()
+            let data_entrega_proposta = $(document).find('#md_data_entrega_proposta').val()
+            let data_processo = $(document).find('#md_data_processo').val()
+            let dados = {
+                'id'                        :id
+                ,'data_entrega_proposta'    :data_entrega_proposta
+                ,'data_processo'            :data_processo
+            }
+            alteraData(dados)
+        })
 })

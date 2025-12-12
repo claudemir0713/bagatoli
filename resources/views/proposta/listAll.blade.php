@@ -1,5 +1,14 @@
 @extends('layouts.model')
 @section('content')
+
+    @php
+        $version_js = env('VERSAO_JS');
+        $version_css = env('VERSAO_CSS');
+    @endphp
+
+    <script src="{{ (asset('js/projeto/proposta.js?v='.$version_js)) }}"></script>
+    <script src="{{ (asset('js/projeto/proposta_function.js?v='.$version_js)) }}"></script>
+
     <table class="table table-borderless table-advance table-condensed">
         <tr>
             <td width="80%">
@@ -95,7 +104,6 @@
                         <th width="5%">Pregão <i class="fas fa-caret-down icone-ordem"></i></th>
                         <th width="5%">Valor <i class="fas fa-caret-down icone-ordem"></i></th>
                         <th width="5%">Ação <i class="fas fa-caret-down icone-ordem"></i></th>
-                        <th width="4%">Ação <i class="fas fa-caret-down icone-ordem"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,14 +119,33 @@
                             <td align="center">{{$item->nr_pregao}}</td>
                             <td align="right">{{number_format($item->total_edital,2,',','.')}}</td>
                             <td  align="center">
-                                <a class="btn btn-success fonte-10" href="{{route('proposta.formEdit', ['id'=>$item->id])}}">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                            </td>
-                            <td  align="center">
-                                <a class="btn btn-danger fonte-10 delete" href="{{route('proposta.destroy', ['id'=>$item->id])}}">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <div class="btn-group-vertical btn-sm fonte-10">
+                                    <div class="btn-group">
+                                        <button type="button"  class="btn btn-outline-info  btn-sm  dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-cogs"></i>
+                                            <span>Ação</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item btn btn-success fonte-10" href=" {{route('proposta.formEdit', ['id'=>$item->id])}}">
+                                                <i class="btn btn-success btn-sm far fa-edit"></i>
+                                                <span>Editar</span>
+                                            </a>
+                                            <a class="dropdown-item btn btn-success fonte-10 alteraData"
+                                                item_id="{{$item->id}}"
+                                                data_entrega_proposta="{{$item->data_entrega_proposta}}"
+                                                data_processo="{{$item->data_processo}}"
+                                            href="#">
+                                                <i class="btn btn-info btn-sm far fa-calendar-alt"></i>
+                                                <span>Altera Data</span>
+                                            </a>
+                                            <hr>
+                                            <a class="dropdown-item btn btn-danger fonte-10 delete" href="{{route('proposta.destroy', ['id'=>$item->id])}}">
+                                                <i class="btn btn-danger btn-sm fas fa-trash"></i>
+                                                <span>Eliminar</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -131,7 +158,7 @@
     @else
         {{$proposta->links()}}
     @endif
-
+    @include('proposta.modalAleraData')
 @endsection
 
 

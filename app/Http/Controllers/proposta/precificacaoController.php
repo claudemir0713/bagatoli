@@ -72,11 +72,11 @@ class precificacaoController extends Controller
         if(array_key_exists('proposta',$dateForm)){
             if($dateForm['proposta']){
                 $filtros=[];
-                $filtros[]=['fase_id',1];
+                // $filtros[]=['fase_id',1];
                 $filtros[]=['proposta.id',$dateForm['proposta']];
             }
         };
-
+        // dd($filtros);
         session()->put('dateForm',$dateForm);
 
 

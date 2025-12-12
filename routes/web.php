@@ -108,6 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('proposta/bg_localizaCliente',[propostaController::class,'bg_localizaCliente'])->name('proposta.bg_localizaCliente');
         Route::post('proposta/localizaNomeCliente',[propostaController::class,'localizaNomeCliente'])->name('proposta.localizaNomeCliente');
+
+        Route::post('proposta/alteraData',[propostaController::class,'alteraData'])->name('proposta.alteraData');
     });
 
     /********************************** precificacao ***************************************************************/

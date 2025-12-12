@@ -75,7 +75,7 @@ class propostaController extends Controller
         if(array_key_exists('proposta',$dateForm)){
             if($dateForm['proposta']){
                 $filtros=[];
-                $filtros[]=['fase_id',1];
+                // $filtros[]=['fase_id',1];
                 $filtros[]=['proposta.id',$dateForm['proposta']];
             }
         };
@@ -444,5 +444,28 @@ class propostaController extends Controller
 
     }
 
+    public function alteraData(Request $request){
+        $proposta = proposta::find($request->id);
+        try{
+            $proposta->data_entrega_proposta = $request->data_entrega_proposta;
+            $proposta->data_processo = $request->data_processo;
+            $proposta->save();
+            return response()->json([
+                'ok'      => true,
+                'message' => 'Data alterada com sucesso.',
+                'data'    => [
+                    'item_id'               => $request->id,
+                    'processo_id'           => $request->processo_id,
+                    'data_entrega_proposta' => $request->data_entrega_proposta,
+                ]
+            ], 200);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'ok'      => false,
+                'message' => 'Erro interno ao alterar a data.',
+            ], 500);
+        }
+    }
 
 }
