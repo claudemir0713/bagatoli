@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\bg_item_mov_estoq;
 use App\Models\bg_prduto;
 use App\Models\cliente;
+use App\Models\empresa_parametro;
 use App\Models\licitacao_tipo;
 use App\Models\proposta;
 use App\Models\proposta_item;
@@ -134,14 +135,16 @@ class propostaController extends Controller
     }
     public function formAdd(){
         $licitacao_tipo = licitacao_tipo::orderBy('descricao')->get(['id','descricao']);
-        return view('proposta.add',compact('licitacao_tipo'));
+        $parametros = empresa_parametro::find(0);
+        return view('proposta.add',compact('licitacao_tipo','parametros'));
     }
     public function formEdit($id){
         $licitacao_tipo = licitacao_tipo::orderBy('descricao')->get(['id','descricao']);
         $proposta = proposta::find($id);
         $cliente = cliente::find($proposta->cliente_id);
         $proposta_item = proposta_item::where('proposta_id',$id)->get();
-        return view('proposta.edit',compact('proposta','proposta_item','cliente','licitacao_tipo'));
+        $parametros = empresa_parametro::find(0);
+        return view('proposta.edit',compact('proposta','proposta_item','cliente','licitacao_tipo','parametros'));
     }
     public function store(Request $request){
         try{
@@ -230,6 +233,7 @@ class propostaController extends Controller
         try{
             $proposta  = proposta::find($id);
                 $proposta->empresa_id           = 0;
+                $proposta->fase_id              = 1;
                 $proposta->cliente_id           = $request->cliente_id;
                 $proposta->tipo_licitacao_id    = $request->tipo_licitacao_id;
                 $proposta->data                 = $request->data;
@@ -242,7 +246,6 @@ class propostaController extends Controller
                 $proposta->portal_compras       = $request->portal_compras;
                 $proposta->id_portal_compras    = $request->id_portal_compras;
                 $proposta->obs                  = $request->obs;
-
             $proposta->save();
             $proposta_id = $id;
 
@@ -268,11 +271,21 @@ class propostaController extends Controller
                         , 'total_edital'            =>Helper::formata_valor($request->total_edital[$key])
                         , 'unt_custo'               =>Helper::formata_valor($request->unt_custo[$key])
                         , 'total_custo'             =>Helper::formata_valor($request->total_custo[$key])
-                        , 'frete_custo'             =>($request->frete_custo)? Helper::formata_valor($request->frete_custo[$key]) : 0
-                        , 'impostos_credito'        =>($request->impostos_credito)? Helper::formata_valor($request->impostos_credito[$key]) : 0
-                        , 'impostos_venda'          =>($request->impostos_venda)? Helper::formata_valor($request->impostos_venda[$key]) : null
-                        , 'difal'                   =>($request->difal)? Helper::formata_valor($request->difal[$key]) : null
-                        , 'obs'                     =>($request->obs_item) ? $request->obs_item[$key] : ''
+                        , 'frete_custo'             =>($request->frete_custo)       ? Helper::formata_valor($request->frete_custo[$key])        : 0
+                        , 'impostos_credito'        =>($request->impostos_credito)  ? Helper::formata_valor($request->impostos_credito[$key])   : 0
+                        , 'impostos_venda'          =>($request->impostos_venda)    ? Helper::formata_valor($request->impostos_venda[$key])     : 0
+                        , 'difal'                   =>($request->difal)             ? Helper::formata_valor($request->difal[$key])              : 0
+                        , 'obs'                     =>($request->obs_item)          ? $request->obs_item[$key]                                  : ''
+                        , 'ir_csll'                 =>($request->ir_csll)           ? Helper::formata_valor($request->ir_csll[$key])            : 0
+                        , 'frete'                   =>($request->frete)             ? Helper::formata_valor($request->frete[$key])              : 0
+                        , 'outros'                  =>($request->outros)            ? Helper::formata_valor($request->outros[$key])             : 0
+                        , 'margem'                  =>($request->margem)            ? Helper::formata_valor($request->margem[$key])             : 0
+                        , 'despesa_fixa'            =>($request->despesa_fixa)      ? Helper::formata_valor($request->despesa_fixa[$key])       : 0
+                        , 'comissao'                =>($request->comissao)          ? Helper::formata_valor($request->comissao[$key])           : 0
+                        , 'unt_minimo'              =>($request->unt_minimo)        ? Helper::formata_valor($request->unt_minimo[$key])         : 0
+                        , 'total_minimo'            =>($request->total_minimo)      ? Helper::formata_valor($request->total_minimo[$key])       : 0
+                        , 'unt_venda'               =>($request->unt_venda)         ? Helper::formata_valor($request->unt_venda[$key])          : 0
+                        , 'total_venda'             =>($request->total_venda)       ? Helper::formata_valor($request->total_venda[$key])        : 0
                     ]);
                     // dd($proposta_item);
                     $proposta_item->save();

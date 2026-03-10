@@ -186,32 +186,75 @@ class clienteController extends Controller
 
     // }
 
-    public function buscaCnpj(Request $request){
-        $cnpj = $request->get('cnpj');
-        $cnpj =  preg_replace('/[^0-9]/', '' , $cnpj);
-        $curl = curl_init();
+    // public function buscaCnpj(Request $request){
+    //     $cnpj = $request->get('cnpj');
+    //     $cnpj =  preg_replace('/[^0-9]/', '' , $cnpj);
+    //     $curl = curl_init();
 
-        // $url = "https://www.receitaws.com.br/v1/cnpj/{$cnpj}";
+    //     // $url = "https://www.receitaws.com.br/v1/cnpj/{$cnpj}";
+    //     $url = "https://api.opencnpj.org/{$cnpj}";
+
+
+    //     curl_setopt($curl, CURLOPT_URL, $url);
+    //     curl_setopt($curl, CURLOPT_TIMEOUT, 3);
+    //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    //     $json = curl_exec($curl);
+    //     $erro = curl_error($curl);
+
+    //     dd($json);
+    //     curl_close($curl);
+
+    //     if ($erro) {
+    //         return response()->json(['erro' => $erro]);
+    //     } else if ($json == 'Too many requests, please try again later.') {
+    //         return response()->json(['erro' => $json]);
+    //     }
+    //     return response($json);
+
+    // }
+
+    public function buscaCnpj(Request $request)
+    {
+        $cnpj = preg_replace('/\D+/', '', $request->get('cnpj'));
         $url = "https://api.opencnpj.org/{$cnpj}";
 
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL            => $url,
+            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER     => [
+                'Accept: application/json',
+                'User-Agent: PlannerSolucoes/1.0'
+            ]
+        ]);
 
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 3);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-        $json = curl_exec($curl);
-        $erro = curl_error($curl);
-
-        //dd($json);
+        $response = curl_exec($curl);
+        $status   = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $error    = curl_error($curl);
         curl_close($curl);
-
-        if ($erro) {
-            return response()->json(['erro' => $erro]);
-        } else if ($json == 'Too many requests, please try again later.') {
-            return response()->json(['erro' => $json]);
+        if ($error) {
+            return response()->json(['erro' => $error], 500);
         }
-        return response($json);
 
+        if ($status === 200) {
+            $data = json_decode($response, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return response()->json(['erro' => 'Erro ao decodificar JSON'], 500);
+            }
+            return response()->json($data);
+        }
+
+        if ($status === 404) {
+            return response()->json(['erro' => 'CNPJ não encontrado'], 404);
+        }
+
+        if ($status === 429) {
+            return response()->json(['erro' => 'Muitas requisições. Aguarde e tente novamente.'], 429);
+        }
+
+        return response()->json(['erro' => "HTTP {$status}", 'body' => $response], $status);
     }
 
 

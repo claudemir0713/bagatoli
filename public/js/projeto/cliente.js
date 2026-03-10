@@ -75,7 +75,4 @@ $(document).ready(function () {
             // console.log(dados, route, type, origem)
         }
     })
-
-
-
 })

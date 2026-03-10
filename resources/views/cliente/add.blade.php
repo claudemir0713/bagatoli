@@ -15,7 +15,7 @@
         <input type="hidden" name="route" id="route" value="/cliente/store">
         <input type="hidden" name="type" id="type" value="POST">
         <input type="hidden" name="origem" id="origem" value="cliente">
-        <input type="hidden" name="retornoUrl" id="retornoUrl" value="?cliente={{session('dateForm.cliente')}}"">
+        <input type="hidden" name="retornoUrl" id="retornoUrl" value="?cliente={{session('dateForm.cliente')}}">
 
 
         <div class="row">

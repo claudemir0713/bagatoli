@@ -9,6 +9,7 @@
 
     <script src="{{ (asset('js/projeto/proposta.js?v='.$version_js)) }}"></script>
     <script src="{{ (asset('js/projeto/proposta_function.js?v='.$version_js)) }}"></script>
+    <script src="{{ (asset('js/projeto/formacaoPreco.js?v='.$version_js)) }}"></script>
 
     <h3 class=""><i class="fas fa-tags"></i> Proposta</h3><hr>
     <form action=""  id="cadastro-proposta"  method="post">
@@ -18,6 +19,18 @@
         <input type="hidden" name="type" id="type" value="POST">
         <input type="hidden" name="origem" id="origem" value="proposta">
         <input type="hidden" name="retornoUrl" id="retornoUrl" value="?proposta={{session('dateForm.proposta')}}">
+
+        <input type="hidden" name="taxa_financeira" id="taxa_financeira" value="{{$parametros->taxa_financeira}}">
+        <input type="hidden" name="imposto_venda" id="imposto_venda" value="{{$parametros->icms+$parametros->simples+$parametros->pis+$parametros->cofins}}">
+        <input type="hidden" name="ir_csll" id="ir_csll" value="{{$parametros->ir_csll}}">
+        <input type="hidden" name="difal" id="difal" value="{{$parametros->difal}}">
+        <input type="hidden" name="frete" id="frete" value="{{$parametros->frete}}">
+        <input type="hidden" name="despesa_fixa" id="despesa_fixa" value="{{$parametros->despesa_fixa}}">
+        <input type="hidden" name="comissao" id="comissao" value="{{$parametros->comissao}}">
+        <input type="hidden" name="outros" id="outros" value="{{$parametros->outros}}">
+        <input type="hidden" name="margem" id="margem" value="{{$parametros->margem}}">
+        <input type="hidden" name="prazoMedio" id="prazoMedio" value="0">
+
 
         <div class="row">
             <div class="form-group col-md-1">

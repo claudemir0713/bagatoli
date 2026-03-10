@@ -36,6 +36,7 @@ class proposta_item extends Model
         , 'bonus'
         , 'despesa_fixa'
         , 'comissao'
+        , 'outros'
         , 'margem'
         , 'unt_minimo'
         , 'total_minimo'

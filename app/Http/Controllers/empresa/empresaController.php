@@ -204,7 +204,6 @@ class empresaController extends Controller
 
     // }
     public function buscaCnpj(Request $request){
-        dd('aqui');
         $cnpj = $request->get('cnpj');
         $cnpj =  preg_replace('/[^0-9]/', '' , $cnpj);
         $curl = curl_init();

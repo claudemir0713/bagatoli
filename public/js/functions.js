@@ -34,7 +34,6 @@ function buscaCep(cep){
 }
 
 /*****************************busca cnpj*****************************************/
-/*****************************busca cnpj*****************************************/
 function buscaCnpj(cnpj){
     $.ajax({
         data: {cnpj:cnpj},
@@ -43,21 +42,72 @@ function buscaCnpj(cnpj){
         url:url+'/cliente/buscaCnpj',
         beforeSend: function(){
             Swal({
-                title: 'Aguarde consultado dados!',
-                type: 'warning',
-                timer:2000
+                title: 'Consultando dados…',
+                type: 'info',
+                text: 'Aguarde alguns segundos.',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
             })
         },
-        success: function(result)
+        success: function (result, textStatus, xhr)
         {
-            console.log(result)
-            $(document).find('input#cliente').val(result.razao_social);
-            $(document).find('input#email').val(result.email);
-            $(document).find('input#Cep').val(result.cep);
-            $(document).find('input#cidade').val(result.municipio);
-            $(document).find('input#endereco').val(result.logradouro+','+result.numero);
-            $(document).find('input#bairro').val(result.bairro);
-            $(document).find('input#uf').val(result.uf);
+                // console.log(result)
+                // $(document).find('input#cliente').val(result.razao_social);
+                // $(document).find('input#email').val(result.email);
+                // $(document).find('input#Cep').val(result.cep);
+                // $(document).find('input#cidade').val(result.municipio);
+                // $(document).find('input#endereco').val(result.logradouro+','+result.numero);
+                // $(document).find('input#bairro').val(result.bairro);
+                // $(document).find('input#uf').val(result.uf);
+
+
+            // Alguns campos podem vir nulos; trate fallbacks:
+            const razao      = result?.razao_social || result?.razaoSocial || '';
+            const email      = result?.email || '';
+            const cep        = (result?.cep || '').replace(/\D+/g, '');
+            const municipio  = result?.municipio || result?.cidade || '';
+            const logradouro = result?.logradouro || '';
+            const numero     = result?.numero || '';
+            const bairro     = result?.bairro || '';
+            const uf         = (result?.uf || '').toUpperCase();
+
+            // Preenche os inputs
+            $(document).find('input#cliente').val(razao);
+            $(document).find('input#email').val(email);
+            $(document).find('input#Cep').val(cep);                // formate no seu inputmask se usar
+            $(document).find('input#cidade').val(municipio);
+            $(document).find('input#endereco').val(
+                numero ? `${logradouro}, ${numero}` : logradouro
+            );
+            $(document).find('input#bairro').val(bairro);
+            $(document).find('input#uf').val(uf);
+
+            Swal.close(); // fecha loading
+        },error: function (xhr) {
+            Swal.close();
+
+            const status = xhr.status;
+            console.log(xhr.responseJSON, xhr.responseJSON.erro);
+            let msg = 'Erro ao consultar o CNPJ. Tente novamente.';
+
+            if (status === 404) {
+                msg = 'CNPJ não encontrado na base pública.';
+            } else if (status === 429) {
+                msg = 'Muitas requisições agora. Aguarde alguns instantes e tente novamente.';
+            } else if (status === 422) {
+                msg = 'CNPJ inválido.';
+            } else if (status >= 500) {
+                msg = 'Serviço temporariamente indisponível.';
+            } else if (xhr.responseJSON && xhr.responseJSON.erro) {
+                msg = xhr.responseJSON.erro + ''+xhr.responseJSON.body;
+            }
+
+            Swal({
+                title: 'Atenção',
+                type: 'info',
+                text: msg,
+                icon: 'warning'
+            });
         }
     });
 }

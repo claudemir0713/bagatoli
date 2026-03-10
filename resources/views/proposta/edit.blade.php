@@ -155,15 +155,24 @@
                                                     </td>
                                                     <td colspan="3">
                                                         <input type="text" class="form-control fonte-10" id="modelo{{$item->id}}" name="modelo[]" value="{{$item->modelo}}">
-                                                        <input type="hidden" id="lote{{$item->id}}" name="lote[]" value="{{$item->lote}}">
-                                                        <input type="hidden" id="lote_descricao{{$item->id}}" name="lote_descricao[]" value="{{$item->lote_descricao}}">
-                                                        <input type="hidden" id="cod_produto{{$item->id}}" name="cod_produto[]" value="{{$item->cod_produto}}">
-                                                        <input type="hidden" id="frete_custo{{$item->id}}" name="frete_custo[]" value="{{$item->frete_custo}}">
-                                                        <input type="hidden" id="impostos_credito{{$item->id}}" name="impostos_credito[]" value="{{$item->impostos_credito}}">
-                                                        <input type="hidden" id="obs_item{{$item->id}}" name="obs_item[]" value="{{$item->obs}}">
-
-                                                        <input type="hidden" id="impostos_venda{{$item->id}}" name="impostos_venda[]" value="{{$item->impostos_venda}}">
-                                                        <input type="hidden" id="difal{{$item->id}}" name="difal[]" value="{{$item->difal}}">
+                                                        <input type="hidden" id="lote{{$item->id}}"            name="lote[]"               value="{{$item->lote}}"                                     title="lote">
+                                                        <input type="hidden" id="lote_descricao{{$item->id}}"  name="lote_descricao[]"     value="{{$item->lote_descricao}}"                           title="lote_descricao">
+                                                        <input type="hidden" id="cod_produto{{$item->id}}"     name="cod_produto[]"        value="{{$item->cod_produto}}"                              title="cod_produto">
+                                                        <input type="hidden" id="frete_custo{{$item->id}}"     name="frete_custo[]"        value="{{number_format($item->frete_custo,2,',','.')}}"     title="frete_custo">
+                                                        <input type="hidden" id="impostos_credito{{$item->id}}"name="impostos_credito[]"   value="{{number_format($item->impostos_credito,2,',','.')}}"title="impostos_credito">
+                                                        <input type="hidden" id="impostos_venda{{$item->id}}"  name="impostos_venda[]"     value="{{number_format($item->impostos_venda,2,',','.')}}"  title="impostos_venda">
+                                                        <input type="hidden" id="difal{{$item->id}}"           name="difal[]"              value="{{number_format($item->difal,2,',','.')}}"           title="difal">
+                                                        <input type="hidden" id="obs_item{{$item->id}}"        name="obs_item[]"           value="{{$item->obs}}"                                      title="obs">
+                                                        <input type="hidden" id="ir_csll{{$item->id}}"         name="ir_csll[]"            value="{{number_format($item->ir_csll,2,',','.')}}"         title="ir_csll">
+                                                        <input type="hidden" id="frete{{$item->id}}"           name="frete[]"              value="{{number_format($item->frete,2,',','.')}}"           title="frete">
+                                                        <input type="hidden" id="outros{{$item->id}}"          name="outros[]"             value="{{number_format($item->outros,2,',','.')}}"          title="outros">
+                                                        <input type="hidden" id="margem{{$item->id}}"          name="margem[]"             value="{{number_format($item->margem,2,',','.')}}"          title="margem">
+                                                        <input type="hidden" id="despesa_fixa{{$item->id}}"    name="despesa_fixa[]"       value="{{number_format($item->despesa_fixa,2,',','.')}}"    title="despesa_fixa">
+                                                        <input type="hidden" id="comissao{{$item->id}}"        name="comissao[]"           value="{{number_format($item->comissao,2,',','.')}}"        title="comissao">
+                                                        <input type="hidden" id="unt_minimo{{$item->id}}"      name="unt_minimo[]"         value="{{number_format($item->unt_minimo,2,',','.')}}"      title="unt_minimo">
+                                                        <input type="hidden" id="total_minimo{{$item->id}}"    name="total_minimo[]"       value="{{number_format($item->total_minimo,2,',','.')}}"    title="total_minimo">
+                                                        <input type="hidden" id="unt_venda{{$item->id}}"       name="unt_venda[]"          value="{{number_format($item->unt_venda,2,',','.')}}"       title="unt_venda">
+                                                        <input type="hidden" id="total_venda{{$item->id}}"     name="total_venda[]"        value="{{number_format($item->total_venda,2,',','.')}}"     title="total_venda">
                                                     </td>
                                                 </tr>
                                                 <tr  class="sectionItem{{$item->id}}">

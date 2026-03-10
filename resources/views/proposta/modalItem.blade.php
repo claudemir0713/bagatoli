@@ -68,7 +68,7 @@
                     <div class="row">
                         <div class="form-group col-md-2">
                             <sup><b>Custo Unt:</b></sup>
-                            <input type="text" class="form-control fonte-12 direita calc_custo_md" id="md_unt_custo" name="md_unt_custo">
+                            <input type="text" class="form-control fonte-12 direita calc_custo_md precoVendaCalcular" id="md_unt_custo" name="md_unt_custo">
                         </div>
                         <div class="form-group col-md-2">
                             <sup><b>Custo Total:</b></sup>

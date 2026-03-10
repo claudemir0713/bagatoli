@@ -111,6 +111,8 @@ $(document).ready(function () {
             let id_portal_compras = $(this).find('#id_portal_compras').val();
             let obs = $(this).find('#obs').val();
 
+
+
             let seq = [];
             $(document).find('input[name="seq[]"]').each(function(index){
                 seq.push($(this).val());
@@ -206,6 +208,58 @@ $(document).ready(function () {
                 obs_item.push($(this).val());
             })
 
+
+            let ir_csll = [];
+            $(document).find('input[name="ir_csll[]"]').each(function(index){
+                ir_csll.push($(this).val());
+            });
+
+            let frete = [];
+            $(document).find('input[name="frete[]"]').each(function(index){
+                frete.push($(this).val());
+            });
+
+            let outros = [];
+            $(document).find('input[name="outros[]"]').each(function(index){
+                outros.push($(this).val());
+            });
+
+            let margem = [];
+            $(document).find('input[name="margem[]"]').each(function(index){
+                margem.push($(this).val());
+            });
+
+            let despesa_fixa = [];
+            $(document).find('input[name="despesa_fixa[]"]').each(function(index){
+                despesa_fixa.push($(this).val());
+            });
+
+            let comissao = [];
+            $(document).find('input[name="comissao[]"]').each(function(index){
+                comissao.push($(this).val());
+            });
+
+            let unt_minimo = [];
+            $(document).find('input[name="unt_minimo[]"]').each(function(index){
+                unt_minimo.push($(this).val());
+            });
+
+            let total_minimo = [];
+            $(document).find('input[name="total_minimo[]"]').each(function(index){
+                total_minimo.push($(this).val());
+            });
+
+            let unt_venda = [];
+            $(document).find('input[name="unt_venda[]"]').each(function(index){
+                unt_venda.push($(this).val());
+            });
+
+            let total_venda = [];
+            $(document).find('input[name="total_venda[]"]').each(function(index){
+                total_venda.push($(this).val());
+            });
+
+
             /********************************************************************************************* */
             if (!descricao || !tipo_licitacao_id ) {
                 Swal({
@@ -245,6 +299,16 @@ $(document).ready(function () {
                     ,'impostos_credito'     :impostos_credito
                     ,'impostos_venda'       :impostos_venda
                     ,'difal'                :difal
+                    ,'ir_csll'              :ir_csll
+                    ,'frete'                :frete
+                    ,'outros'               :outros
+                    ,'margem'               :margem
+                    ,'despesa_fixa'         :despesa_fixa
+                    ,'comissao'             :comissao
+                    ,'unt_minimo'           :unt_minimo
+                    ,'total_minimo'         :total_minimo
+                    ,'unt_venda'            :unt_venda
+                    ,'total_venda'          :total_venda
                 }
                 // console.log(dados);
                 cadastrar(dados,route,type,origem);
@@ -453,4 +517,48 @@ $(document).ready(function () {
             }
             alteraData(dados)
         })
+
+    /**********************************************************************************************/
+        // Util: extrai números do atributo id (ex.: "total_custo12" -> 12)
+        function extractNumericIdFromElement(el) {
+            const m = String(el.id || '').match(/(\d+)/);
+            return m ? m[1] : undefined;
+        }
+
+        $(document).on('blur', '.precoVendaCalcular', function () {
+        const id = $(this).attr('id').replace(/\D+/g, '');
+
+        // Coleta TODOS os parâmetros do DOM (formato BR) para passar à função pura
+        const params = {
+            custo:              $(document).find('#md_unt_custo'+id).val(),
+            imposto_custo:      $(document).find('#md_impostos_credito'+id).val(),
+            imposto_venda:      $(document).find('#imposto_venda').val(),
+            difal:              $(document).find('#difal').val(),
+            ir_csll:            $(document).find('#ir_csll').val(),
+            outros:             $(document).find('#outros').val(),
+            comissao:           $(document).find('#comissao').val(),
+            frete:              $(document).find('#frete').val(),
+            despesa_fixa:       $(document).find('#despesa_fixa').val(),
+            margem:             $(document).find('#margem').val(),
+            qtd:                $(document).find('#md_qtd'+id).val(),
+            prazoMedio:         $(document).find('#prazoMedio').val(),
+            taxa_financeira:    $(document).find('#taxa_financeira').val(),
+            vlrVendaUntInicial: $(document).find('#md_unt_edital'+id).val(),
+            vlrVendaInicial:    $(document).find('#vlrVenda'+id).val(),
+            total_edital:       0
+        };
+
+        // Chama a função pura de cálculo passando TODOS os parâmetros
+        const r = precoVendaCalcular(params);
+        console.log(r);
+
+        // Atualiza UI com os resultados formatados
+        $(document).find('#vlrVenda'+id).val(r.vlrVendaTotalFormatado);
+        $(document).find('#vlrVendaUnt'+id).val(r.vlrVendaUnitarioFormatado);
+
+        // Mantém suas funções auxiliares (se existirem)
+        if (typeof fundoValor === 'function') fundoValor(r.total_edital, r.vlrVendaTotal, id);
+        if (typeof fundoMargem === 'function') fundoMargem((precoVendaCalcular ? r.impostos?.margem ?? 0 : 0), id);
+        if (typeof calculaCard === 'function') calculaCard();
+        });
 })

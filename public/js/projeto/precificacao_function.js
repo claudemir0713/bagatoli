@@ -109,7 +109,7 @@ function precoVenda(id){
         let custo_unt       = 0;
         let equivalencia    = Math.pow( (taxa_financeira/100+1),(prazoMedio/30) ) ;
 
-        let vlrVendaUnt        = parseFloat($(document).find('#vlrVendaUnt'+id).val().replaceAll('.','').replaceAll(',','.'));
+        let vlrVendaUnt     = parseFloat($(document).find('#vlrVendaUnt'+id).val().replaceAll('.','').replaceAll(',','.'));
         let vlrVenda        = parseFloat($(document).find('#vlrVenda'+id).val().replaceAll('.','').replaceAll(',','.'));
         let total_edital    = parseFloat($(document).find('#total_edital'+id).val().replaceAll('.','').replaceAll(',','.'));
 
