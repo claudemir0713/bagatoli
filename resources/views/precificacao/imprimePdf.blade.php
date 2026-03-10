@@ -206,9 +206,9 @@
                 <?php
                     $margem_css ='';
                     if($licitacao_tipo->controla_preco_minimo == 'S' && $item->total_edital>0 ){
-                        $margem_css = ($item->total_venda>=$item->total_edital) ? 'margem-negativa' : '';
+                        $margem_css = ($item->total_venda>=$item->total_edital) ? "⚠" : '';
                     }else{
-                        $margem_css = ($item->margem < 0 ) ? 'margem-negativa' : '';
+                        $margem_css = ($item->margem < 0 ) ? "⚠" : '';
                     }
 
 
@@ -240,8 +240,8 @@
                         </tr>
                     @endif
                 @endif
-                <tr class="{{$margem_css}}">
-                    <td align="center" >{{$item->item}}</td>
+                <tr>
+                    <td align="center" >{{$margem_css}}  {{$item->item}}</td>
                     <td align="center">{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
                     <td align="">{{$item->marca}}</td>
