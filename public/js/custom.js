@@ -267,15 +267,21 @@ $(document).ready(function () {
                 },
                 success:function(result){
                     Swal.close();
-                    if(result>0){
+                    if(result.existe=='S'){
                         Swal({
                             title: 'Cliente já cadastrado!',
                             type: 'error',
                             timer:2000
                         })
+                        $('.modal').each(function () {
+                            $(this).modal('hide');
+                        });
+                        Swal.close();
+                        $(document).find('#cliente_id').val(result.id);
+                        localizaNomeCliente()
+                        $(document).find('#cliente_id').focus();
                     }else{
                         cnpj = cnpj.replace('.', '').replace('/', '').replace('-', '');
-                        console.log(cnpj);
                         if (cnpj.length >= 14) {
                             buscaCnpj(cnpj);
                         };

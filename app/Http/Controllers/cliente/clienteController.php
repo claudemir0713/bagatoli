@@ -75,8 +75,10 @@ class clienteController extends Controller
                 'message'   => 'Success',
                 'title'     => 'Success',
                 'type'      => 'success',
-                'acao'      => 'atualizar',
+                'acao'      => 'atualizar_cliente_proposta',
                 'html'      => 'Cadastro efetuado com sucesso!',
+                'origem'    => 'cliente',
+                'id'        => $cliente->id,
                 'timer'     => 1000
             ], 200);
     }
@@ -262,6 +264,11 @@ class clienteController extends Controller
     public function verificaNaBase(Request $request)
     {
         $cliente = cliente::where('cpf_cnpj',$request->cnpj)->count();
-        return $cliente;
+
+        if($cliente>0){
+            $cliente = cliente::where('cpf_cnpj',$request->cnpj)->first();
+            return response()->json(['existe' => "S", 'cnpj' => "$cliente->cnpj",'nome' =>"$cliente->cliente",'id'=>"$cliente->id"]);
+        }
+        return response()->json(['existe' => "N", 'body' => ""]);
     }
 }

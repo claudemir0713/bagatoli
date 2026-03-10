@@ -51,16 +51,6 @@ function buscaCnpj(cnpj){
         },
         success: function (result, textStatus, xhr)
         {
-                // console.log(result)
-                // $(document).find('input#cliente').val(result.razao_social);
-                // $(document).find('input#email').val(result.email);
-                // $(document).find('input#Cep').val(result.cep);
-                // $(document).find('input#cidade').val(result.municipio);
-                // $(document).find('input#endereco').val(result.logradouro+','+result.numero);
-                // $(document).find('input#bairro').val(result.bairro);
-                // $(document).find('input#uf').val(result.uf);
-
-
             // Alguns campos podem vir nulos; trate fallbacks:
             const razao      = result?.razao_social || result?.razaoSocial || '';
             const email      = result?.email || '';
@@ -154,27 +144,37 @@ function cadastrar(dados,route,type,origem){
         url:url+route,
         success: function(result)
         {
+            console.log(result);
             Swal.fire({
                 title   : result.title,
                 type    : result.type,
                 html    : result.html,
                 timer   : result.timer,
             }).then(() => {
-                    if(result.acao=="voltar"){
-                        if(origem=='precificacao'){
-                            window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
-                        }
-                        if(dados.page){
-                            origem = origem+'?page='+dados.page
-                        }
-                        window.location.replace(url+'/'+origem);
-
-                    }else if(result.acao=="atualizar"){
-                        window.location.reload();
-                    }else if(result.acao=="limpar"){
-                        $('.limpar').val('');
-                        $('select').trigger("chosen:updated");
+                if(result.acao=="voltar"){
+                    if(origem=='precificacao'){
+                        window.open(url + '/' + origem + '/imprimir/'+dados.proposta_id, '_blank');
                     }
+                    if(dados.page){
+                        origem = origem+'?page='+dados.page
+                    }
+                    window.location.replace(url+'/'+origem);
+
+                }else if(result.acao=="atualizar"){
+                    window.location.reload();
+                }else if(result.acao=="atualizar_cliente_proposta"){
+                    $('.modal').each(function () {
+                        $(this).modal('hide');
+                    });
+                    Swal.close();
+                    $(document).find('#cliente_id').val(result.id);
+                    localizaNomeCliente()
+                    $(document).find('#cliente_id').focus();
+
+                }else if(result.acao=="limpar"){
+                    $('.limpar').val('');
+                    $('select').trigger("chosen:updated");
+                }
 
             });
         },

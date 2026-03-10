@@ -331,24 +331,52 @@ class propostaController extends Controller
     }
 
     public function bg_localizaCliente(Request $request){
-        $arr_nome = explode(' ',trim($request->cliente));
-        $filtros = [];
-        foreach($arr_nome as $item){
-            if( $item ){
-                $filtros[] = ['cliente','like','%'.strtoupper($item).'%'];
+        // $arr_nome = explode(' ',trim($request->cliente));
+        // $filtros = [];
+        // foreach($arr_nome as $item){
+        //     if( $item ){
+        //         $filtros[] = ['cliente','like','%'.strtoupper($item).'%'];
+        //     }
+        // }
+        // $cliente = cliente::where($filtros)
+        //             ->orderby('cliente')
+        //             ->get();
+        // $cli = [];
+        // foreach($cliente as $item){
+        //     $cli[] = [
+        //         'id'        => $item->id
+        //         ,'cliente'  => $item->cliente
+        //     ];
+        // }
+        // return response()->json($cli);
+
+        $termo = trim($request->cliente); // pode ser nome ou CNPJ
+
+        $query = Cliente::query();
+
+        // Quebra o termo em palavras para filtrar por nome
+        $arr_nome = preg_split('/\s+/', strtoupper($termo));
+
+        $query->where(function ($q) use ($arr_nome) {
+            foreach ($arr_nome as $p) {
+                if ($p !== '') {
+                    $q->where('cliente', 'like', "%{$p}%");
+                }
             }
-        }
-        $cliente = cliente::where($filtros)
-                    ->orderby('cliente')
-                    ->get();
-        $cli = [];
-        foreach($cliente as $item){
-            $cli[] = [
-                'id'        => $item->id
-                ,'cliente'  => $item->cliente
-            ];
-        }
+        })
+        // OU busca no campo cpf_cnpj (com máscara)
+        ->orWhere('cpf_cnpj', 'like', "%{$termo}%");
+
+        $cliente = $query->orderBy('cliente')->get();
+
+        $cli = $cliente->map(fn($item) => [
+            'id'      => $item->id,
+            'cliente' => $item->cliente,
+            'cpf_cnpj'=> $item->cpf_cnpj, // útil retornar também
+        ]);
+
         return response()->json($cli);
+
 
     }
 
