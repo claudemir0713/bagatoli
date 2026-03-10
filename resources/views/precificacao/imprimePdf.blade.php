@@ -114,13 +114,16 @@
             line-height: 1.5;
         }
 
-    /* Classe para destacar a coluna unt_edital */
-    .highlight-edital {
-        font-weight: bold;          /* Negrito para dar contraste */
-        background-color: #e0e0e0;  /* Cinza claro (opcional, imprime bem) */
-    }
+        /* Classe para destacar a coluna unt_edital */
+        .highlight-edital {
+            font-weight: bold;          /* Negrito para dar contraste */
+            background-color: #e0e0e0;  /* Cinza claro (opcional, imprime bem) */
+        }
 
 
+        .margem-negativa {
+            background-color: #ffcccc;
+        }
 
     </style>
 </head>
@@ -196,10 +199,20 @@
             $custo_total    = 0;
             $pauta_total    = 0;
             $venda_total    = 0;
-
+            $margem_css     = '';
         @endphp
         <tbody>
             @foreach ($proposta_item as $item )
+                <?php
+                    $margem_css ='';
+                    if($licitacao_tipo->controla_preco_minimo == 'S' && $item->total_edital>0 ){
+                        $margem_css = ($item->total_venda>=$item->total_edital) ? 'margem-negativa' : '';
+                    }else{
+                        $margem_css = ($item->margem < 0 ) ? 'margem-negativa' : '';
+                    }
+
+
+                ?>
                 @if($lote!=$item->lote)
                     @if ($lote!='0' && $lote!='')
                         <tr bgcolor="#e3e3e3">
@@ -227,8 +240,8 @@
                         </tr>
                     @endif
                 @endif
-                <tr>
-                    <td align="center">{{$item->item}}</td>
+                <tr class="{{$margem_css}}">
+                    <td align="center" >{{$item->item}}</td>
                     <td align="center">{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
                     <td align="">{{$item->marca}}</td>

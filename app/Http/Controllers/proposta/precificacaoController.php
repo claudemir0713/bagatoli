@@ -222,6 +222,7 @@ class precificacaoController extends Controller
 
     public function imprimir($id){
         $proposta = proposta::find($id);
+        $licitacao_tipo = licitacao_tipo::find($proposta->tipo_licitacao_id);
         $cliente = cliente::find($proposta->cliente_id);
         ($proposta->empresa_id)? $empresa_id = $proposta->empresa_id : $empresa_id = 1;
         $empresa = empresa::find($empresa_id);
@@ -263,7 +264,7 @@ class precificacaoController extends Controller
         $rodape .='</table>';
 
 
-        $html = view('precificacao.imprimePdf',compact('proposta','proposta_item','cliente','empresa'));
+        $html = view('precificacao.imprimePdf',compact('proposta','proposta_item','cliente','empresa','licitacao_tipo'));
         $html->render();
         $mpdf->SetHTMLHeader($cabecalho);
         $mpdf->SetHTMLFooter($rodape);
