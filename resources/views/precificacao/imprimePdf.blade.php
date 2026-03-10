@@ -241,7 +241,7 @@
                     @endif
                 @endif
                 <tr>
-                    <td align="center" >{{$margem_css}}  {{$item->item}}</td>
+                    <td align="center" ><span style="font-size: 22px;">{{$margem_css}}</span>  {{$item->item}}</td>
                     <td align="center">{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
                     <td align="">{{$item->marca}}</td>
