@@ -11,7 +11,7 @@
     <div class="row">
         <div class="form-group col-md-4">
             <h3 style="display: inline;"><i class="fas fa-hand-holding-usd"></i> <sup>Proposta</sup></h3>
-            <h6 style="display: inline;">    <b><i>{{str_pad($proposta->id, 4 , '0' , STR_PAD_LEFT)}}</i> - {{$cliente->cliente}}</b></h6>
+            <h6 style="display: inline;">    <b><i>{{str_pad($proposta->id, 4 , '0' , STR_PAD_LEFT)}}</i> - {{$cliente->cliente}} - {{$cliente->uf}}</b></h6>
         </div>
         <div class="form-group col-md-2">
             <h3 style="display: inline;"><sup>Tipo</sup></h3>
@@ -65,11 +65,12 @@
                             <th width="5%">R$ total</th>
                             <th width="8%">R$ custo</th>
                             <th width="6%">% Imp.Cust</th>
+                            <th width="6%">% icms.Cot</th>
                             <th width="6%">% Imp.Vend</th>
                             <th width="6%">% Difal</th>
                             <th width="6%">% Ir/Csl</th>
                             <th width="6%">% Outros</th>
-                            <th width="6%">% Comis.</th>
+                            {{-- <th width="6%">% Comis.</th> --}}
                             <th width="6%">% Frete</th>
                             <th width="6%">% Desp.Fix</th>
                             <th width="6%">% Marg</th>
@@ -122,6 +123,7 @@
                                     $difal = $item->difal;
                                     $outros = $item->outros;
                                     $imposto_custo = $item->impostos_credito;
+                                    $icms_cotacao = $item->impostos_credito;
                                     $comissao = $item->comissao;
                                     $frete = $item->frete;
                                     $despesa_fixa = $item->despesa_fixa;
@@ -139,6 +141,7 @@
                                 $difal              = number_format($difal,2,',','.');
                                 $outros             = number_format($outros,2,',','.');
                                 $imposto_custo      = number_format($imposto_custo,2,',','.');
+                                $icms_cotacao       = number_format($icms_cotacao,2,',','.');
                                 $comissao           = number_format($comissao,2,',','.');
                                 $frete              = number_format($frete,2,',','.');
                                 $despesa_fixa       = number_format($despesa_fixa,2,',','.');
@@ -196,11 +199,11 @@
                                     <input type="text" class="form-control fonte-8 direita calc_pre_venda calc_custo_unt"   id="total_custo{{$item->id}}"     name="total_custo[]"    value="{{$total_custo}}" title="R$ custo total"   autocomplete="off">
                                 </td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda"                  id="imposto_custo{{$item->id}}"   name="imposto_custo[]"  value="{{$imposto_custo}}"                        autocomplete="off"></td>
+                                <td><input type="text" class="form-control fonte-8 direita "                                id="icms_cotacao{{$item->id}}"    name="icms_cotacao[]"   value="{{$icms_cotacao}}"                         autocomplete="off" readonly></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda imposto_venda"    id="imposto_venda{{$item->id}}"   name="imposto_venda[]"  value="{{$imposto_venda}}"                        autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda difal"            id="difal{{$item->id}}"           name="difal[]"          value="{{$difal}}"                                autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda ir_csll"          id="ir_csll{{$item->id}}"         name="ir_csll[]"        value="{{$ir_csll}}"                              autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda outros"           id="outros{{$item->id}}"          name="outros[]"         value="{{$outros}}"                               autocomplete="off"></td>
-                                <td><input type="text" class="form-control fonte-8 direita calc_pre_venda comissao"         id="comissao{{$item->id}}"        name="comissao[]"       value="{{$comissao}}"                             autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda frete"            id="frete{{$item->id}}"           name="frete[]"          value="{{$frete}}"                                autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda despesa_fixa"     id="despesa_fixa{{$item->id}}"    name="despesa_fixa[]"   value="{{$despesa_fixa}}"                         autocomplete="off"></td>
                                 <td><input type="text" class="form-control fonte-8 direita calc_pre_venda margem {{$cssFundoMargem}}"id="margem{{$item->id}}" name="margem[]"         value="{{$margem}}"                               autocomplete="off"></td>
@@ -211,6 +214,7 @@
                                     <input type="hidden" class="form-control fonte-8 direita" id="total_edital{{$item->id}}" name="total_edital[]" value="{{number_format($item->total_edital,2,',','.')}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="id{{$item->id}}" name="id[]" value="{{$item->id}}">
                                     <input type="hidden" class="form-control fonte-8 direita" id="lote{{$item->id}}" name="lote[]" value="{{preg_replace("/\s+/", "",$item->lote)}}">
+                                    <input type="hidden" class="form-control fonte-8 direita calc_pre_venda comissao"         id="comissao{{$item->id}}"        name="comissao[]"       value="{{$comissao}}"                             autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
