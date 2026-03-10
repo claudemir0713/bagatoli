@@ -23,6 +23,12 @@ class clienteController extends Controller
                 session()->put('cliente', $dateForm['cliente']);
             }
         };
+        if(array_key_exists('cpf_cnpj',$dateForm)){
+            if($dateForm['cpf_cnpj']){
+                $filtros[]=['cliente.cpf_cnpj','like',$dateForm['cpf_cnpj'].'%'];
+                session()->put('cpf_cnpj', $dateForm['cpf_cnpj']);
+            }
+        };
         session()->put('dateForm',$dateForm);
         $clientes = cliente::where($filtros)->orderBy('cliente')->select(['id','cliente'])->paginate(7);
         return view('cliente.listAll', compact('clientes','dateForm'));

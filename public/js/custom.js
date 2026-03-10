@@ -276,7 +276,7 @@ $(document).ready(function () {
                         $('.modal').each(function () {
                             $(this).modal('hide');
                         });
-                        Swal.close();
+                        // Swal.close();
                         $(document).find('#cliente_id').val(result.id);
                         localizaNomeCliente()
                         $(document).find('#cliente_id').focus();

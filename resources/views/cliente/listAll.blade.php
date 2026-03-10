@@ -33,6 +33,10 @@
                         Nome:
                         <input type="text" class="form-control" name="cliente" id="cliente" value="{{ array_key_exists('cliente',$dateForm) ? $dateForm['cliente'] : '' }}">
                     </div>
+                    <div class="form-group col-md-4">
+                        Cnpj/CPF:
+                        <input type="text" class="form-control" name="cpf_cnpj" id="cpf_cnpj" value="{{ array_key_exists('cpf_cnpj',$dateForm) ? $dateForm['cpf_cnpj'] : '' }}">
+                    </div>
                 </div>
                 <button class="btn btn-primary btn-sm fonte-12" type="submit" >
                     <span class="fas fa-play"></span> Filtrar
