@@ -250,7 +250,7 @@
                 @endif
                 <tr >
                     <td align="center" ><span style="font-size: 20px;font-weight: bold;">{{$margem_css}}</span>  {{$item->item}}</td>
-                    <td align="center">{{$riscado}}{{$item->cod_produto}}</td>
+                    <td align="center">{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
                     <td align="">{{$item->marca}}</td>
                     <td align="">{{$item->modelo}}</td>
