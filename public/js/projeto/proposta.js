@@ -310,7 +310,7 @@ $(document).ready(function () {
                     ,'unt_venda'            :unt_venda
                     ,'total_venda'          :total_venda
                 }
-                // console.log(dados);
+                console.log(dados);
                 cadastrar(dados,route,type,origem);
             }
         })
@@ -383,15 +383,25 @@ $(document).ready(function () {
                     linha +='<td colspan="3"><textarea type="text" class="form-control fonte-10" id="descricao'+md_seq+'"   name="descricao[]">'+md_descricao+'</textarea></td>';
                     linha +='<td colspan="3"><input type="text" class="form-control fonte-10"                id="marca'+md_seq+'"       name="marca[]" value="'+md_marca+'"   ></td>';
                     linha +='<td colspan="3">'
-                            linha +='<input type="text" class="form-control fonte-10"id="modelo'+md_seq+'"             name="modelo[]"             value="'+md_modelo+'">'
-                            linha +='<input type="hidden"                            id="lote'+md_seq+'"               name="lote[]"               value="'+md_lote+'" >'
-                            linha +='<input type="hidden"                            id="lote_descricao'+md_seq+'"     name="lote_descricao[]"     value="'+md_lote_descricao+'" >'
-                            linha +='<input type="hidden"                            id="cod_produto'+md_seq+'"        name="cod_produto[]"        value="'+md_cod_produto+'" >'
-                            linha +='<input type="hidden"                            id="frete_custo'+md_seq+'"        name="frete_custo[]"        value="'+md_frete_custo+'" >'
-                            linha +='<input type="hidden"                            id="impostos_credito'+md_seq+'"   name="impostos_credito[]"   value="'+md_impostos_credito+'" >'
-                            linha +='<input type="hidden"                            id="obs_item'+md_seq+'"           name="obs_item[]"           value="'+md_obs+'" >'
-                            linha +='<input type="hidden"                            id="impostos_venda'+md_seq+'"     name="impostos_venda[]"     value="'+md_impostos_venda+'" >'
-                            linha +='<input type="hidden"                            id="difal'+md_seq+'"              name="difal[]"              value="'+md_difal+'" >'
+                            linha +='<input type="text" class="form-control fonte-10"id="modelo'+md_seq+'"              name="modelo[]"             value="'+md_modelo+'"            title="modelo">'
+                            linha +='<input type="hidden"                            id="lote'+md_seq+'"               name="lote[]"               value="'+md_lote+'"              title="lote">'
+                            linha +='<input type="hidden"                            id="lote_descricao'+md_seq+'"     name="lote_descricao[]"     value="'+md_lote_descricao+'"    title="lote_descricao">'
+                            linha +='<input type="hidden"                            id="cod_produto'+md_seq+'"        name="cod_produto[]"        value="'+md_cod_produto+'"       title="cod_produto">'
+                            linha +='<input type="hidden"                            id="frete_custo'+md_seq+'"        name="frete_custo[]"        value="'+md_frete_custo+'"       title="frete_custo">'
+                            linha +='<input type="hidden"                            id="impostos_credito'+md_seq+'"   name="impostos_credito[]"   value="'+md_impostos_credito+'"  title="impostos_credito">'
+                            linha +='<input type="hidden"                            id="obs_item'+md_seq+'"           name="obs_item[]"           value="'+md_obs+'"               title="obs_item">'
+                            linha +='<input type="hidden"                            id="impostos_venda'+md_seq+'"     name="impostos_venda[]"     value="'+md_impostos_venda+'"    title="impostos_venda">'
+                            linha +='<input type="hidden"                            id="difal'+md_seq+'"              name="difal[]"              value="'+md_difal+'"             title="difal">'
+                            linha +='<input type="hidden"                            id="comissao'+md_seq+'"           name="comissao[]"           value="0,00"                     title="comissao">'
+                            linha +='<input type="hidden"                            id="ir_csll'+md_seq+'"            name="ir_csll[]"            value="0,00"                     title="ir_csll">'
+                            linha +='<input type="hidden"                            id="frete'+md_seq+'"              name="frete[]"              value="0,00"                     title="frete">'
+                            linha +='<input type="hidden"                            id="margem'+md_seq+'"             name="margem[]"             value="0,00"                     title="margem">'
+                            linha +='<input type="hidden"                            id="outros'+md_seq+'"             name="outros[]"             value="0,00"                     title="outros">'
+                            linha +='<input type="hidden"                            id="despesa_fixa'+md_seq+'"       name="despesa_fixa[]"       value="0,00"                     title="despesa_fixa">'
+                            linha +='<input type="hidden"                            id="unt_minimo'+md_seq+'"         name="unt_minimo[]"         value="0,00"                     title="unt_minimo">'
+                            linha +='<input type="hidden"                            id="total_minimo'+md_seq+'"       name="total_minimo[]"       value="0,00"                     title="total_minimo">'
+                            linha +='<input type="hidden"                            id="unt_venda'+md_seq+'"          name="unt_venda[]"          value="0,00"                     title="unt_venda">'
+                            linha +='<input type="hidden"                            id="total_venda'+md_seq+'"        name="total_venda[]"        value="0,00"                     title="total_venda">'
                     linha +='</td>';
                 linha +='</tr>';
                 linha +='<tr class="sectionItem'+md_seq+'">';

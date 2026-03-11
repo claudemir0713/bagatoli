@@ -246,8 +246,8 @@ class propostaController extends Controller
                 $proposta->portal_compras       = $request->portal_compras;
                 $proposta->id_portal_compras    = $request->id_portal_compras;
                 $proposta->obs                  = $request->obs;
-            $proposta->save();
-            $proposta_id = $id;
+                $proposta->save();
+                $proposta_id = $id;
 
             proposta_item::where('proposta_id',$id)->delete();
 
@@ -331,25 +331,6 @@ class propostaController extends Controller
     }
 
     public function bg_localizaCliente(Request $request){
-        // $arr_nome = explode(' ',trim($request->cliente));
-        // $filtros = [];
-        // foreach($arr_nome as $item){
-        //     if( $item ){
-        //         $filtros[] = ['cliente','like','%'.strtoupper($item).'%'];
-        //     }
-        // }
-        // $cliente = cliente::where($filtros)
-        //             ->orderby('cliente')
-        //             ->get();
-        // $cli = [];
-        // foreach($cliente as $item){
-        //     $cli[] = [
-        //         'id'        => $item->id
-        //         ,'cliente'  => $item->cliente
-        //     ];
-        // }
-        // return response()->json($cli);
-
         $termo = trim($request->cliente); // pode ser nome ou CNPJ
 
         $query = Cliente::query();

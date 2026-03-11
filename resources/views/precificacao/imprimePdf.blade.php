@@ -125,6 +125,11 @@
             background-color: #ffcccc;
         }
 
+        .texto-riscado {
+            text-decoration: line-through;
+        }
+
+
     </style>
 </head>
 
@@ -205,10 +210,13 @@
             @foreach ($proposta_item as $item )
                 <?php
                     $margem_css ='';
+                    $riscado = '';
                     if($licitacao_tipo->controla_preco_minimo == 'S' && $item->total_edital>0 ){
                         $margem_css = ($item->total_venda>=$item->total_edital) ? "⚠" : '';
+                        $riscado = 'texto-riscado';
                     }else{
                         $margem_css = ($item->margem < 0 ) ? "⚠" : '';
+                        $riscado = 'texto-riscado';
                     }
 
 
@@ -240,9 +248,9 @@
                         </tr>
                     @endif
                 @endif
-                <tr>
-                    <td align="center" ><span style="font-size: 22px;">{{$margem_css}}</span>  {{$item->item}}</td>
-                    <td align="center">{{$item->cod_produto}}</td>
+                <tr >
+                    <td align="center" ><span style="font-size: 20px;font-weight: bold;">{{$margem_css}}</span>  {{$item->item}}</td>
+                    <td align="center">{{$riscado}}{{$item->cod_produto}}</td>
                     <td align="">{{$item->produto}}</td>
                     <td align="">{{$item->marca}}</td>
                     <td align="">{{$item->modelo}}</td>
