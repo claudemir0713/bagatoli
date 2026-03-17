@@ -43,14 +43,18 @@ class bg_impostos {
                                 , 'ALIQ_ICMS.AI_PER_REDUC_ICMS                  as base'
                                 , 'PRDUTO_UF_ALIQ_ICMS.PRAI_PERC_ALIQ_INT_COMP  as aliq_icms'
                                 , 'AI_NOM                                       as regra'
+                                , 'AI_PER_REDUC_DIFAL                           as red_difal'
+                                , 'ALIQ_ICMS.AI_COD                             as ai_cod'
                             ])
                             ->where($filtros)
                             ->first();
 
 
             $empresa_parametro = empresa_parametro::where('empresa_id',$proposta->empresa_id)->first();
-
             if($icms){
+                $red_difal = ($icms->red_difal)? $icms->red_difal : 1;
+                if ($red_difal == null) { $red_difal=100; };
+
                 if($regime_tributario=='Simples Nacional'){
                     $imposto_custo  = 0;
                     $difal          = 0;
@@ -58,25 +62,25 @@ class bg_impostos {
                     $regra          = $regime_tributario.' - '.$icms->regra;
                 }elseif($regime_tributario=='Lucro Presumido'){
                     $imposto_custo  = $item->impostos_credito;
-                    $difal          = $icms->aliq_iterna - $icms->aliq_icms;
+                    $difal          = ($icms->aliq_iterna - $icms->aliq_icms)*( (100-$red_difal)/100 );
                     $aliq_icms      = $icms->aliq_icms;
-                    $regra          = $regime_tributario.' - '.$icms->regra .' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
+                    $regra          = "Regra $icms->ai_cod - ".$regime_tributario.' - '.$icms->regra .' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins." Difal ( aliq_iterna = $icms->aliq_iterna - aliq_icms = $icms->aliq_icms * (red_difal = 100 - $red_difal/100) )";
                 }elseif($regime_especial_icms=='S'){
                     $imposto_custo  = $empresa_parametro->pis+$empresa_parametro->cofins;
-                    $difal          = $icms->aliq_iterna - $icms->aliq_icms;
+                    $difal          = ($icms->aliq_iterna - $icms->aliq_icms)*( (100-$red_difal)/100);
                     $aliq_icms      = $empresa_parametro->icms + $empresa_parametro->simples;
-                    $regra          = 'Regime especial ( icms='.$aliq_icms.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins.' )';
+                    $regra          = "Regra $icms->ai_cod - ".'Regime especial ( icms='.$aliq_icms.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins.' )'." Difal ( aliq_iterna = $icms->aliq_iterna - aliq_icms = $icms->aliq_icms * (red_difal = 100 - $red_difal/100) )";
                 }else{
                     $imposto_custo  = $item->impostos_credito+$empresa_parametro->pis+$empresa_parametro->cofins;
-                    $difal          = $icms->aliq_iterna - $icms->aliq_icms;
+                    $difal          = ($icms->aliq_iterna - $icms->aliq_icms)*( (100-$red_difal)/100);
                     $aliq_icms      = $icms->aliq_icms;
-                    $regra          = $regime_tributario.' - '.$icms->regra.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
+                    $regra          = "Regra $icms->ai_cod - ".$regime_tributario.' - '.$icms->regra.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins." Difal ( aliq_iterna = $icms->aliq_iterna - aliq_icms = $icms->aliq_icms * (red_difal = 100 - $red_difal/100) )";
                 }
             }else{
                 $imposto_custo  = $item->impostos_credito + $empresa_parametro->pis + $empresa_parametro->cofins;
                 $difal          = $item->difal;
                 $aliq_icms      = $empresa_parametro->icms + $empresa_parametro->simples;
-                $regra          = $regime_tributario.' - produto sem cadastro de regra tributária no sistema -> Icms '.$item->impostos_venda.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins;
+                $regra          = "Regra '!'".$regime_tributario.' - produto sem cadastro de regra tributária no sistema -> Icms '.$item->impostos_venda.' + pis '.$empresa_parametro->pis.' + cofins '.$empresa_parametro->cofins." Difal = $item->difal";
 
             }
 
