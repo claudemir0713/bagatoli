@@ -136,10 +136,10 @@
 <body>
     <table class="bordaSimples fonte-12" width='100%'>
         <tr>
-            <td colspan="2" width="20%">
+            <td colspan="" width="20%">
                 <sup><b>Cnpj:</b></sup> {{$cliente->cpf_cnpj}}
             </td>
-            <td colspan="2" width="30%">
+            <td colspan="" width="30%">
                 <sup><b>Cliente:</b></sup> {{$cliente->cliente}}
             </td>
             <td colspan="2" width="50%" >
