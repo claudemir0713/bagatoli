@@ -222,6 +222,13 @@
                                     <b><i>Descrição:</i></b> {{$item->descricao}}
                                 </td>
                             </tr>
+                            @if($item->obs)
+                                <tr bgcolor="#c3c3c3">
+                                    <td colspan="16">
+                                        <sup><b><i>Obs:</i></b></sup>{{$item->obs}}
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

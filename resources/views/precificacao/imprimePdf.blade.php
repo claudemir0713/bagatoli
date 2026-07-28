@@ -222,7 +222,6 @@
                         $riscado = 'texto-riscado';
                     }
 
-
                 ?>
                 @if($lote!=$item->lote)
                     @if ($lote!='0' && $lote!='')
@@ -266,6 +265,15 @@
                     <td align="right" class="highlight-edital">{{number_format($item->unt_venda,2,',','.')}}</td>
                     <td align="right">{{number_format($item->total_venda,2,',','.')}}</td>
                 </tr>
+                @if($item->obs)
+                    <tr>
+                        <td colspan="13">
+                            <sup><b><i>Obs</i></b></sup>
+                            $item->obs
+                        </td>
+                    </tr>
+                @endif
+
                 @php
                     $lote               = $item->lote;
                     $total_venda        += $item->total_venda;
