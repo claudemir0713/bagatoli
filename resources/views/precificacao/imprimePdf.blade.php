@@ -269,7 +269,7 @@
                     <tr>
                         <td colspan="13">
                             <sup><b><i>Obs</i></b></sup>
-                            $item->obs
+                            {{ $item->obs }}
                         </td>
                     </tr>
                 @endif
