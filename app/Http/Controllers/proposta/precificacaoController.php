@@ -234,7 +234,7 @@ class precificacaoController extends Controller
             'margin_left'   => 15,
             'margin_rigth'  => 10,
             'margin_top'    => 25,
-            'margin_bottom' => 18,
+            'margin_bottom' => 20,
             'margin_header' => 8,
             'margin_footer' => 8
         ]);
